@@ -49,7 +49,7 @@ export const createSemanticColors = (mode: "light" | "dark") => ({
     inverse:
       mode === "light"
         ? colorPalette.vritti.white
-        : colorPalette.vritti.deepSpace,
+        : colorPalette.darkNeutral[200],
     disabled:
       mode === "light"
         ? colorPalette.lightNeutral[400] // Muted for light
