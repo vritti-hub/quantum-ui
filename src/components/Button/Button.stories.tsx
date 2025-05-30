@@ -1,59 +1,46 @@
-import type { Meta, StoryObj } from '@storybook/react';
-
-import { Box, Stack, Typography } from '@mui/material';
-import { QuantumButton, ThemeProvider } from '..';
+import { Box, Stack, Typography } from "@mui/material";
+import type { Meta, StoryObj } from "@storybook/react";
+import { QuantumButton } from "./Button";
 
 const meta: Meta<typeof QuantumButton> = {
-  title: 'Components/Button',
+  title: "Components/Button",
   component: QuantumButton,
-  decorators: [
-    (Story, context) => (
-      <ThemeProvider defaultColorScheme={context.globals.theme || 'light'}>
-        <Box sx={{ p: 3, minHeight: '200px', bgcolor: 'background.default' }}>
-          <Story />
-        </Box>
-      </ThemeProvider>
-    ),
-  ],
   parameters: {
-    layout: 'fullscreen',
+    layout: "padded",
     docs: {
       description: {
-        component: 'Enhanced Material-UI Button with quantum effects, gradients, and glow animations.',
+        component:
+          "Semantic button component with intent-based styling and emphasis levels.",
       },
     },
   },
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['contained', 'outlined', 'text', 'gradient'],
-      description: 'Button variant style',
+    intent: {
+      control: "select",
+      options: ["primary", "secondary", "destructive", "subtle"],
+      description: "Semantic purpose of the button",
+    },
+    emphasis: {
+      control: "select",
+      options: ["high", "medium", "low"],
+      description: "Visual prominence level",
     },
     size: {
-      control: 'select',
-      options: ['small', 'medium', 'large'],
-      description: 'Button size',
-    },
-    color: {
-      control: 'select',
-      options: ['primary', 'secondary', 'error', 'warning', 'info', 'success'],
-      description: 'Theme color',
-    },
-    glow: {
-      control: 'boolean',
-      description: 'Enable glow effect on hover',
+      control: "select",
+      options: ["small", "medium", "large"],
+      description: "Button size",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Disable button interaction',
+      control: "boolean",
+      description: "Disable button interaction",
     },
     fullWidth: {
-      control: 'boolean',
-      description: 'Make button full width',
+      control: "boolean",
+      description: "Make button full width",
     },
     children: {
-      control: 'text',
-      description: 'Button content',
+      control: "text",
+      description: "Button content",
     },
   },
 };
@@ -63,67 +50,96 @@ type Story = StoryObj<typeof QuantumButton>;
 
 export const Default: Story = {
   args: {
-    children: 'Quantum Button',
-    variant: 'contained',
+    children: "Button",
+    intent: "primary",
+    emphasis: "high",
   },
 };
 
-export const AllVariants: Story = {
+export const AllIntents: Story = {
   render: () => (
     <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">Button Variants</Typography>
+      <Typography variant="h6" color="text.primary">
+        Button Intents
+      </Typography>
       <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-        <QuantumButton variant="contained">Contained</QuantumButton>
-        <QuantumButton variant="outlined">Outlined</QuantumButton>
-        <QuantumButton variant="text">Text</QuantumButton>
-        <QuantumButton variant="gradient">Gradient</QuantumButton>
+        <QuantumButton intent="primary">Primary</QuantumButton>
+        <QuantumButton intent="secondary">Secondary</QuantumButton>
+        <QuantumButton intent="destructive">Destructive</QuantumButton>
+        <QuantumButton intent="subtle">Subtle</QuantumButton>
       </Stack>
     </Stack>
   ),
   parameters: {
     docs: {
       description: {
-        story: 'All available button variants including the special gradient variant.',
+        story: "Different semantic intents for buttons based on their purpose.",
       },
     },
   },
 };
 
-export const AllColors: Story = {
+export const AllEmphasisLevels: Story = {
   render: () => (
     <Stack spacing={3}>
       <Box>
-        <Typography variant="h6" color="text.primary" gutterBottom>Contained Buttons</Typography>
+        <Typography variant="h6" color="text.primary" gutterBottom>
+          Primary Intent - Different Emphasis
+        </Typography>
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-          <QuantumButton color="primary">Primary</QuantumButton>
-          <QuantumButton color="secondary">Secondary</QuantumButton>
-          <QuantumButton color="error">Error</QuantumButton>
-          <QuantumButton color="warning">Warning</QuantumButton>
-          <QuantumButton color="info">Info</QuantumButton>
-          <QuantumButton color="success">Success</QuantumButton>
+          <QuantumButton intent="primary" emphasis="high">
+            High Emphasis
+          </QuantumButton>
+          <QuantumButton intent="primary" emphasis="medium">
+            Medium Emphasis
+          </QuantumButton>
+          <QuantumButton intent="primary" emphasis="low">
+            Low Emphasis
+          </QuantumButton>
         </Stack>
       </Box>
-      
+
       <Box>
-        <Typography variant="h6" color="text.primary" gutterBottom>Outlined Buttons</Typography>
+        <Typography variant="h6" color="text.primary" gutterBottom>
+          Destructive Intent - Different Emphasis
+        </Typography>
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-          <QuantumButton variant="outlined" color="primary">Primary</QuantumButton>
-          <QuantumButton variant="outlined" color="secondary">Secondary</QuantumButton>
-          <QuantumButton variant="outlined" color="error">Error</QuantumButton>
-          <QuantumButton variant="outlined" color="warning">Warning</QuantumButton>
-          <QuantumButton variant="outlined" color="info">Info</QuantumButton>
-          <QuantumButton variant="outlined" color="success">Success</QuantumButton>
+          <QuantumButton intent="destructive" emphasis="high">
+            Delete
+          </QuantumButton>
+          <QuantumButton intent="destructive" emphasis="medium">
+            Remove
+          </QuantumButton>
+          <QuantumButton intent="destructive" emphasis="low">
+            Clear
+          </QuantumButton>
         </Stack>
       </Box>
     </Stack>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Visual emphasis levels: high (contained), medium (outlined), low (text).",
+      },
+    },
+  },
 };
 
 export const Sizes: Story = {
   render: () => (
     <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">Button Sizes</Typography>
-      <Stack direction="row" spacing={2} alignItems="center" flexWrap="wrap" useFlexGap>
+      <Typography variant="h6" color="text.primary">
+        Button Sizes
+      </Typography>
+      <Stack
+        direction="row"
+        spacing={2}
+        alignItems="center"
+        flexWrap="wrap"
+        useFlexGap
+      >
         <QuantumButton size="small">Small</QuantumButton>
         <QuantumButton size="medium">Medium</QuantumButton>
         <QuantumButton size="large">Large</QuantumButton>
@@ -132,54 +148,30 @@ export const Sizes: Story = {
   ),
 };
 
-export const GlowEffects: Story = {
-  render: () => (
-    <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">Glow Effects</Typography>
-      <Typography variant="body2" color="text.secondary">
-        Hover over buttons to see the glow animation
-      </Typography>
-      <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-        <QuantumButton glow>Contained Glow</QuantumButton>
-        <QuantumButton variant="outlined" glow>Outlined Glow</QuantumButton>
-        <QuantumButton variant="gradient" glow>Gradient Glow</QuantumButton>
-        <QuantumButton variant="text" glow>Text Glow</QuantumButton>
-      </Stack>
-    </Stack>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Buttons with glow effects that appear on hover. The glow creates an animated border gradient.',
-      },
-    },
-  },
-};
-
 export const States: Story = {
   render: () => (
     <Stack spacing={3}>
       <Box>
-        <Typography variant="h6" color="text.primary" gutterBottom>Normal vs Disabled</Typography>
+        <Typography variant="h6" color="text.primary" gutterBottom>
+          Normal vs Disabled
+        </Typography>
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-          <QuantumButton>Normal</QuantumButton>
-          <QuantumButton disabled>Disabled</QuantumButton>
+          <QuantumButton intent="primary">Normal</QuantumButton>
+          <QuantumButton intent="primary" disabled>
+            Disabled
+          </QuantumButton>
         </Stack>
       </Box>
-      
+
       <Box>
-        <Typography variant="h6" color="text.primary" gutterBottom>Outlined</Typography>
+        <Typography variant="h6" color="text.primary" gutterBottom>
+          Secondary Intent
+        </Typography>
         <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-          <QuantumButton variant="outlined">Normal</QuantumButton>
-          <QuantumButton variant="outlined" disabled>Disabled</QuantumButton>
-        </Stack>
-      </Box>
-      
-      <Box>
-        <Typography variant="h6" color="text.primary" gutterBottom>Gradient</Typography>
-        <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-          <QuantumButton variant="gradient">Normal</QuantumButton>
-          <QuantumButton variant="gradient" disabled>Disabled</QuantumButton>
+          <QuantumButton intent="secondary">Normal</QuantumButton>
+          <QuantumButton intent="secondary" disabled>
+            Disabled
+          </QuantumButton>
         </Stack>
       </Box>
     </Stack>
@@ -189,10 +181,18 @@ export const States: Story = {
 export const FullWidth: Story = {
   render: () => (
     <Stack spacing={3} sx={{ maxWidth: 400 }}>
-      <Typography variant="h6" color="text.primary">Full Width Buttons</Typography>
-      <QuantumButton fullWidth>Full Width Contained</QuantumButton>
-      <QuantumButton variant="outlined" fullWidth>Full Width Outlined</QuantumButton>
-      <QuantumButton variant="gradient" fullWidth glow>Full Width Gradient with Glow</QuantumButton>
+      <Typography variant="h6" color="text.primary">
+        Full Width Buttons
+      </Typography>
+      <QuantumButton intent="primary" emphasis="high" fullWidth>
+        Save Changes
+      </QuantumButton>
+      <QuantumButton intent="secondary" emphasis="medium" fullWidth>
+        Cancel
+      </QuantumButton>
+      <QuantumButton intent="destructive" emphasis="low" fullWidth>
+        Delete Account
+      </QuantumButton>
     </Stack>
   ),
 };
@@ -200,30 +200,33 @@ export const FullWidth: Story = {
 export const Interactive: Story = {
   render: () => (
     <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">Interactive Demo</Typography>
+      <Typography variant="h6" color="text.primary">
+        Interactive Examples
+      </Typography>
       <Typography variant="body2" color="text.secondary">
-        Click buttons to see alerts and hover for animations
+        Click buttons to see alerts and experience hover animations
       </Typography>
       <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-        <QuantumButton 
-          variant="contained"
-          onClick={() => alert('Contained button clicked!')}
+        <QuantumButton
+          intent="primary"
+          emphasis="high"
+          onClick={() => alert("Primary action completed!")}
         >
-          Click Me!
+          Save
         </QuantumButton>
-        <QuantumButton 
-          variant="gradient"
-          glow
-          onClick={() => alert('Gradient glow button clicked!')}
+        <QuantumButton
+          intent="secondary"
+          emphasis="medium"
+          onClick={() => alert("Secondary action!")}
         >
-          Gradient Glow
+          Preview
         </QuantumButton>
-        <QuantumButton 
-          variant="outlined"
-          color="secondary"
-          onClick={() => alert('Secondary outlined clicked!')}
+        <QuantumButton
+          intent="destructive"
+          emphasis="low"
+          onClick={() => alert("Are you sure you want to delete?")}
         >
-          Secondary
+          Delete
         </QuantumButton>
       </Stack>
     </Stack>
@@ -231,7 +234,8 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive buttons with click handlers to demonstrate functionality.',
+        story:
+          "Interactive buttons with click handlers to demonstrate functionality.",
       },
     },
   },
@@ -239,16 +243,15 @@ export const Interactive: Story = {
 
 export const Playground: Story = {
   args: {
-    children: 'Customize Me!',
-    variant: 'gradient',
-    glow: true,
-    color: 'primary',
-    size: 'medium',
+    children: "Customize Me!",
+    intent: "primary",
+    emphasis: "high",
+    size: "medium",
   },
   parameters: {
     docs: {
       description: {
-        story: 'Use the controls panel to customize this button and see all available props in action.',
+        story: "Use the controls panel to experiment with all button props.",
       },
     },
   },
