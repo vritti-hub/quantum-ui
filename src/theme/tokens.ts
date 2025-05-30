@@ -51,7 +51,7 @@ export const designTokens = {
     small: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
     medium: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
     large: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-    glow: "0 0 0 1px rgba(99, 102, 241, 0.1), 0 4px 12px rgba(99, 102, 241, 0.15)",
+    glow: "0 0 0 1px rgba(192, 132, 252, 0.1), 0 4px 12px rgba(192, 132, 252, 0.15)", // Updated to purple glow
   },
 
   // Animation
@@ -105,12 +105,13 @@ export const generateCSSVariables = (
   return cssVars;
 };
 
-// Export for developer experience
+// Export for developer experience (Dark Tech Theme)
 export const quantumColors = {
   palette: colorPalette,
   light: createSemanticColors("light"),
   dark: createSemanticColors("dark"),
-  primary: colorPalette.indigo[500],
-  secondary: colorPalette.cyan[500],
+  primary: colorPalette.darkBlue[700], // Your chosen deep blue #1E40AF
+  secondary: colorPalette.cyan[500], // Futuristic cyan accent #06B6D4
+  accent: colorPalette.cyan[400], // Neon highlights #22D3EE
   vritti: colorPalette.vritti,
 };
