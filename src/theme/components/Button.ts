@@ -70,16 +70,17 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
   },
 
   variants: [
-    // Semantic intent variants
+    // Primary color with explicit white text for universal #0066CC
     {
       props: { color: "primary" },
       style: {
         "&.MuiButton-contained": {
           backgroundColor: "var(--quantum-action-primary)",
-          color: "var(--quantum-text-inverse)",
+          color: "#FFFFFF", // Explicit white text for universal primary
           "&:hover": {
             backgroundColor: "var(--quantum-action-primary)",
             opacity: 0.9,
+            color: "#FFFFFF", // Maintain white text on hover
           },
         },
         "&.MuiButton-outlined": {
@@ -87,6 +88,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           color: "var(--quantum-action-primary)",
           "&:hover": {
             borderColor: "var(--quantum-action-primary)",
+            backgroundColor: "rgba(var(--quantum-action-primary-rgb), 0.04)",
           },
         },
         "&.MuiButton-text": {
@@ -95,20 +97,25 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
       },
     },
 
+    // Secondary emerald color
     {
       props: { color: "secondary" },
       style: {
         "&.MuiButton-contained": {
           backgroundColor: "var(--quantum-action-secondary)",
-          color: "var(--quantum-text-primary)",
+          color: "#FFFFFF", // White text on emerald
           "&:hover": {
             backgroundColor: "var(--quantum-action-secondary)",
             opacity: 0.9,
+            color: "#FFFFFF",
           },
         },
         "&.MuiButton-outlined": {
           borderColor: "var(--quantum-action-secondary)",
           color: "var(--quantum-action-secondary)",
+          "&:hover": {
+            borderColor: "var(--quantum-action-secondary)",
+          },
         },
         "&.MuiButton-text": {
           color: "var(--quantum-action-secondary)",
@@ -116,15 +123,17 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
       },
     },
 
+    // Error/destructive color
     {
       props: { color: "error" },
       style: {
         "&.MuiButton-contained": {
           backgroundColor: "var(--quantum-feedback-error)",
-          color: "var(--quantum-text-inverse)",
+          color: "#FFFFFF", // White text on red
           "&:hover": {
             backgroundColor: "var(--quantum-feedback-error)",
             opacity: 0.9,
+            color: "#FFFFFF",
           },
         },
         "&.MuiButton-outlined": {

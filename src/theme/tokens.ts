@@ -46,12 +46,20 @@ export const designTokens = {
     full: "9999px",
   },
 
-  // Shadows
+  // Shadows (Updated for glassmorphism)
   shadows: {
     small: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
     medium: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
     large: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-    glow: "0 0 0 1px rgba(192, 132, 252, 0.1), 0 4px 12px rgba(192, 132, 252, 0.15)", // Updated to purple glow
+    glass: "0 8px 32px 0 rgba(31, 38, 135, 0.37)", // Glassmorphism shadow
+    glassInset: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)", // Inner highlight
+  },
+
+  // Glassmorphism effects
+  glassmorphism: {
+    backdrop: "blur(16px)", // Background blur
+    backdropLight: "blur(8px)", // Lighter blur
+    backdropHeavy: "blur(24px)", // Stronger blur
   },
 
   // Animation
@@ -77,7 +85,7 @@ export const designTokens = {
   },
 };
 
-// Generate CSS variables
+// Generate CSS variables (Updated for glassmorphism)
 export const generateCSSVariables = (
   semanticColors: ReturnType<typeof createSemanticColors>
 ) => {
@@ -99,19 +107,29 @@ export const generateCSSVariables = (
     cssVars[`--quantum-border-radius-${key}`] = value;
   });
 
+  // Shadow variables
+  Object.entries(designTokens.shadows).forEach(([key, value]) => {
+    cssVars[`--quantum-shadow-${key}`] = value;
+  });
+
+  // Glassmorphism variables
+  Object.entries(designTokens.glassmorphism).forEach(([key, value]) => {
+    cssVars[`--quantum-glass-${key}`] = value;
+  });
+
   // Typography variables
   cssVars["--quantum-font-family"] = designTokens.typography.fontFamily;
 
   return cssVars;
 };
 
-// Export for developer experience (Dark Tech Theme)
+// Export for developer experience (High Contrast Universal Theme)
 export const quantumColors = {
   palette: colorPalette,
   light: createSemanticColors("light"),
   dark: createSemanticColors("dark"),
-  primary: colorPalette.darkBlue[700], // Your chosen deep blue #1E40AF
-  secondary: colorPalette.cyan[500], // Futuristic cyan accent #06B6D4
-  accent: colorPalette.cyan[400], // Neon highlights #22D3EE
+  primary: colorPalette.universalBlue[500], // Universal #0066CC
+  secondary: colorPalette.emeraldAccent[500], // Complementary emerald #10B981
+  accent: colorPalette.universalBlue[400], // Bright blue accent
   vritti: colorPalette.vritti,
 };

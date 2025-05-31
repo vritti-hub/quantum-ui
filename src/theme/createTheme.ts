@@ -16,11 +16,11 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
     palette: {
       mode,
       primary: {
-        main: semanticColors.action.primary, // Your #1E40AF in both modes
-        contrastText: semanticColors.text.inverse, // White/light text
+        main: semanticColors.action.primary, // Universal #0066CC in both modes
+        contrastText: semanticColors.text.inverse, // White/black text for perfect contrast
       },
       secondary: {
-        main: semanticColors.action.secondary,
+        main: semanticColors.action.secondary, // Emerald green #10B981
         contrastText: semanticColors.text.inverse,
       },
       error: {
@@ -70,8 +70,7 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
           ":root": {
             ...cssVariables,
             // Force RGB values for rgba usage
-            "--quantum-action-primary-rgb":
-              mode === "light" ? "30, 64, 175" : "30, 64, 175", // #1E40AF RGB
+            "--quantum-action-primary-rgb": "0, 102, 204", // #0066CC RGB for both modes
             "--quantum-shadow-small": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
             "--quantum-shadow-medium": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
             "--quantum-shadow-large": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
@@ -79,13 +78,12 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
 
           '[data-theme="dark"]': {
             ...generateCSSVariables(createSemanticColors("dark")),
-            "--quantum-action-primary-rgb": "30, 64, 175", // Same RGB in dark mode
+            "--quantum-action-primary-rgb": "0, 102, 204", // Same RGB in dark mode
           },
         },
       },
 
       MuiButton: ButtonTheme,
-
       MuiTextField: TextFieldTheme,
     },
   });

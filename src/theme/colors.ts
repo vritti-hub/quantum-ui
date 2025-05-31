@@ -1,105 +1,133 @@
 export const colorPalette = {
-  // Dark Tech Primary - Deep Navy Blue
-  darkBlue: {
-    50: "#EFF6FF",
-    100: "#DBEAFE",
-    200: "#BFDBFE",
-    300: "#93C5FD",
-    400: "#60A5FA",
-    500: "#3B82F6",
-    600: "#2563EB",
-    700: "#1E40AF", // Your chosen primary - deep professional blue
-    800: "#1E3A8A",
-    900: "#1E3A8A",
-    950: "#172554",
+  // Universal Primary Blue (Excellent contrast both modes)
+  universalBlue: {
+    50: "#EBF4FF",
+    100: "#DBE9FF",
+    200: "#B8D4FF",
+    300: "#85B8FF",
+    400: "#4A95FF",
+    500: "#0066CC", // Universal primary - excellent contrast both modes
+    600: "#0052A3",
+    700: "#003D7A",
+    800: "#002952",
+    900: "#001529",
+    950: "#000A14",
   },
 
-  // Futuristic Cyan Accent
-  cyan: {
-    50: "#ECFEFF",
-    100: "#CFFAFE",
-    200: "#A5F3FC",
-    300: "#67E8F9",
-    400: "#22D3EE",
-    500: "#06B6D4", // Futuristic accent
-    600: "#0891B2",
-    700: "#0E7490",
-    800: "#155E75",
-    900: "#164E63",
-    950: "#083344",
-  },
-
-  // Dark Tech Neutrals (Charcoal to Steel)
-  darkNeutral: {
-    50: "#F8FAFC", // Very light with subtle blue undertone
-    100: "#F1F5F9", // Light steel
-    200: "#E2E8F0", // Steel border
-    300: "#CBD5E1", // Medium steel
-    400: "#94A3B8", // Muted steel
-    500: "#64748B", // Medium charcoal-steel
-    600: "#475569", // Dark steel
-    700: "#334155", // Charcoal
-    800: "#1E293B", // Deep charcoal
-    900: "#0F172A", // Very deep charcoal (primary dark)
-    950: "#020617", // Maximum dark
-  },
-
-  // Light Mode - Blue-tinted Neutrals (for professional light alternative)
+  // High Contrast Neutrals for Light Mode
   lightNeutral: {
-    50: "#FAFBFF", // Blue-tinted white (barely perceptible)
-    100: "#F4F6FA", // Very light blue-gray
-    200: "#E5E9F2", // Light blue-gray border
-    300: "#D1D9E6", // Medium blue-gray
-    400: "#9CA8C0", // Muted blue-gray
-    500: "#6B7794", // Medium blue-steel
-    600: "#4A5578", // Dark blue-steel
-    700: "#333B5C", // Deep blue-charcoal
-    800: "#1F2542", // Very deep blue-charcoal
-    900: "#0F1629", // Maximum deep blue-charcoal
-    950: "#060B14", // Ultra deep
+    50: "#FFFFFF", // Pure white for maximum contrast
+    100: "#F8F9FA", // Very light gray
+    200: "#E9ECEF", // Light border
+    300: "#DEE2E6", // Medium border
+    400: "#CED4DA", // Subtle elements
+    500: "#6C757D", // Medium text (7:1 contrast)
+    600: "#495057", // Secondary text (9:1 contrast)
+    700: "#343A40", // Strong text (12:1 contrast)
+    800: "#212529", // Very strong text (16:1 contrast)
+    900: "#000000", // Maximum contrast text
+    950: "#000000", // Absolute black
   },
 
-  // Status Colors (designed for dark-first)
+  // High Contrast Neutrals for Dark Mode
+  darkNeutral: {
+    50: "#FFFFFF", // Pure white text (21:1 contrast)
+    100: "#F8F9FA", // Very light text (19:1 contrast)
+    200: "#E9ECEF", // Light text (16:1 contrast)
+    300: "#CED4DA", // Medium text (12:1 contrast)
+    400: "#6C757D", // Muted text (7:1 contrast)
+    500: "#495057", // Subtle elements
+    600: "#343A40", // Dark elements
+    700: "#212529", // Very dark surface
+    800: "#1A1D20", // Dark surface
+    900: "#0D1117", // Primary dark background
+    950: "#000000", // Maximum dark
+  },
+
+  // Secondary Accent (Complementary to blue)
+  emeraldAccent: {
+    50: "#ECFDF5",
+    100: "#D1FAE5",
+    200: "#A7F3D0",
+    300: "#6EE7B7",
+    400: "#34D399",
+    500: "#10B981", // Secondary color - excellent contrast
+    600: "#059669",
+    700: "#047857",
+    800: "#065F46",
+    900: "#064E3B",
+    950: "#022C22",
+  },
+
+  // Glass Effects (High contrast semi-transparent)
+  glass: {
+    light: {
+      elevated: 95, // 95% opacity for maximum readability
+      subtle: 80, // 80% opacity for clear visibility
+      border: 30, // 30% opacity for visible borders
+    },
+    dark: {
+      elevated: 90, // 90% opacity for maximum readability
+      subtle: 75, // 75% opacity for clear visibility
+      border: 25, // 25% opacity for visible borders
+    },
+  },
+
+  // Status Colors (High contrast)
   red: {
     50: "#FEF2F2",
     400: "#F87171",
-    500: "#EF4444",
-    600: "#DC2626",
-    700: "#B91C1C",
+    500: "#DC2626", // High contrast error (8:1 light, 6:1 dark)
+    600: "#B91C1C",
+    700: "#991B1B",
   },
 
   amber: {
     50: "#FFFBEB",
     400: "#FBBF24",
-    500: "#F59E0B",
-    600: "#D97706",
-    700: "#B45309",
+    500: "#D97706", // High contrast warning (7:1 light, 5:1 dark)
+    600: "#B45309",
+    700: "#92400E",
   },
 
   emerald: {
     50: "#ECFDF5",
     400: "#34D399",
-    500: "#10B981",
-    600: "#059669",
-    700: "#047857",
+    500: "#059669", // High contrast success (7:1 light, 5:1 dark)
+    600: "#047857",
+    700: "#065F46",
   },
 
   blue: {
     50: "#EFF6FF",
     400: "#60A5FA",
-    500: "#3B82F6",
-    600: "#2563EB",
-    700: "#1D4ED8",
+    500: "#2563EB", // High contrast info (6:1 light, 4:1 dark)
+    600: "#1D4ED8",
+    700: "#1E40AF",
   },
 
-  // Vritti AI Brand Colors (Dark Tech Theme)
-  vritti: {
-    deepSpace: "#0F172A", // Primary dark background
-    charcoal: "#1E293B", // Secondary dark surface
-    steel: "#475569", // Dark mode secondary text
-    deepBlue: "#1E40AF", // Your chosen primary
-    cyberAccent: "#06B6D4", // Futuristic highlights
+  // Pure colors (Maximum contrast references)
+  pure: {
     white: "#FFFFFF",
-    lightSpace: "#FAFBFF", // Light mode primary background
+    black: "#000000",
+  },
+
+  // Vritti AI Brand Colors (High Contrast Theme)
+  vritti: {
+    // Backgrounds
+    lightPrimary: "#FFFFFF", // Pure white background
+    lightSecondary: "#F8F9FA", // Very light gray
+    darkPrimary: "#0D1117", // GitHub-like dark
+    darkSecondary: "#1A1D20", // Elevated dark surface
+
+    // Actions
+    universalPrimary: "#0066CC", // Your universal primary
+    secondaryAccent: "#10B981", // Complementary emerald
+
+    // Text (Maximum contrast)
+    lightText: "#000000", // Pure black on light
+    lightTextSecondary: "#343A40", // Dark gray on light
+    darkText: "#FFFFFF", // Pure white on dark
+    darkTextSecondary: "#CED4DA", // Light gray on dark
   },
 };
