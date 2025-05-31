@@ -20,22 +20,16 @@ export interface QuantumPaperProps extends Omit<MuiPaperProps, "variant"> {
   children: React.ReactNode;
 }
 
-export const QuantumPaper: React.FC<QuantumPaperProps> = ({
-  variant = "standard",
-  children,
-  ...props
-}) => {
-  return (
-    <MuiPaper
-      // Pass variant as data attribute for theme targeting
-      data-variant={variant}
-      // Use elevation 0 to let theme handle all styling
-      elevation={0}
-      {...props}
-    >
-      {children}
-    </MuiPaper>
-  );
-};
+export const QuantumPaper = React.memo<QuantumPaperProps>(
+  ({ variant = "standard", children, ...props }) => {
+    return (
+      <MuiPaper data-variant={variant} elevation={0} {...props}>
+        {children}
+      </MuiPaper>
+    );
+  }
+);
+
+QuantumPaper.displayName = "QuantumPaper";
 
 export default QuantumPaper;

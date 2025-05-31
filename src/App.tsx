@@ -1,14 +1,39 @@
 import { Box, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { QuantumButton } from "./components/Button/Button";
 import { QuantumPaper } from "./components/Paper/Paper";
 import { QuantumTextField } from "./components/TextField/TextField";
 import { ThemeProvider, useTheme } from "./theme/ThemeProvider";
 
-function AppContent() {
+// ✅ Optimized: Memoized content component
+const AppContent = React.memo(() => {
   const { toggleColorScheme, resolvedColorScheme } = useTheme();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+
+  // ✅ Optimized: Memoized callbacks
+  const handleSendMessage = useCallback(() => {
+    alert(`Email: ${email}\nMessage: ${message}`);
+  }, [email, message]);
+
+  const handleClear = useCallback(() => {
+    setEmail("");
+    setMessage("");
+  }, []);
+
+  const handleEmailChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setEmail(e.target.value);
+    },
+    []
+  );
+
+  const handleMessageChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setMessage(e.target.value);
+    },
+    []
+  );
 
   return (
     <Box component="main" padding={3}>
@@ -37,7 +62,7 @@ function AppContent() {
                 label="Email Address"
                 type="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={handleEmailChange}
                 placeholder="Enter your email"
                 required
               />
@@ -47,24 +72,15 @@ function AppContent() {
                 multiline
                 rows={4}
                 value={message}
-                onChange={(e) => setMessage(e.target.value)}
+                onChange={handleMessageChange}
                 placeholder="Enter your message..."
               />
 
               <Stack direction="row" spacing={2}>
-                <QuantumButton
-                  intent="primary"
-                  onClick={() => alert(`Email: ${email}\nMessage: ${message}`)}
-                >
+                <QuantumButton intent="primary" onClick={handleSendMessage}>
                   Send Message
                 </QuantumButton>
-                <QuantumButton
-                  intent="ghost"
-                  onClick={() => {
-                    setEmail("");
-                    setMessage("");
-                  }}
-                >
+                <QuantumButton intent="ghost" onClick={handleClear}>
                   Clear
                 </QuantumButton>
               </Stack>
@@ -227,14 +243,17 @@ function AppContent() {
             Quantum UI - Clean semantic design system
           </Typography>
           <Typography variant="caption" color="text.disabled">
-            No sx props, no styled components, pure theme-based styling
+            Optimized for performance - No unnecessary re-renders
           </Typography>
         </Box>
       </Stack>
     </Box>
   );
-}
+});
 
+AppContent.displayName = "AppContent";
+
+// ✅ Optimized: Main App component with memoization
 function App() {
   return (
     <ThemeProvider defaultColorScheme="light">

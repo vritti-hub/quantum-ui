@@ -3,9 +3,30 @@ import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
 import { createSemanticColors } from "./semanticColors";
 import { generateCSSVariables } from "./tokens";
 
+// ✅ Optimized: Pre-computed color constants
+const COMMON_OVERRIDES = {
+  "--quantum-action-primary-rgb": "0, 102, 204", // #0066CC RGB for both modes
+  "--quantum-shadow-small": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+  "--quantum-shadow-medium": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+  "--quantum-shadow-large": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+} as const;
+
+// ✅ Optimized: Memoized semantic colors for dark mode
+let darkModeColors: ReturnType<typeof createSemanticColors> | null = null;
+const getDarkModeColors = () => {
+  if (!darkModeColors) {
+    darkModeColors = createSemanticColors("dark");
+  }
+  return darkModeColors;
+};
+
 export const createQuantumTheme = (mode: "light" | "dark") => {
   const semanticColors = createSemanticColors(mode);
-  const cssVariables = generateCSSVariables(semanticColors);
+  const lightModeVariables = generateCSSVariables(semanticColors);
+
+  // ✅ Optimized: Only generate dark mode variables when needed
+  const darkModeVariables =
+    mode === "light" ? generateCSSVariables(getDarkModeColors()) : {};
 
   return createTheme({
     cssVariables: {
@@ -17,7 +38,7 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
       mode,
       primary: {
         main: semanticColors.action.primary, // Universal #0066CC in both modes
-        contrastText: semanticColors.text.inverse, // White/black text for perfect contrast
+        contrastText: semanticColors.text.inverse,
       },
       secondary: {
         main: semanticColors.action.secondary, // Emerald green #10B981
@@ -68,24 +89,22 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
       MuiCssBaseline: {
         styleOverrides: {
           ":root": {
-            ...cssVariables,
-            // Force RGB values for rgba usage
-            "--quantum-action-primary-rgb": "0, 102, 204", // #0066CC RGB for both modes
-            "--quantum-shadow-small": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-            "--quantum-shadow-medium": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-            "--quantum-shadow-large": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+            ...lightModeVariables,
+            ...COMMON_OVERRIDES,
           },
-
-          '[data-theme="dark"]': {
-            ...generateCSSVariables(createSemanticColors("dark")),
-            "--quantum-action-primary-rgb": "0, 102, 204", // Same RGB in dark mode
-          },
+          // ✅ Optimized: Conditional dark mode styles
+          ...(mode === "light" && {
+            '[data-theme="dark"]': {
+              ...darkModeVariables,
+              ...COMMON_OVERRIDES,
+            },
+          }),
         },
       },
 
       MuiButton: ButtonTheme,
-      MuiTextField: TextFieldTheme,
       MuiPaper: PaperTheme,
+      MuiTextField: TextFieldTheme,
     },
   });
 };

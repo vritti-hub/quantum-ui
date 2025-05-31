@@ -50,56 +50,42 @@ export interface QuantumTextFieldProps
   fullWidth?: boolean;
 }
 
-const mapStateToColor = (
-  state: QuantumTextFieldProps["state"]
-): MuiTextFieldProps["color"] => {
-  switch (state) {
-    case "error":
-      return "error";
-    case "success":
-      return "success";
-    case "warning":
-      return "warning";
-    case "normal":
-    default:
-      return "primary";
+// ✅ Optimized: Constant mappings instead of functions
+const STATE_TO_COLOR_MAP = {
+  normal: "primary",
+  error: "error",
+  success: "success",
+  warning: "warning",
+} as const;
+
+const DENSITY_TO_SIZE_MAP = {
+  compact: "small",
+  comfortable: "medium",
+  spacious: "medium", // MUI doesn't have large, medium is largest
+} as const;
+
+export const QuantumTextField = React.memo<QuantumTextFieldProps>(
+  ({
+    state = "normal",
+    density = "comfortable",
+    message,
+    fullWidth = true,
+    ...props
+  }) => {
+    return (
+      <MuiTextField
+        variant="outlined"
+        color={STATE_TO_COLOR_MAP[state]}
+        size={DENSITY_TO_SIZE_MAP[density]}
+        error={state === "error"}
+        helperText={message}
+        fullWidth={fullWidth}
+        {...props}
+      />
+    );
   }
-};
+);
 
-const mapDensityToSize = (
-  density: QuantumTextFieldProps["density"]
-): MuiTextFieldProps["size"] => {
-  switch (density) {
-    case "compact":
-      return "small";
-    case "spacious":
-      return "medium"; // MUI doesn't have large, medium is the largest
-    case "comfortable":
-    default:
-      return "medium";
-  }
-};
-
-export const QuantumTextField: React.FC<QuantumTextFieldProps> = ({
-  state = "normal",
-  density = "comfortable",
-  message,
-  fullWidth = true,
-  ...props
-}) => {
-  const hasError = state === "error";
-
-  return (
-    <MuiTextField
-      variant="outlined"
-      color={mapStateToColor(state)}
-      size={mapDensityToSize(density)}
-      error={hasError}
-      helperText={message}
-      fullWidth={fullWidth}
-      {...props}
-    />
-  );
-};
+QuantumTextField.displayName = "QuantumTextField";
 
 export default QuantumTextField;

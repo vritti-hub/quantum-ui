@@ -36,41 +36,27 @@ export interface QuantumButtonProps
   children: React.ReactNode;
 }
 
-export const QuantumButton: React.FC<QuantumButtonProps> = ({
-  intent = "primary",
-  size = "medium",
-  children,
-  ...props
-}) => {
-  // Map semantic intent to MUI props for theme targeting
-  const getMuiProps = () => {
-    switch (intent) {
-      case "primary":
-        return { variant: "contained" as const, color: "primary" as const };
-      case "secondary":
-        return { variant: "outlined" as const, color: "primary" as const };
-      case "destructive":
-        return { variant: "contained" as const, color: "error" as const };
-      case "ghost":
-        return { variant: "text" as const, color: "inherit" as const };
-      default:
-        return { variant: "contained" as const, color: "primary" as const };
-    }
-  };
+// ✅ Optimized: Constant lookup instead of function calls
+const INTENT_TO_MUI_PROPS = {
+  primary: { variant: "contained" as const, color: "primary" as const },
+  secondary: { variant: "outlined" as const, color: "primary" as const },
+  destructive: { variant: "contained" as const, color: "error" as const },
+  ghost: { variant: "text" as const, color: "inherit" as const },
+} as const;
 
-  const muiProps = getMuiProps();
+export const QuantumButton = React.memo<QuantumButtonProps>(
+  ({ intent = "primary", size = "medium", children, ...props }) => {
+    // ✅ Direct lookup - no function calls
+    const muiProps = INTENT_TO_MUI_PROPS[intent];
 
-  return (
-    <MuiButton
-      {...muiProps}
-      size={size}
-      // Pass intent as data attribute for theme targeting
-      data-intent={intent}
-      {...props}
-    >
-      {children}
-    </MuiButton>
-  );
-};
+    return (
+      <MuiButton {...muiProps} size={size} data-intent={intent} {...props}>
+        {children}
+      </MuiButton>
+    );
+  }
+);
+
+QuantumButton.displayName = "QuantumButton";
 
 export default QuantumButton;

@@ -85,53 +85,95 @@ export const designTokens = {
   },
 };
 
-// Generate CSS variables (Updated for glassmorphism)
+// ✅ Optimized: Single efficient mapping function
 export const generateCSSVariables = (
   semanticColors: ReturnType<typeof createSemanticColors>
 ) => {
-  const cssVars: Record<string, string> = {};
+  // Define all mappings with their transformers
+  const mappings = [
+    // Semantic colors (nested objects)
+    {
+      source: semanticColors,
+      transform: (category: string, variant: string, value: string) => [
+        `--quantum-${category}-${variant}`,
+        value,
+      ],
+      isNested: true,
+    },
+    // Design tokens (flat objects)
+    {
+      source: designTokens.spacing,
+      transform: (key: string, _: string, value: string) => [
+        `--quantum-spacing-${key}`,
+        value,
+      ],
+      isNested: false,
+    },
+    {
+      source: designTokens.borderRadius,
+      transform: (key: string, _: string, value: string) => [
+        `--quantum-border-radius-${key}`,
+        value,
+      ],
+      isNested: false,
+    },
+    {
+      source: designTokens.shadows,
+      transform: (key: string, _: string, value: string) => [
+        `--quantum-shadow-${key}`,
+        value,
+      ],
+      isNested: false,
+    },
+    {
+      source: designTokens.glassmorphism,
+      transform: (key: string, _: string, value: string) => [
+        `--quantum-glass-${key}`,
+        value,
+      ],
+      isNested: false,
+    },
+  ];
 
-  // Color variables
-  Object.entries(semanticColors).forEach(([category, colors]) => {
-    Object.entries(colors).forEach(([variant, color]) => {
-      cssVars[`--quantum-${category}-${variant}`] = color;
-    });
+  // ✅ Single efficient loop for all mappings
+  const cssVarEntries = mappings.flatMap(({ source, transform, isNested }) => {
+    if (isNested) {
+      return Object.entries(source).flatMap(([category, colors]) =>
+        Object.entries(colors as Record<string, string>).map(
+          ([variant, value]) => transform(category, variant, value)
+        )
+      );
+    } else {
+      return Object.entries(source).map(([key, value]) =>
+        transform(key, "", value as string)
+      );
+    }
   });
 
-  // Design token variables
-  Object.entries(designTokens.spacing).forEach(([key, value]) => {
-    cssVars[`--quantum-spacing-${key}`] = value;
-  });
+  // Add typography and additional variables
+  cssVarEntries.push(
+    ["--quantum-font-family", designTokens.typography.fontFamily],
+    ["--quantum-action-primary-rgb", "0, 102, 204"] // For rgba usage
+  );
 
-  Object.entries(designTokens.borderRadius).forEach(([key, value]) => {
-    cssVars[`--quantum-border-radius-${key}`] = value;
-  });
+  return Object.fromEntries(cssVarEntries);
+};
 
-  // Shadow variables
-  Object.entries(designTokens.shadows).forEach(([key, value]) => {
-    cssVars[`--quantum-shadow-${key}`] = value;
-  });
-
-  // Glassmorphism variables - FIXED NAMING
-  Object.entries(designTokens.glassmorphism).forEach(([key, value]) => {
-    cssVars[`--quantum-glass-${key}`] = value;
-  });
-
-  // ADD MISSING GLASSMORPHISM VARIABLES
-  cssVars["--quantum-glass-backdrop-light"] = "blur(8px)";
-  cssVars["--quantum-glass-backdrop-heavy"] = "blur(24px)";
-
-  // Typography variables
-  cssVars["--quantum-font-family"] = designTokens.typography.fontFamily;
-
-  return cssVars;
+// ✅ Optimized: Memoized color exports
+const memoizedColors = {
+  get light() {
+    return createSemanticColors("light");
+  },
+  get dark() {
+    return createSemanticColors("dark");
+  },
 };
 
 // Export for developer experience (High Contrast Universal Theme)
 export const quantumColors = {
   palette: colorPalette,
-  light: createSemanticColors("light"),
-  dark: createSemanticColors("dark"),
+  light: memoizedColors.light,
+  dark: memoizedColors.dark,
   primary: colorPalette.universalBlue[500], // Universal #0066CC
   secondary: colorPalette.emeraldAccent[500], // Complementary emerald #10B981
   accent: colorPalette.universalBlue[400], // Bright blue accent
