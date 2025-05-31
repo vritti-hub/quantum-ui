@@ -112,10 +112,14 @@ export const generateCSSVariables = (
     cssVars[`--quantum-shadow-${key}`] = value;
   });
 
-  // Glassmorphism variables
+  // Glassmorphism variables - FIXED NAMING
   Object.entries(designTokens.glassmorphism).forEach(([key, value]) => {
     cssVars[`--quantum-glass-${key}`] = value;
   });
+
+  // ADD MISSING GLASSMORPHISM VARIABLES
+  cssVars["--quantum-glass-backdrop-light"] = "blur(8px)";
+  cssVars["--quantum-glass-backdrop-heavy"] = "blur(24px)";
 
   // Typography variables
   cssVars["--quantum-font-family"] = designTokens.typography.fontFamily;

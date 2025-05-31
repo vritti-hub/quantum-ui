@@ -1,5 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-import { ButtonTheme, TextFieldTheme } from "./components";
+import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
 import { createSemanticColors } from "./semanticColors";
 import { generateCSSVariables } from "./tokens";
 
@@ -85,6 +85,7 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
 
       MuiButton: ButtonTheme,
       MuiTextField: TextFieldTheme,
+      MuiPaper: PaperTheme,
     },
   });
 };

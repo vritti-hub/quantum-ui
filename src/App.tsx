@@ -1,7 +1,7 @@
-import { Box, Paper, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useState } from "react";
-// Import directly from individual modules
 import { QuantumButton } from "./components/Button/Button";
+import { QuantumPaper } from "./components/Paper/Paper";
 import { QuantumTextField } from "./components/TextField/TextField";
 import { ThemeProvider, useTheme } from "./theme/ThemeProvider";
 
@@ -11,241 +11,225 @@ function AppContent() {
   const [message, setMessage] = useState("");
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        bgcolor: "background.default",
-        p: 3,
-        transition: "all 0.3s ease",
-      }}
-    >
-      <Stack spacing={4} sx={{ maxWidth: 600, mx: "auto" }}>
+    <Box component="main" padding={3}>
+      <Stack spacing={4} maxWidth={600} marginX="auto">
         {/* Header */}
-        <Box sx={{ textAlign: "center" }}>
+        <Box textAlign="center">
           <Typography variant="h3" component="h1" gutterBottom>
             Quantum UI
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
-            High-contrast glassmorphism design system
+            Clean semantic design system
           </Typography>
-          <QuantumButton
-            intent="secondary"
-            emphasis="medium"
-            onClick={toggleColorScheme}
-          >
+          <QuantumButton intent="secondary" onClick={toggleColorScheme}>
             Theme: {resolvedColorScheme}
           </QuantumButton>
         </Box>
 
         {/* Glass Form Card */}
-        <Paper
-          sx={{
-            p: 4,
-            background: "var(--quantum-surface-elevated)",
-            backdropFilter: "var(--quantum-glass-backdrop)",
-            border: "var(--quantum-glass-border)",
-            boxShadow: "var(--quantum-shadow-glass)",
-          }}
-        >
-          <Typography variant="h5" gutterBottom>
-            Glassmorphism Demo Form
-          </Typography>
-          <Stack spacing={3}>
-            <QuantumTextField
-              label="Email Address"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Enter your email"
-              required
-            />
-
-            <QuantumTextField
-              label="Message"
-              multiline
-              rows={4}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Enter your message..."
-            />
-
-            <Stack direction="row" spacing={2}>
-              <QuantumButton
-                intent="primary"
-                emphasis="high"
-                onClick={() => alert(`Email: ${email}\nMessage: ${message}`)}
-              >
-                Send Message
-              </QuantumButton>
-              <QuantumButton
-                intent="subtle"
-                emphasis="low"
-                onClick={() => {
-                  setEmail("");
-                  setMessage("");
-                }}
-              >
-                Clear
-              </QuantumButton>
-            </Stack>
-          </Stack>
-        </Paper>
-
-        {/* Layered Glass Effect Demo */}
-        <Box sx={{ position: "relative", p: 4 }}>
-          {/* Background Layer */}
-          <Paper
-            sx={{
-              p: 4,
-              background: "var(--quantum-surface-secondary)",
-              minHeight: 200,
-            }}
-          >
+        <QuantumPaper variant="glass">
+          <Box padding={4}>
             <Typography variant="h5" gutterBottom>
-              Background Layer
+              Contact Form
             </Typography>
-            <Typography variant="body1" color="text.secondary">
-              This is the background content that shows through the glass effect
-              above. You can see how the glassmorphism creates a beautiful
-              layered effect.
+            <Stack spacing={3}>
+              <QuantumTextField
+                label="Email Address"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+
+              <QuantumTextField
+                label="Message"
+                multiline
+                rows={4}
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Enter your message..."
+              />
+
+              <Stack direction="row" spacing={2}>
+                <QuantumButton
+                  intent="primary"
+                  onClick={() => alert(`Email: ${email}\nMessage: ${message}`)}
+                >
+                  Send Message
+                </QuantumButton>
+                <QuantumButton
+                  intent="ghost"
+                  onClick={() => {
+                    setEmail("");
+                    setMessage("");
+                  }}
+                >
+                  Clear
+                </QuantumButton>
+              </Stack>
+            </Stack>
+          </Box>
+        </QuantumPaper>
+
+        {/* Button Showcase */}
+        <QuantumPaper variant="elevated">
+          <Box padding={4}>
+            <Typography variant="h5" gutterBottom>
+              Button Types
             </Typography>
+            <Stack spacing={3}>
+              {/* Primary Actions */}
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Primary Actions
+                </Typography>
+                <Stack direction="row" spacing={2} flexWrap="wrap">
+                  <QuantumButton intent="primary" size="small">
+                    Small Primary
+                  </QuantumButton>
+                  <QuantumButton intent="primary" size="medium">
+                    Medium Primary
+                  </QuantumButton>
+                  <QuantumButton intent="primary" size="large">
+                    Large Primary
+                  </QuantumButton>
+                </Stack>
+              </Box>
 
-            {/* Glass Overlay */}
-            <Box
-              sx={{
-                position: "absolute",
-                top: 32,
-                left: 32,
-                right: 32,
-                bottom: 32,
-                background: "var(--quantum-surface-glass)",
-                backdropFilter: "var(--quantum-glass-backdrop)",
-                border: "1px solid var(--quantum-border-glass)",
-                borderRadius: "var(--quantum-border-radius-large)",
-                p: 3,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Typography variant="h6" gutterBottom>
-                Glass Overlay
-              </Typography>
-              <Typography
-                variant="body2"
-                color="text.secondary"
-                textAlign="center"
-              >
-                This glass surface allows you to see the content behind it with
-                a beautiful blur effect.
-              </Typography>
-              <QuantumButton intent="primary" emphasis="high" sx={{ mt: 2 }}>
-                Glass Button
-              </QuantumButton>
-            </Box>
-          </Paper>
-        </Box>
+              {/* Secondary Actions */}
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Secondary Actions
+                </Typography>
+                <Stack direction="row" spacing={2} flexWrap="wrap">
+                  <QuantumButton intent="secondary">Cancel</QuantumButton>
+                  <QuantumButton intent="secondary">Learn More</QuantumButton>
+                  <QuantumButton intent="secondary" disabled>
+                    Disabled
+                  </QuantumButton>
+                </Stack>
+              </Box>
 
-        {/* Button Examples with Glass Background */}
-        <Paper
-          sx={{
-            p: 4,
-            background: "var(--quantum-surface-elevated)",
-            backdropFilter: "var(--quantum-glass-backdrop)",
-            border: "var(--quantum-glass-border)",
-            boxShadow: "var(--quantum-shadow-glass)",
-          }}
-        >
-          <Typography variant="h5" gutterBottom>
-            High-Contrast Buttons on Glass
+              {/* Destructive Actions */}
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Destructive Actions
+                </Typography>
+                <Stack direction="row" spacing={2} flexWrap="wrap">
+                  <QuantumButton intent="destructive">
+                    Delete Account
+                  </QuantumButton>
+                  <QuantumButton intent="destructive">
+                    Remove Item
+                  </QuantumButton>
+                </Stack>
+              </Box>
+
+              {/* Ghost Actions */}
+              <Box>
+                <Typography variant="h6" gutterBottom>
+                  Ghost Actions
+                </Typography>
+                <Stack direction="row" spacing={2} flexWrap="wrap">
+                  <QuantumButton intent="ghost">Skip for now</QuantumButton>
+                  <QuantumButton intent="ghost">View Details</QuantumButton>
+                  <QuantumButton intent="ghost">Maybe Later</QuantumButton>
+                </Stack>
+              </Box>
+            </Stack>
+          </Box>
+        </QuantumPaper>
+
+        {/* Surface Types Demo */}
+        <Box>
+          <Typography variant="h5" gutterBottom textAlign="center">
+            Surface Types
           </Typography>
           <Stack spacing={3}>
-            <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              <QuantumButton intent="primary" emphasis="high">
-                Primary (#0066CC)
-              </QuantumButton>
-              <QuantumButton intent="primary" emphasis="medium">
-                Primary Medium
-              </QuantumButton>
-              <QuantumButton intent="primary" emphasis="low">
-                Primary Low
-              </QuantumButton>
-            </Stack>
+            {/* Standard Paper */}
+            <QuantumPaper variant="standard">
+              <Box padding={3}>
+                <Typography variant="h6" gutterBottom>
+                  Standard Surface
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Default paper with subtle border and shadow. Perfect for main
+                  content cards.
+                </Typography>
+              </Box>
+            </QuantumPaper>
 
-            <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              <QuantumButton intent="secondary" emphasis="high">
-                Secondary
-              </QuantumButton>
-              <QuantumButton intent="destructive" emphasis="medium">
-                Destructive
-              </QuantumButton>
-              <QuantumButton intent="subtle" emphasis="low">
-                Subtle
-              </QuantumButton>
-            </Stack>
-          </Stack>
-        </Paper>
+            {/* Glass Paper */}
+            <QuantumPaper variant="glass">
+              <Box padding={3}>
+                <Typography variant="h6" gutterBottom>
+                  Glass Surface
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Glassmorphism effect with backdrop blur. Great for overlays
+                  and floating elements.
+                </Typography>
+              </Box>
+            </QuantumPaper>
 
-        {/* Navigation-style Glass Bar */}
-        <Box
-          sx={{
-            background: "var(--quantum-surface-glass)",
-            backdropFilter: "var(--quantum-glass-backdrop-light)",
-            border: "1px solid var(--quantum-border-glass)",
-            borderRadius: "var(--quantum-border-radius-large)",
-            p: 2,
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="h6">Glass Navigation Bar</Typography>
-          <Stack direction="row" spacing={1}>
-            <QuantumButton intent="primary" emphasis="medium" size="small">
-              Action
-            </QuantumButton>
-            <QuantumButton intent="subtle" emphasis="low" size="small">
-              Menu
-            </QuantumButton>
+            {/* Elevated Paper */}
+            <QuantumPaper variant="elevated">
+              <Box padding={3}>
+                <Typography variant="h6" gutterBottom>
+                  Elevated Surface
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Higher prominence with larger shadow. Perfect for important
+                  highlighted content.
+                </Typography>
+              </Box>
+            </QuantumPaper>
+
+            {/* Subtle Paper */}
+            <QuantumPaper variant="subtle">
+              <Box padding={3}>
+                <Typography variant="h6" gutterBottom>
+                  Subtle Surface
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  Minimal styling for background sections and less important
+                  content.
+                </Typography>
+              </Box>
+            </QuantumPaper>
           </Stack>
         </Box>
 
-        {/* Color Showcase */}
-        <Paper
-          sx={{
-            p: 4,
-            background: "var(--quantum-surface-elevated)",
-            backdropFilter: "var(--quantum-glass-backdrop)",
-            border: "var(--quantum-glass-border)",
-            boxShadow: "var(--quantum-shadow-glass)",
-          }}
-        >
-          <Typography variant="h5" gutterBottom>
-            Universal #0066CC Primary Color
-          </Typography>
-          <Typography variant="body1" color="text.secondary" gutterBottom>
-            Excellent contrast in both light and dark modes (9.1:1 and 8.7:1
-            ratios)
-          </Typography>
-          <Stack
-            direction="row"
-            spacing={2}
-            flexWrap="wrap"
-            useFlexGap
-            sx={{ mt: 2 }}
+        {/* Navigation Example */}
+        <QuantumPaper variant="glass">
+          <Box
+            padding={2}
+            display="flex"
+            justifyContent="space-between"
+            alignItems="center"
           >
-            <QuantumButton intent="primary" emphasis="high" size="small">
-              Small
-            </QuantumButton>
-            <QuantumButton intent="primary" emphasis="high" size="medium">
-              Medium
-            </QuantumButton>
-            <QuantumButton intent="primary" emphasis="high" size="large">
-              Large
-            </QuantumButton>
-          </Stack>
-        </Paper>
+            <Typography variant="h6">Navigation Bar</Typography>
+            <Stack direction="row" spacing={1}>
+              <QuantumButton intent="primary" size="small">
+                Sign In
+              </QuantumButton>
+              <QuantumButton intent="ghost" size="small">
+                Menu
+              </QuantumButton>
+            </Stack>
+          </Box>
+        </QuantumPaper>
+
+        {/* Footer */}
+        <Box textAlign="center" paddingY={3}>
+          <Typography variant="body2" color="text.secondary">
+            Quantum UI - Clean semantic design system
+          </Typography>
+          <Typography variant="caption" color="text.disabled">
+            No sx props, no styled components, pure theme-based styling
+          </Typography>
+        </Box>
       </Stack>
     </Box>
   );
