@@ -3,37 +3,38 @@ import type { Components, Theme } from "@mui/material/styles";
 export const PaperTheme: Components<Theme>["MuiPaper"] = {
   styleOverrides: {
     root: {
-      borderRadius: "var(--quantum-border-radius-medium)",
-      transition: "all 200ms cubic-bezier(0.4, 0.0, 0.2, 1)",
+      borderRadius: "var(--quantum-borderRadius-medium)",
+      transition:
+        "all var(--quantum-animation-duration-normal) var(--quantum-animation-easing-standard)",
 
       // Target data-variant attribute using CSS selector
       "&[data-variant='standard']": {
-        backgroundColor: "var(--quantum-surface-primary)",
-        border: "1px solid var(--quantum-border-default)",
-        boxShadow: "var(--quantum-shadow-small)",
+        backgroundColor: "var(--quantum-color-surface-primary)",
+        border: "1px solid var(--quantum-color-border-default)",
+        boxShadow: "var(--quantum-shadows-small)",
       },
 
       "&[data-variant='glass']": {
-        backgroundColor: "var(--quantum-surface-glass)",
-        backdropFilter: "var(--quantum-glass-backdrop)",
-        border: "1px solid var(--quantum-border-glass)",
-        boxShadow: "var(--quantum-shadow-glass)",
+        backgroundColor: "var(--quantum-color-surface-secondary)",
+        backdropFilter: "var(--quantum-glassmorphism-backdrop)",
+        border: "1px solid var(--quantum-color-border-subtle)",
+        boxShadow: "var(--quantum-shadows-glass)",
       },
 
       "&[data-variant='elevated']": {
-        backgroundColor: "var(--quantum-surface-elevated)",
-        border: "1px solid var(--quantum-border-subtle)",
-        boxShadow: "var(--quantum-shadow-large)",
+        backgroundColor: "var(--quantum-color-surface-elevated)",
+        border: "1px solid var(--quantum-color-border-subtle)",
+        boxShadow: "var(--quantum-shadows-large)",
 
         "&:hover": {
           transform: "translateY(-2px)",
-          boxShadow: "var(--quantum-shadow-large)",
+          boxShadow: "var(--quantum-shadows-large)",
         },
       },
 
       "&[data-variant='subtle']": {
-        backgroundColor: "var(--quantum-surface-secondary)",
-        border: "1px solid var(--quantum-border-subtle)",
+        backgroundColor: "var(--quantum-color-surface-secondary)",
+        border: "1px solid var(--quantum-color-border-subtle)",
         boxShadow: "none",
       },
     },

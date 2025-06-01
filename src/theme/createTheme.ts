@@ -20,6 +20,9 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
   // Get design tokens for palette values using actual screen width
   const designTokens = createDesignTokens(mode, screenWidth);
 
+  console.log(lightModeVariables);
+  // Log the design tokens for debugging
+
   return createTheme({
     cssVariables: {
       colorSchemeSelector: '[data-theme="%s"]',

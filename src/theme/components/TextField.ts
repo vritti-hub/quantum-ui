@@ -3,76 +3,78 @@ import type { Components, Theme } from "@mui/material/styles";
 export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
   styleOverrides: {
     root: {
-      fontFamily: "var(--quantum-font-family)",
+      fontFamily: "var(--quantum-typography-fontFamily)",
 
       "& .MuiInputLabel-root": {
         fontFamily: "inherit",
-        fontSize: "0.875rem",
-        fontWeight: 500,
+        fontSize: "var(--quantum-typography-fontSize-body)",
+        fontWeight: "var(--quantum-typography-fontWeight-medium)",
 
         "&.Mui-focused": {
-          fontWeight: 600,
+          fontWeight: "var(--quantum-typography-fontWeight-semibold)",
         },
 
         "&.MuiInputLabel-shrunk": {
-          fontSize: "0.75rem",
+          fontSize: "var(--quantum-typography-fontSize-caption)",
         },
       },
 
       "& .MuiOutlinedInput-root": {
-        borderRadius: "var(--quantum-border-radius-medium)",
-        fontSize: "0.875rem",
-        transition: "all 200ms cubic-bezier(0.4, 0.0, 0.2, 1)",
+        borderRadius: "var(--quantum-borderRadius-medium)",
+        fontSize: "var(--quantum-typography-fontSize-body)",
+        transition:
+          "all var(--quantum-animation-duration-normal) var(--quantum-animation-easing-standard)",
 
         "& fieldset": {
-          borderColor: "var(--quantum-border-default)",
-          transition: "all 200ms cubic-bezier(0.4, 0.0, 0.2, 1)",
+          borderColor: "var(--quantum-color-border-default)",
+          transition:
+            "all var(--quantum-animation-duration-normal) var(--quantum-animation-easing-standard)",
         },
 
         "&:hover fieldset": {
-          borderColor: "var(--quantum-border-emphasis)",
+          borderColor: "var(--quantum-color-border-subtle)",
         },
 
         "&.Mui-focused fieldset": {
-          borderColor: "var(--quantum-action-primary)",
+          borderColor: "var(--quantum-color-action-primary)",
           borderWidth: "2px",
         },
 
         "&.Mui-error fieldset": {
-          borderColor: "var(--quantum-feedback-error)",
+          borderColor: "var(--quantum-color-feedback-error)",
         },
 
         "&.Mui-disabled": {
-          backgroundColor: "var(--quantum-surface-secondary)",
+          backgroundColor: "var(--quantum-color-surface-secondary)",
 
           "& fieldset": {
-            borderColor: "var(--quantum-border-subtle)",
+            borderColor: "var(--quantum-color-border-subtle)",
           },
         },
       },
 
       "& .MuiFormHelperText-root": {
         fontFamily: "inherit",
-        fontSize: "0.75rem",
+        fontSize: "var(--quantum-typography-fontSize-caption)",
         marginTop: "6px",
         marginLeft: "4px",
 
         "&.Mui-error": {
-          color: "var(--quantum-feedback-error)",
+          color: "var(--quantum-color-feedback-error)",
         },
       },
 
       "& .MuiInputBase-input": {
-        color: "var(--quantum-text-primary)",
+        color: "var(--quantum-color-text-primary)",
 
         "&::placeholder": {
-          color: "var(--quantum-text-disabled)",
+          color: "var(--quantum-color-text-disabled)",
           opacity: 1,
         },
 
         "&:disabled": {
-          color: "var(--quantum-text-disabled)",
-          WebkitTextFillColor: "var(--quantum-text-disabled)",
+          color: "var(--quantum-color-text-disabled)",
+          WebkitTextFillColor: "var(--quantum-color-text-disabled)",
         },
       },
     },
@@ -84,18 +86,19 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
       props: { size: "small" },
       style: {
         "& .MuiOutlinedInput-root": {
-          fontSize: "0.75rem",
+          fontSize: "var(--quantum-typography-fontSize-caption)",
 
           "& .MuiOutlinedInput-input": {
-            padding: "8px 12px",
+            padding:
+              "var(--quantum-spacing-normal) var(--quantum-spacing-comfortable)",
           },
         },
 
         "& .MuiInputLabel-root": {
-          fontSize: "0.75rem",
+          fontSize: "var(--quantum-typography-fontSize-caption)",
 
           "&.MuiInputLabel-shrunk": {
-            fontSize: "0.625rem",
+            fontSize: "calc(var(--quantum-typography-fontSize-caption) * 0.85)",
           },
         },
       },
@@ -105,7 +108,8 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
       props: { size: "medium" },
       style: {
         "& .MuiOutlinedInput-input": {
-          padding: "12px 14px",
+          padding:
+            "var(--quantum-spacing-comfortable) var(--quantum-spacing-spacious)",
         },
       },
     },
@@ -116,12 +120,12 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
       style: {
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": {
-            borderColor: "var(--quantum-feedback-success)",
+            borderColor: "var(--quantum-color-feedback-success)",
           },
         },
 
         "& .MuiInputLabel-root.Mui-focused": {
-          color: "var(--quantum-feedback-success)",
+          color: "var(--quantum-color-feedback-success)",
         },
       },
     },
@@ -131,12 +135,12 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
       style: {
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": {
-            borderColor: "var(--quantum-feedback-warning)",
+            borderColor: "var(--quantum-color-feedback-warning)",
           },
         },
 
         "& .MuiInputLabel-root.Mui-focused": {
-          color: "var(--quantum-feedback-warning)",
+          color: "var(--quantum-color-feedback-warning)",
         },
       },
     },
