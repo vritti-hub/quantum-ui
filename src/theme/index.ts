@@ -1,9 +1,8 @@
-// src/theme/index.ts
-// Single export file for all theme functionality
+export { createQuantumTheme } from "./createTheme";
+export { ThemeProvider, useTheme } from "./ThemeProvider";
+export type { ThemeContextType } from "./ThemeProvider";
 
-import { SEMANTIC_TOKENS } from "./semanticTokens";
-
-// Semantic tokens and utilities
+// Design tokens and utilities
 export {
   getAllVariables,
   getResponsiveVariables,
@@ -11,6 +10,5 @@ export {
   SEMANTIC_TOKENS,
 } from "./semanticTokens";
 
-// Legacy exports for backwards compatibility
-export const designTokens = SEMANTIC_TOKENS;
-export const quantumColors = SEMANTIC_TOKENS.color;
+// Component theme overrides (for advanced customization)
+export * from "./components";

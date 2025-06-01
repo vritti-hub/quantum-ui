@@ -3,7 +3,7 @@ import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { createQuantumTheme } from "./createTheme";
 
-interface ThemeContextType {
+export interface ThemeContextType {
   toggleColorScheme: () => void;
   colorScheme: "light" | "dark";
 }

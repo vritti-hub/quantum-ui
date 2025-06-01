@@ -58,5 +58,3 @@ export const QuantumButton = React.memo<QuantumButtonProps>(
 );
 
 QuantumButton.displayName = "QuantumButton";
-
-export default QuantumButton;

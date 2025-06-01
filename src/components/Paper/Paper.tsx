@@ -31,5 +31,3 @@ export const QuantumPaper = React.memo<QuantumPaperProps>(
 );
 
 QuantumPaper.displayName = "QuantumPaper";
-
-export default QuantumPaper;

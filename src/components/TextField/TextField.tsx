@@ -87,5 +87,3 @@ export const QuantumTextField = React.memo<QuantumTextFieldProps>(
 );
 
 QuantumTextField.displayName = "QuantumTextField";
-
-export default QuantumTextField;
