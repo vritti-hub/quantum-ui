@@ -6,5 +6,6 @@ export type { QuantumButtonProps } from "./Button/Button";
 export { QuantumTextField, default as TextField } from "./TextField/TextField";
 export type { QuantumTextFieldProps } from "./TextField/TextField";
 
-// Theme exports
-export { quantumColors, ThemeProvider, useTheme } from "../theme";
+// Paper exports
+export { default as Paper, QuantumPaper } from "./Paper/Paper";
+export type { QuantumPaperProps } from "./Paper/Paper";
