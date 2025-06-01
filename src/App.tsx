@@ -7,7 +7,7 @@ import { ThemeProvider, useTheme } from "./theme/ThemeProvider";
 
 // ✅ Optimized: Memoized content component
 const AppContent = React.memo(() => {
-  const { toggleColorScheme, resolvedColorScheme } = useTheme();
+  const { toggleColorScheme, colorScheme } = useTheme();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
@@ -47,7 +47,7 @@ const AppContent = React.memo(() => {
             Clean semantic design system
           </Typography>
           <QuantumButton intent="secondary" onClick={toggleColorScheme}>
-            Theme: {resolvedColorScheme}
+            Theme: {colorScheme}
           </QuantumButton>
         </Box>
 

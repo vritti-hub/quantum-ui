@@ -1,21 +1,11 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import React, {
-  createContext,
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { createQuantumTheme } from "./createTheme";
 
-type ColorScheme = "light" | "dark" | "auto";
-
 interface ThemeContextType {
-  colorScheme: ColorScheme;
-  resolvedColorScheme: "light" | "dark";
-  setColorScheme: (scheme: ColorScheme) => void;
   toggleColorScheme: () => void;
+  colorScheme: string;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -30,97 +20,58 @@ export const useTheme = () => {
 
 interface ThemeProviderProps {
   children: React.ReactNode;
-  defaultColorScheme?: ColorScheme;
+  defaultColorScheme?: "light" | "dark";
 }
-
-// ✅ Optimized: Cached system color scheme detection
-const getSystemColorScheme = (): "light" | "dark" => {
-  if (typeof window === "undefined") return "light";
-  return window.matchMedia("(prefers-color-scheme: dark)").matches
-    ? "dark"
-    : "light";
-};
-
-// ✅ Optimized: Theme caching to avoid recreation
-const themeCache = new Map<
-  "light" | "dark",
-  ReturnType<typeof createQuantumTheme>
->();
-
-const getCachedTheme = (mode: "light" | "dark") => {
-  if (!themeCache.has(mode)) {
-    themeCache.set(mode, createQuantumTheme(mode));
-  }
-  return themeCache.get(mode)!;
-};
 
 export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultColorScheme = "light",
 }) => {
-  const [colorScheme, setColorScheme] =
-    useState<ColorScheme>(defaultColorScheme);
-  const [systemColorScheme, setSystemColorScheme] = useState<"light" | "dark">(
-    () => getSystemColorScheme()
+  const [screenWidth, setScreenWidth] = useState<number>(() =>
+    typeof window !== "undefined" ? window.innerWidth : 1024
   );
 
-  const resolvedColorScheme =
-    colorScheme === "auto" ? systemColorScheme : colorScheme;
+  // Theme creation - only recreates on screen width changes
+  const theme = createQuantumTheme("light", screenWidth); // Always use light theme object
 
-  // ✅ Optimized: Single useEffect for DOM updates
+  // Handle window resize - only for responsive variables
   useEffect(() => {
-    const root = document.documentElement;
-    const body = document.body;
+    if (typeof window === "undefined") return;
 
-    // Apply theme attribute
-    root.setAttribute("data-theme", resolvedColorScheme);
-
-    // Apply theme class for CSS targeting
-    body.className = body.className.replace(/theme-(light|dark)/g, "");
-    body.classList.add(`theme-${resolvedColorScheme}`);
-
-    // Set CSS custom properties for immediate feedback
-    const isDark = resolvedColorScheme === "dark";
-    root.style.setProperty("--theme-bg", isDark ? "#0D1117" : "#FFFFFF");
-    root.style.setProperty("--theme-text", isDark ? "#FFFFFF" : "#000000");
-  }, [resolvedColorScheme]);
-
-  // ✅ Optimized: Conditional media query listener
-  useEffect(() => {
-    // Only listen for system changes when in auto mode
-    if (colorScheme !== "auto" || typeof window === "undefined") return;
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
-      setSystemColorScheme(e.matches ? "dark" : "light");
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
     };
 
-    mediaQuery.addEventListener("change", handleSystemThemeChange);
-    return () =>
-      mediaQuery.removeEventListener("change", handleSystemThemeChange);
-  }, [colorScheme]);
-
-  // ✅ Optimized: Memoized toggle function
-  const toggleColorScheme = useCallback(() => {
-    setColorScheme((prev) => {
-      if (prev === "light") return "dark";
-      if (prev === "dark") return "auto";
-      return "light";
-    });
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // ✅ Optimized: Use cached theme
-  const theme = getCachedTheme(resolvedColorScheme);
+  // Initialize theme from localStorage or default
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  const contextValue = React.useMemo(
-    () => ({
-      colorScheme,
-      resolvedColorScheme,
-      setColorScheme,
-      toggleColorScheme,
-    }),
-    [colorScheme, resolvedColorScheme, toggleColorScheme]
-  );
+    const savedScheme = localStorage.getItem("quantum-color-scheme");
+    const initialScheme = savedScheme || defaultColorScheme;
+    document.documentElement.setAttribute("data-theme", initialScheme);
+  }, [defaultColorScheme]);
+
+  // Get current color scheme value from DOM
+  const colorScheme =
+    document.documentElement.getAttribute("data-theme") || "light";
+
+  // Toggle color scheme - direct DOM manipulation + persistence
+  const toggleColorScheme = () => {
+    const current = colorScheme;
+    const newScheme = current === "light" ? "dark" : "light";
+
+    document.documentElement.setAttribute("data-theme", newScheme);
+    localStorage.setItem("quantum-color-scheme", newScheme);
+  };
+
+  const contextValue = {
+    toggleColorScheme,
+    colorScheme,
+  };
 
   return (
     <ThemeContext.Provider value={contextValue}>

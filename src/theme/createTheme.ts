@@ -1,29 +1,52 @@
-// src/theme/createTheme.ts
-
 import { createTheme } from "@mui/material/styles";
 import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
-import { createDesignTokens, generateCSSVariables } from "./tokens";
+import { SEMANTIC_TOKENS, getAllVariables } from "./semanticTokens";
 
-const getScreenWidth = (): number => {
-  if (typeof window !== "undefined") {
-    return window.innerWidth;
-  }
-  return 1024; // Default for SSR
+const themeCache = new Map<string, ReturnType<typeof createTheme>>();
+
+const generateThemeCacheKey = (
+  mode: "light" | "dark",
+  screenWidth: number
+): string => {
+  // Round screen width to reduce cache entries
+  const roundedWidth = Math.round(screenWidth / 50) * 50;
+  return `${mode}-${roundedWidth}`;
 };
 
-export const createQuantumTheme = (mode: "light" | "dark") => {
-  const screenWidth = getScreenWidth();
+export const createQuantumTheme = (
+  mode: "light" | "dark",
+  screenWidth: number
+) => {
+  const width = screenWidth;
+  const cacheKey = generateThemeCacheKey(mode, width);
 
-  const lightModeVariables = generateCSSVariables("light", screenWidth);
-  const darkModeVariables = generateCSSVariables("dark", screenWidth);
+  // Return cached theme if available
+  if (themeCache.has(cacheKey)) {
+    return themeCache.get(cacheKey)!;
+  }
 
-  // Get design tokens for palette values using actual screen width
-  const designTokens = createDesignTokens(mode, screenWidth);
+  // Generate CSS variables for both modes
+  const lightModeVariables = getAllVariables("light", width);
+  const darkModeVariables = getAllVariables("dark", width);
 
-  console.log(lightModeVariables);
-  // Log the design tokens for debugging
+  // Get current mode colors for MUI palette
+  const colors = SEMANTIC_TOKENS.color;
+  const currentModeColors = {
+    actionPrimary: colors.action.primary[mode],
+    actionSecondary: colors.action.secondary[mode],
+    feedbackError: colors.feedback.error[mode],
+    feedbackWarning: colors.feedback.warning[mode],
+    feedbackInfo: colors.feedback.info[mode],
+    feedbackSuccess: colors.feedback.success[mode],
+    surfacePrimary: colors.surface.primary[mode],
+    surfaceSecondary: colors.surface.secondary[mode],
+    textPrimary: colors.text.primary[mode],
+    textSecondary: colors.text.secondary[mode],
+    textDisabled: colors.text.disabled[mode],
+    borderDefault: colors.border.default[mode],
+  };
 
-  return createTheme({
+  const theme = createTheme({
     cssVariables: {
       colorSchemeSelector: '[data-theme="%s"]',
       disableCssColorScheme: true,
@@ -32,39 +55,39 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
     palette: {
       mode,
       primary: {
-        main: designTokens.color.action.primary,
-        contrastText: designTokens.color.text.primary,
+        main: currentModeColors.actionPrimary,
+        contrastText: currentModeColors.textPrimary,
       },
       secondary: {
-        main: designTokens.color.action.secondary,
-        contrastText: designTokens.color.text.primary,
+        main: currentModeColors.actionSecondary,
+        contrastText: currentModeColors.textPrimary,
       },
       error: {
-        main: designTokens.color.feedback.error,
-        contrastText: designTokens.color.text.primary,
+        main: currentModeColors.feedbackError,
+        contrastText: currentModeColors.textPrimary,
       },
       warning: {
-        main: designTokens.color.feedback.warning,
-        contrastText: designTokens.color.text.primary,
+        main: currentModeColors.feedbackWarning,
+        contrastText: currentModeColors.textPrimary,
       },
       info: {
-        main: designTokens.color.feedback.info,
-        contrastText: designTokens.color.text.primary,
+        main: currentModeColors.feedbackInfo,
+        contrastText: currentModeColors.textPrimary,
       },
       success: {
-        main: designTokens.color.feedback.success,
-        contrastText: designTokens.color.text.primary,
+        main: currentModeColors.feedbackSuccess,
+        contrastText: currentModeColors.textPrimary,
       },
       background: {
-        default: designTokens.color.surface.primary,
-        paper: designTokens.color.surface.secondary,
+        default: currentModeColors.surfacePrimary,
+        paper: currentModeColors.surfaceSecondary,
       },
       text: {
-        primary: designTokens.color.text.primary,
-        secondary: designTokens.color.text.secondary,
-        disabled: designTokens.color.text.disabled,
+        primary: currentModeColors.textPrimary,
+        secondary: currentModeColors.textSecondary,
+        disabled: currentModeColors.textDisabled,
       },
-      divider: designTokens.color.border.default,
+      divider: currentModeColors.borderDefault,
     },
 
     typography: {
@@ -88,4 +111,7 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
       MuiTextField: TextFieldTheme,
     },
   });
+  themeCache.set(cacheKey, theme);
+
+  return theme;
 };

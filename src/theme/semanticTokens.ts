@@ -1,0 +1,377 @@
+// src/theme/semanticTokens.ts
+// THE single source of truth for all design decisions
+// All CSS variables are generated from these semantic tokens
+
+import { palette } from "./palette";
+
+// Type definitions for semantic tokens
+interface ColorDefinition {
+  light: string;
+  dark: string;
+  needsRGB?: boolean; // ✅ Correct boolean name
+}
+
+interface ResponsiveValue<T> {
+  mobile: T;
+  tablet: T;
+  desktop: T;
+}
+
+// ✅ THE definitive design system
+export const SEMANTIC_TOKENS = {
+  // ========================================
+  // STATIC SEMANTIC TOKENS (mode-dependent only)
+  // ========================================
+
+  color: {
+    // Action colors
+    action: {
+      primary: {
+        light: palette.universalBlue[500],
+        dark: palette.universalBlue[400],
+        needsRGB: true, // ✅ Correct boolean name
+      } as ColorDefinition,
+      secondary: {
+        light: palette.emeraldAccent[500],
+        dark: palette.emeraldAccent[400],
+      } as ColorDefinition,
+      destructive: {
+        light: palette.red[500],
+        dark: palette.red[400],
+      } as ColorDefinition,
+    },
+
+    // Surface colors
+    surface: {
+      primary: {
+        light: palette.lightNeutral[50], // Pure white
+        dark: palette.darkNeutral[900], // Deep dark
+      } as ColorDefinition,
+      secondary: {
+        light: palette.lightNeutral[100], // Very light gray
+        dark: palette.darkNeutral[800], // Dark surface
+      } as ColorDefinition,
+      elevated: {
+        light: palette.pure.white,
+        dark: palette.darkNeutral[800],
+      } as ColorDefinition,
+    },
+
+    // Text colors
+    text: {
+      primary: {
+        light: palette.lightNeutral[900], // Pure black
+        dark: palette.darkNeutral[50], // Pure white
+      } as ColorDefinition,
+      secondary: {
+        light: palette.lightNeutral[700], // High contrast secondary
+        dark: palette.darkNeutral[300], // High contrast secondary dark
+      } as ColorDefinition,
+      disabled: {
+        light: palette.lightNeutral[500],
+        dark: palette.darkNeutral[400],
+      } as ColorDefinition,
+      onPrimary: {
+        light: palette.pure.white, // White text on primary blue
+        dark: palette.pure.white, // White text on primary blue (both modes)
+      } as ColorDefinition,
+      onDestructive: {
+        light: palette.pure.white, // White text on red background
+        dark: palette.pure.white, // White text on red background (both modes)
+      } as ColorDefinition,
+    },
+
+    // Feedback colors
+    feedback: {
+      success: {
+        light: palette.emerald[500],
+        dark: palette.emerald[400],
+      } as ColorDefinition,
+      warning: {
+        light: palette.amber[500],
+        dark: palette.amber[400],
+      } as ColorDefinition,
+      error: {
+        light: palette.red[500],
+        dark: palette.red[400],
+      } as ColorDefinition,
+      info: {
+        light: palette.blue[500],
+        dark: palette.blue[400],
+      } as ColorDefinition,
+    },
+
+    // Border colors
+    border: {
+      default: {
+        light: palette.lightNeutral[300],
+        dark: palette.darkNeutral[600],
+      } as ColorDefinition,
+      subtle: {
+        light: palette.lightNeutral[200],
+        dark: palette.darkNeutral[700],
+      } as ColorDefinition,
+    },
+  },
+
+  // Border radius - static values
+  borderRadius: {
+    none: "0px",
+    small: "4px",
+    medium: "8px",
+    large: "12px",
+    full: "9999px",
+  },
+
+  // Shadows - static values
+  shadows: {
+    small: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+    medium: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+    large: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+    glass: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+    glassInset: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",
+  },
+
+  // Glass effects - static values
+  glassmorphism: {
+    backdrop: "blur(16px)",
+    backdropLight: "blur(8px)",
+    backdropHeavy: "blur(24px)",
+  },
+
+  // Animation - static values
+  animation: {
+    duration: {
+      fast: "150ms",
+      normal: "200ms",
+      slow: "300ms",
+    },
+    easing: {
+      standard: "cubic-bezier(0.4, 0.0, 0.2, 1)",
+      decelerate: "cubic-bezier(0.0, 0.0, 0.2, 1)",
+      accelerate: "cubic-bezier(0.4, 0.0, 1, 1)",
+    },
+  },
+
+  // Typography static values
+  typography: {
+    fontFamily:
+      'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    fontWeight: {
+      normal: 400,
+      medium: 500,
+      semibold: 600,
+      bold: 700,
+    },
+  },
+
+  // ========================================
+  // RESPONSIVE SEMANTIC TOKENS (mode + width dependent)
+  // ========================================
+
+  // Spacing - responsive values
+  spacing: {
+    tight: {
+      mobile: "4px",
+      tablet: "4px",
+      desktop: "4px",
+    } as ResponsiveValue<string>,
+    normal: {
+      mobile: "8px",
+      tablet: "8px",
+      desktop: "8px",
+    } as ResponsiveValue<string>,
+    comfortable: {
+      mobile: "12px",
+      tablet: "16px",
+      desktop: "20px",
+    } as ResponsiveValue<string>,
+    spacious: {
+      mobile: "16px",
+      tablet: "24px",
+      desktop: "32px",
+    } as ResponsiveValue<string>,
+    loose: {
+      mobile: "24px",
+      tablet: "32px",
+      desktop: "48px",
+    } as ResponsiveValue<string>,
+  },
+
+  // Typography responsive values
+  typographyResponsive: {
+    fontSize: {
+      caption: {
+        mobile: "0.75rem",
+        tablet: "0.75rem",
+        desktop: "0.75rem",
+      } as ResponsiveValue<string>,
+      body: {
+        mobile: "0.875rem",
+        tablet: "1rem",
+        desktop: "1rem",
+      } as ResponsiveValue<string>,
+      heading: {
+        mobile: "1.25rem",
+        tablet: "1.5rem",
+        desktop: "1.875rem",
+      } as ResponsiveValue<string>,
+      display: {
+        mobile: "1.875rem",
+        tablet: "2.25rem",
+        desktop: "3rem",
+      } as ResponsiveValue<string>,
+    },
+
+    lineHeight: {
+      tight: {
+        mobile: 1.2,
+        tablet: 1.2,
+        desktop: 1.1,
+      } as ResponsiveValue<number>,
+      normal: {
+        mobile: 1.4,
+        tablet: 1.4,
+        desktop: 1.4,
+      } as ResponsiveValue<number>,
+      comfortable: {
+        mobile: 1.5,
+        tablet: 1.5,
+        desktop: 1.6,
+      } as ResponsiveValue<number>,
+      relaxed: {
+        mobile: 1.6,
+        tablet: 1.7,
+        desktop: 1.7,
+      } as ResponsiveValue<number>,
+    },
+  },
+} as const;
+
+// ========================================
+// CSS VARIABLE GENERATION FUNCTIONS
+// ========================================
+
+import { generateCSSVariablesFromTokens } from "./cssVariableGenerator";
+
+// Cache for static and responsive variables
+const staticVariableCache = new Map<"light" | "dark", Record<string, string>>();
+const responsiveVariableCache = new Map<number, Record<string, string>>();
+
+// Helper function to convert hex to RGB (for RGBA support)
+const hexToRgb = (hex: string): string => {
+  const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  if (!result) return "0, 0, 0";
+
+  return [
+    parseInt(result[1], 16),
+    parseInt(result[2], 16),
+    parseInt(result[3], 16),
+  ].join(", ");
+};
+
+// Get breakpoint based on screen width
+const getBreakpoint = (
+  screenWidth: number
+): "mobile" | "tablet" | "desktop" => {
+  if (screenWidth < 768) return "mobile";
+  if (screenWidth < 1024) return "tablet";
+  return "desktop";
+};
+
+// Generate static CSS variables using your original generator approach
+export const getStaticVariables = (
+  mode: "light" | "dark"
+): Record<string, string> => {
+  if (staticVariableCache.has(mode)) {
+    return staticVariableCache.get(mode)!;
+  }
+
+  // Create tokens object for static values
+  const staticTokens = {
+    color: {} as any,
+    borderRadius: SEMANTIC_TOKENS.borderRadius,
+    shadows: SEMANTIC_TOKENS.shadows,
+    glassmorphism: SEMANTIC_TOKENS.glassmorphism,
+    animation: SEMANTIC_TOKENS.animation,
+    typography: SEMANTIC_TOKENS.typography,
+  };
+
+  // Process colors with RGB support
+  Object.entries(SEMANTIC_TOKENS.color).forEach(([category, colors]) => {
+    staticTokens.color[category] = {};
+    Object.entries(colors).forEach(([name, colorDef]) => {
+      // Always add the base color based on mode
+      staticTokens.color[category][name] = colorDef[mode];
+
+      // Add RGB variant if needsRGB is true
+      if (colorDef.needsRGB) {
+        const colorValue = colorDef[mode];
+        staticTokens.color[category][name + "-rgb"] = hexToRgb(colorValue);
+      }
+    });
+  });
+
+  // ✅ Use your original flexible CSS variable generator
+  const variables = generateCSSVariablesFromTokens(staticTokens);
+  staticVariableCache.set(mode, variables);
+  return variables;
+};
+
+// Generate responsive CSS variables using your original generator approach
+export const getResponsiveVariables = (
+  screenWidth: number
+): Record<string, string> => {
+  // Round to nearest 50px to avoid cache explosion
+  const roundedWidth = Math.round(screenWidth / 50) * 50;
+
+  if (responsiveVariableCache.has(roundedWidth)) {
+    return responsiveVariableCache.get(roundedWidth)!;
+  }
+
+  const breakpoint = getBreakpoint(roundedWidth);
+
+  // Create tokens object for responsive values
+  const responsiveTokens = {
+    spacing: {} as any,
+    typography: {} as any,
+  };
+
+  // Process spacing
+  Object.entries(SEMANTIC_TOKENS.spacing).forEach(([name, responsiveValue]) => {
+    responsiveTokens.spacing[name] = responsiveValue[breakpoint];
+  });
+
+  // Process typography responsive values
+  responsiveTokens.typography.fontSize = {};
+  responsiveTokens.typography.lineHeight = {};
+
+  Object.entries(SEMANTIC_TOKENS.typographyResponsive.fontSize).forEach(
+    ([name, responsiveValue]) => {
+      responsiveTokens.typography.fontSize[name] = responsiveValue[breakpoint];
+    }
+  );
+
+  Object.entries(SEMANTIC_TOKENS.typographyResponsive.lineHeight).forEach(
+    ([name, responsiveValue]) => {
+      responsiveTokens.typography.lineHeight[name] =
+        responsiveValue[breakpoint];
+    }
+  );
+
+  // ✅ Use your original flexible CSS variable generator
+  const variables = generateCSSVariablesFromTokens(responsiveTokens);
+  responsiveVariableCache.set(roundedWidth, variables);
+  return variables;
+};
+
+// Generate all CSS variables (static + responsive)
+export const getAllVariables = (
+  mode: "light" | "dark",
+  screenWidth: number
+): Record<string, string> => {
+  const staticVars = getStaticVariables(mode);
+  const responsiveVars = getResponsiveVariables(screenWidth);
+
+  return { ...staticVars, ...responsiveVars };
+};

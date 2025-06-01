@@ -1,4 +1,8 @@
-export const colorPalette = {
+// src/theme/palette.ts
+// Raw color palette - internal use only, never used directly
+// All colors should be referenced through semantic tokens
+
+export const palette = {
   // Universal Primary Blue (Excellent contrast both modes)
   universalBlue: {
     50: "#EBF4FF",
@@ -59,20 +63,6 @@ export const colorPalette = {
     950: "#022C22",
   },
 
-  // Glass Effects (High contrast semi-transparent)
-  glass: {
-    light: {
-      elevated: 95, // 95% opacity for maximum readability
-      subtle: 80, // 80% opacity for clear visibility
-      border: 30, // 30% opacity for visible borders
-    },
-    dark: {
-      elevated: 90, // 90% opacity for maximum readability
-      subtle: 75, // 75% opacity for clear visibility
-      border: 25, // 25% opacity for visible borders
-    },
-  },
-
   // Status Colors (High contrast)
   red: {
     50: "#FEF2F2",
@@ -111,23 +101,4 @@ export const colorPalette = {
     white: "#FFFFFF",
     black: "#000000",
   },
-
-  // Vritti AI Brand Colors (High Contrast Theme)
-  vritti: {
-    // Backgrounds
-    lightPrimary: "#FFFFFF", // Pure white background
-    lightSecondary: "#F8F9FA", // Very light gray
-    darkPrimary: "#0D1117", // GitHub-like dark
-    darkSecondary: "#1A1D20", // Elevated dark surface
-
-    // Actions
-    universalPrimary: "#0066CC", // Your universal primary
-    secondaryAccent: "#10B981", // Complementary emerald
-
-    // Text (Maximum contrast)
-    lightText: "#000000", // Pure black on light
-    lightTextSecondary: "#343A40", // Dark gray on light
-    darkText: "#FFFFFF", // Pure white on dark
-    darkTextSecondary: "#CED4DA", // Light gray on dark
-  },
-};
+} as const;
