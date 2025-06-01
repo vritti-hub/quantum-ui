@@ -23,7 +23,6 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
         transform: "none",
       },
 
-      // Hover animation for all buttons
       "&:hover:not(:disabled)": {
         transform: "translateY(-1px)",
       },
@@ -32,10 +31,9 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
         transform: "translateY(0)",
       },
 
-      // Target data-intent attribute using CSS selector
       "&[data-intent='primary']": {
         backgroundColor: "var(--quantum-color-action-primary)",
-        color: "var(--quantum-color-text-primary)",
+        color: "var(--quantum-color-text-onPrimary)",
         border: "none",
         boxShadow: "var(--quantum-shadows-small)",
 
@@ -65,7 +63,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
 
       "&[data-intent='destructive']": {
         backgroundColor: "var(--quantum-color-feedback-error)",
-        color: "var(--quantum-color-text-primary)",
+        color: "var(--quantum-color-text-onDestructive)",
         border: "none",
         boxShadow: "var(--quantum-shadows-small)",
 
@@ -80,6 +78,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
         },
       },
 
+      // ✅ Ghost intent uses secondary text color (unchanged)
       "&[data-intent='ghost']": {
         backgroundColor: "transparent",
         color: "var(--quantum-color-text-secondary)",

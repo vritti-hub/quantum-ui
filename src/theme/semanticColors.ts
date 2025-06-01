@@ -51,6 +51,18 @@ export const semanticColors = {
       light: colorPalette.lightNeutral[500],
       dark: colorPalette.darkNeutral[400],
     } as ColorDefinition,
+    inverse: {
+      light: colorPalette.pure.white, // White text on colored backgrounds (light mode)
+      dark: colorPalette.pure.black, // Black text on colored backgrounds (dark mode)
+    } as ColorDefinition,
+    onPrimary: {
+      light: colorPalette.pure.white, // White text on primary blue
+      dark: colorPalette.pure.white, // White text on primary blue (both modes)
+    } as ColorDefinition,
+    onDestructive: {
+      light: colorPalette.pure.white, // White text on red background
+      dark: colorPalette.pure.white, // White text on red background (both modes)
+    } as ColorDefinition,
   },
 
   feedback: {
