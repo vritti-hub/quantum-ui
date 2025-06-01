@@ -5,7 +5,7 @@ import { createQuantumTheme } from "./createTheme";
 
 interface ThemeContextType {
   toggleColorScheme: () => void;
-  colorScheme: string;
+  colorScheme: "light" | "dark";
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -31,8 +31,16 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     typeof window !== "undefined" ? window.innerWidth : 1024
   );
 
-  // Theme creation - only recreates on screen width changes
-  const theme = createQuantumTheme("light", screenWidth); // Always use light theme object
+  // ✅ Use React state for color scheme instead of reading from DOM
+  const [colorScheme, setColorScheme] = useState<"light" | "dark">(() => {
+    if (typeof window === "undefined") return defaultColorScheme;
+
+    const savedScheme = localStorage.getItem("quantum-color-scheme");
+    return (savedScheme as "light" | "dark") || defaultColorScheme;
+  });
+
+  // Theme creation - recreates when color scheme or screen width changes
+  const theme = createQuantumTheme(colorScheme, screenWidth);
 
   // Handle window resize - only for responsive variables
   useEffect(() => {
@@ -46,26 +54,17 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Initialize theme from localStorage or default
+  // Sync DOM attribute and localStorage when colorScheme state changes
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    const savedScheme = localStorage.getItem("quantum-color-scheme");
-    const initialScheme = savedScheme || defaultColorScheme;
-    document.documentElement.setAttribute("data-theme", initialScheme);
-  }, [defaultColorScheme]);
+    document.documentElement.setAttribute("data-theme", colorScheme);
+    localStorage.setItem("quantum-color-scheme", colorScheme);
+  }, [colorScheme]);
 
-  // Get current color scheme value from DOM
-  const colorScheme =
-    document.documentElement.getAttribute("data-theme") || "light";
-
-  // Toggle color scheme - direct DOM manipulation + persistence
+  // Toggle color scheme - update React state (which triggers DOM/localStorage sync)
   const toggleColorScheme = () => {
-    const current = colorScheme;
-    const newScheme = current === "light" ? "dark" : "light";
-
-    document.documentElement.setAttribute("data-theme", newScheme);
-    localStorage.setItem("quantum-color-scheme", newScheme);
+    setColorScheme((current) => (current === "light" ? "dark" : "light"));
   };
 
   const contextValue = {

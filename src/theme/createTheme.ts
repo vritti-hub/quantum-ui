@@ -111,7 +111,7 @@ export const createQuantumTheme = (
       MuiTextField: TextFieldTheme,
     },
   });
-  themeCache.set(cacheKey, theme);
 
+  themeCache.set(cacheKey, theme);
   return theme;
 };
