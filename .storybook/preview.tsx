@@ -1,4 +1,6 @@
+// .storybook/preview.tsx - SIMPLE BACKGROUND FIX
 import type { Preview } from "@storybook/react-vite";
+import { useEffect } from "react";
 import { ThemeProvider } from "../src/index";
 
 const preview: Preview = {
@@ -12,8 +14,19 @@ const preview: Preview = {
     docs: {
       toc: true,
     },
+    // ✅ Enable backgrounds with your theme colors
     backgrounds: {
-      disable: true,
+      default: "light",
+      values: [
+        {
+          name: "light",
+          value: "#FFFFFF",
+        },
+        {
+          name: "dark",
+          value: "#0B1426",
+        },
+      ],
     },
   },
 
@@ -37,8 +50,36 @@ const preview: Preview = {
     (Story, context) => {
       const themeMode = context.globals.theme || "light";
 
+      // ✅ Sync Storybook's background with theme
+      useEffect(() => {
+        // Update the background parameter to match theme
+        const canvas = document.querySelector(".sb-show-main") as HTMLElement;
+        const root = document.getElementById("storybook-root") as HTMLElement;
+
+        const backgroundColor = themeMode === "dark" ? "#0B1426" : "#FFFFFF";
+
+        if (canvas) {
+          canvas.style.backgroundColor = backgroundColor;
+        }
+        if (root) {
+          root.style.backgroundColor = backgroundColor;
+        }
+
+        // Update document data-theme
+        document.documentElement.setAttribute("data-theme", themeMode);
+      }, [themeMode]);
+
+      // ✅ Also update Storybook's background tool
+      context.parameters.backgrounds = {
+        ...context.parameters.backgrounds,
+        default: themeMode,
+      };
+
       return (
-        <ThemeProvider defaultColorScheme={themeMode} key={themeMode}>
+        <ThemeProvider
+          defaultColorScheme={themeMode as "light" | "dark"}
+          key={themeMode}
+        >
           <Story />
         </ThemeProvider>
       );

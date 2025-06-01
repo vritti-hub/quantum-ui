@@ -10,7 +10,7 @@ const meta: Meta<typeof QuantumTextField> = {
     docs: {
       description: {
         component:
-          "Semantic text field component with state-based styling and density options.",
+          "Semantic text field component with state-based styling, density options, and full theme integration.",
       },
     },
   },
@@ -65,8 +65,13 @@ export const Default: Story = {
 export const AllStates: Story = {
   render: () => (
     <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">
-        Field States
+      <Typography variant="h6">Field States</Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "var(--quantum-color-text-secondary)" }}
+      >
+        Different validation states with appropriate styling and messaging. Try
+        switching themes to see adaptive colors.
       </Typography>
       <Stack spacing={2} sx={{ maxWidth: 400 }}>
         <QuantumTextField
@@ -109,8 +114,13 @@ export const AllStates: Story = {
 export const DensityLevels: Story = {
   render: () => (
     <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">
-        Density Levels
+      <Typography variant="h6">Density Levels</Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "var(--quantum-color-text-secondary)" }}
+      >
+        Choose the right density for your layout context and user interface
+        needs.
       </Typography>
       <Stack spacing={2} sx={{ maxWidth: 400 }}>
         <QuantumTextField
@@ -143,125 +153,156 @@ export const DensityLevels: Story = {
   },
 };
 
-export const FormFields: Story = {
+export const ThemeAdaptiveFields: Story = {
   render: () => (
-    <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">
-        Common Form Fields
+    <Stack spacing={4}>
+      <Typography variant="h6">Theme-Adaptive Text Fields</Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "var(--quantum-color-text-secondary)" }}
+      >
+        Text fields automatically adapt their colors, borders, and focus states
+        to match the current theme.
       </Typography>
-      <Stack spacing={2} sx={{ maxWidth: 400 }}>
-        <QuantumTextField
-          label="First Name"
-          required
-          placeholder="Enter your first name"
-        />
-        <QuantumTextField
-          label="Last Name"
-          required
-          placeholder="Enter your last name"
-        />
-        <QuantumTextField
-          label="Email Address"
-          type="email"
-          required
-          placeholder="Enter your email"
-          message="We'll never share your email"
-        />
-        <QuantumTextField
-          label="Phone Number"
-          type="tel"
-          placeholder="(555) 123-4567"
-          message="Optional: for account security"
-        />
-        <QuantumTextField
-          label="Company"
-          placeholder="Enter your company name"
-        />
-      </Stack>
-    </Stack>
-  ),
-};
 
-export const FieldTypes: Story = {
-  render: () => (
-    <Stack spacing={3}>
-      <Typography variant="h6" color="text.primary">
-        Input Types
-      </Typography>
-      <Stack spacing={2} sx={{ maxWidth: 400 }}>
-        <QuantumTextField
-          label="Text Input"
-          type="text"
-          placeholder="Regular text input"
-        />
-        <QuantumTextField
-          label="Email Input"
-          type="email"
-          placeholder="email@example.com"
-        />
-        <QuantumTextField
-          label="Password Input"
-          type="password"
-          placeholder="Enter password"
-        />
-        <QuantumTextField
-          label="Number Input"
-          type="number"
-          placeholder="Enter a number"
-        />
-        <QuantumTextField label="Date Input" type="date" />
-        <QuantumTextField
-          label="Multiline Text"
-          multiline
-          rows={3}
-          placeholder="Enter multiple lines of text..."
-        />
-      </Stack>
-    </Stack>
-  ),
-};
-
-export const DisabledAndRequired: Story = {
-  render: () => (
-    <Stack spacing={3}>
-      <Box>
-        <Typography variant="h6" color="text.primary" gutterBottom>
-          Required Fields
+      <Box
+        sx={{
+          p: 3,
+          borderRadius: "var(--quantum-borderRadius-medium)",
+          backgroundColor: "var(--quantum-color-surface-secondary)",
+          border: "1px solid var(--quantum-color-border-default)",
+        }}
+      >
+        <Typography variant="subtitle1" gutterBottom>
+          On Secondary Surface
         </Typography>
         <Stack spacing={2} sx={{ maxWidth: 400 }}>
+          <QuantumTextField label="Username" placeholder="Enter username" />
           <QuantumTextField
-            label="Required Field"
-            required
-            placeholder="This field is required"
-          />
-          <QuantumTextField
-            label="Required with Error"
-            required
-            state="error"
-            message="This field is required"
+            label="Password"
+            type="password"
+            placeholder="Enter password"
           />
         </Stack>
       </Box>
 
-      <Box>
-        <Typography variant="h6" color="text.primary" gutterBottom>
-          Disabled Fields
+      <Box
+        sx={{
+          p: 3,
+          borderRadius: "var(--quantum-borderRadius-medium)",
+          backgroundColor: "var(--quantum-color-surface-primary)",
+          border: "1px solid var(--quantum-color-border-default)",
+        }}
+      >
+        <Typography variant="subtitle1" gutterBottom>
+          On Primary Surface
         </Typography>
         <Stack spacing={2} sx={{ maxWidth: 400 }}>
           <QuantumTextField
-            label="Disabled Empty"
-            disabled
-            placeholder="This field is disabled"
+            label="Email Address"
+            type="email"
+            placeholder="your@email.com"
           />
           <QuantumTextField
-            label="Disabled with Value"
-            disabled
-            value="This field has a value but is disabled"
+            label="Phone Number"
+            type="tel"
+            placeholder="+1 (555) 123-4567"
           />
         </Stack>
       </Box>
     </Stack>
   ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates how text fields adapt to different themes and surface backgrounds.",
+      },
+    },
+  },
+};
+
+export const CompleteForm: Story = {
+  render: () => (
+    <Stack spacing={3}>
+      <Typography variant="h6">Complete Form Example</Typography>
+      <Typography
+        variant="body2"
+        sx={{ color: "var(--quantum-color-text-secondary)" }}
+      >
+        A realistic form demonstrating various field types, states, and layouts
+        working together.
+      </Typography>
+
+      <Box
+        component="form"
+        sx={{
+          maxWidth: 500,
+          p: 3,
+          borderRadius: "var(--quantum-borderRadius-medium)",
+          backgroundColor: "var(--quantum-color-surface-secondary)",
+          border: "1px solid var(--quantum-color-border-default)",
+        }}
+      >
+        <Typography variant="h6" gutterBottom>
+          User Registration
+        </Typography>
+
+        <Stack spacing={2}>
+          <QuantumTextField
+            label="First Name"
+            required
+            placeholder="Enter your first name"
+          />
+          <QuantumTextField
+            label="Last Name"
+            required
+            placeholder="Enter your last name"
+          />
+          <QuantumTextField
+            label="Email Address"
+            type="email"
+            required
+            state="success"
+            value="john@example.com"
+            message="Email is available"
+          />
+          <QuantumTextField
+            label="Password"
+            type="password"
+            required
+            state="warning"
+            message="Password should be stronger"
+          />
+          <QuantumTextField
+            label="Phone Number"
+            type="tel"
+            placeholder="+1 (555) 123-4567"
+            message="Optional: for account security"
+          />
+          <QuantumTextField
+            label="Company"
+            placeholder="Enter your company name"
+          />
+          <QuantumTextField
+            label="Bio"
+            multiline
+            rows={3}
+            placeholder="Tell us about yourself..."
+            message="Optional: help others know you better"
+          />
+        </Stack>
+      </Box>
+    </Stack>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "A complete form example showing how different field types, states, and densities work together in a real-world scenario.",
+      },
+    },
+  },
 };
 
 export const Playground: Story = {
