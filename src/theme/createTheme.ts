@@ -1,13 +1,24 @@
+// src/theme/createTheme.ts
+
 import { createTheme } from "@mui/material/styles";
 import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
 import { createDesignTokens, generateCSSVariables } from "./tokens";
 
-export const createQuantumTheme = (mode: "light" | "dark") => {
-  const lightModeVariables = generateCSSVariables("light", 1024);
-  const darkModeVariables = generateCSSVariables("dark", 1024);
+const getScreenWidth = (): number => {
+  if (typeof window !== "undefined") {
+    return window.innerWidth;
+  }
+  return 1024; // Default for SSR
+};
 
-  // Get design tokens for palette values
-  const designTokens = createDesignTokens(mode, 1024);
+export const createQuantumTheme = (mode: "light" | "dark") => {
+  const screenWidth = getScreenWidth();
+
+  const lightModeVariables = generateCSSVariables("light", screenWidth);
+  const darkModeVariables = generateCSSVariables("dark", screenWidth);
+
+  // Get design tokens for palette values using actual screen width
+  const designTokens = createDesignTokens(mode, screenWidth);
 
   return createTheme({
     cssVariables: {
