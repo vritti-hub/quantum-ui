@@ -1,8 +1,11 @@
+// src/theme/tokens.ts
+
 import {
   calculateFontSize,
   calculateLineHeight,
   calculateSpacing,
 } from "./calculations";
+import { generateCSSVariablesFromTokens } from "./cssVariableGenerator";
 import { createSemanticColors } from "./semanticColors";
 
 export const createDesignTokens = (
@@ -97,7 +100,6 @@ export const createDesignTokens = (
     },
   },
 
-  // Keep existing static values
   borderRadius: {
     none: "0px",
     small: "4px",
@@ -133,3 +135,10 @@ export const createDesignTokens = (
     },
   },
 });
+
+export const generateCSSVariables = (
+  mode: "light" | "dark",
+  screenWidth: number
+): Record<string, string> => {
+  return generateCSSVariablesFromTokens(createDesignTokens(mode, screenWidth));
+};

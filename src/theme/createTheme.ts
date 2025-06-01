@@ -1,32 +1,13 @@
 import { createTheme } from "@mui/material/styles";
 import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
-import { createSemanticColors } from "./semanticColors";
-import { generateCSSVariables } from "./tokens";
-
-// ✅ Optimized: Pre-computed color constants
-const COMMON_OVERRIDES = {
-  "--quantum-action-primary-rgb": "0, 102, 204", // #0066CC RGB for both modes
-  "--quantum-shadow-small": "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-  "--quantum-shadow-medium": "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-  "--quantum-shadow-large": "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-} as const;
-
-// ✅ Optimized: Memoized semantic colors for dark mode
-let darkModeColors: ReturnType<typeof createSemanticColors> | null = null;
-const getDarkModeColors = () => {
-  if (!darkModeColors) {
-    darkModeColors = createSemanticColors("dark");
-  }
-  return darkModeColors;
-};
+import { createDesignTokens, generateCSSVariables } from "./tokens";
 
 export const createQuantumTheme = (mode: "light" | "dark") => {
-  const semanticColors = createSemanticColors(mode);
-  const lightModeVariables = generateCSSVariables(semanticColors);
+  const lightModeVariables = generateCSSVariables("light", 1024);
+  const darkModeVariables = generateCSSVariables("dark", 1024);
 
-  // ✅ Optimized: Only generate dark mode variables when needed
-  const darkModeVariables =
-    mode === "light" ? generateCSSVariables(getDarkModeColors()) : {};
+  // Get design tokens for palette values
+  const designTokens = createDesignTokens(mode, 1024);
 
   return createTheme({
     cssVariables: {
@@ -37,48 +18,43 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
     palette: {
       mode,
       primary: {
-        main: semanticColors.action.primary, // Universal #0066CC in both modes
-        contrastText: semanticColors.text.inverse,
+        main: designTokens.color.action.primary,
+        contrastText: designTokens.color.text.primary,
       },
       secondary: {
-        main: semanticColors.action.secondary, // Emerald green #10B981
-        contrastText: semanticColors.text.inverse,
+        main: designTokens.color.action.secondary,
+        contrastText: designTokens.color.text.primary,
       },
       error: {
-        main: semanticColors.feedback.error,
-        contrastText: semanticColors.text.inverse,
+        main: designTokens.color.feedback.error,
+        contrastText: designTokens.color.text.primary,
       },
       warning: {
-        main: semanticColors.feedback.warning,
-        contrastText: semanticColors.text.inverse,
+        main: designTokens.color.feedback.warning,
+        contrastText: designTokens.color.text.primary,
       },
       info: {
-        main: semanticColors.feedback.info,
-        contrastText: semanticColors.text.inverse,
+        main: designTokens.color.feedback.info,
+        contrastText: designTokens.color.text.primary,
       },
       success: {
-        main: semanticColors.feedback.success,
-        contrastText: semanticColors.text.inverse,
+        main: designTokens.color.feedback.success,
+        contrastText: designTokens.color.text.primary,
       },
       background: {
-        default: semanticColors.surface.primary,
-        paper: semanticColors.surface.secondary,
+        default: designTokens.color.surface.primary,
+        paper: designTokens.color.surface.secondary,
       },
       text: {
-        primary: semanticColors.text.primary,
-        secondary: semanticColors.text.secondary,
-        disabled: semanticColors.text.disabled,
+        primary: designTokens.color.text.primary,
+        secondary: designTokens.color.text.secondary,
+        disabled: designTokens.color.text.disabled,
       },
-      divider: semanticColors.border.default,
+      divider: designTokens.color.border.default,
     },
 
     typography: {
-      fontFamily:
-        'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-      button: {
-        textTransform: "none",
-        fontWeight: 500,
-      },
+      fontFamily: "var(--quantum-typography-fontFamily)",
     },
 
     shape: {
@@ -88,17 +64,8 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
     components: {
       MuiCssBaseline: {
         styleOverrides: {
-          ":root": {
-            ...lightModeVariables,
-            ...COMMON_OVERRIDES,
-          },
-          // ✅ Optimized: Conditional dark mode styles
-          ...(mode === "light" && {
-            '[data-theme="dark"]': {
-              ...darkModeVariables,
-              ...COMMON_OVERRIDES,
-            },
-          }),
+          ":root": lightModeVariables,
+          '[data-theme="dark"]': darkModeVariables,
         },
       },
 
