@@ -13,7 +13,16 @@ interface ResponsiveValue<T> {
   desktop: T;
 }
 
-// THE definitive design system
+// Simplified typography variant definitions
+interface TypographyVariant {
+  fontSize: ResponsiveValue<string>;
+  lineHeight: ResponsiveValue<number>;
+  fontWeight: number;
+  letterSpacing?: string;
+  fontFamily: "display" | "primary";
+}
+
+// Simplified design system with essential typography only
 export const SEMANTIC_TOKENS = {
   colors: {
     // Action colors
@@ -21,7 +30,7 @@ export const SEMANTIC_TOKENS = {
       primary: {
         light: palette.universalBlue[500],
         dark: palette.universalBlue[400],
-        needsRGB: true, // ✅ Correct boolean name
+        needsRGB: true,
       } as ColorDefinition,
       secondary: {
         light: palette.emeraldAccent[500],
@@ -145,62 +154,176 @@ export const SEMANTIC_TOKENS = {
     },
   },
 
-  // Typography static values
+  // Simplified Typography System with Space Grotesk
   typography: {
-    fontFamily:
-      'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    // Font families - Single font approach with Space Grotesk
+    fontFamily: {
+      // Space Grotesk variable font for everything
+      display:
+        "'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+      primary:
+        "'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+    },
+
+    // Font weights
     fontWeight: {
+      light: 300,
       normal: 400,
       medium: 500,
       semibold: 600,
       bold: 700,
     },
-    fontSize: {
-      caption: {
-        mobile: "0.75rem",
-        tablet: "0.75rem",
-        desktop: "0.75rem",
-      } as ResponsiveValue<string>,
-      body: {
-        mobile: "0.875rem",
-        tablet: "1rem",
-        desktop: "1rem",
-      } as ResponsiveValue<string>,
-      heading: {
-        mobile: "1.25rem",
-        tablet: "1.5rem",
-        desktop: "1.875rem",
-      } as ResponsiveValue<string>,
+
+    // Essential typography variants only
+    variants: {
+      // Display - Hero sections only
       display: {
-        mobile: "1.875rem",
-        tablet: "2.25rem",
-        desktop: "3rem",
-      } as ResponsiveValue<string>,
-    },
-    lineHeight: {
-      tight: {
-        mobile: 1.2,
-        tablet: 1.2,
-        desktop: 1.1,
-      } as ResponsiveValue<number>,
-      normal: {
-        mobile: 1.4,
-        tablet: 1.4,
-        desktop: 1.4,
-      } as ResponsiveValue<number>,
-      comfortable: {
-        mobile: 1.5,
-        tablet: 1.5,
-        desktop: 1.6,
-      } as ResponsiveValue<number>,
-      relaxed: {
-        mobile: 1.6,
-        tablet: 1.7,
-        desktop: 1.7,
-      } as ResponsiveValue<number>,
+        fontSize: {
+          mobile: "2.5rem", // 40px
+          tablet: "3.5rem", // 56px
+          desktop: "4.5rem", // 72px
+        },
+        lineHeight: {
+          mobile: 1.1,
+          tablet: 1.1,
+          desktop: 1.0,
+        },
+        fontWeight: 700,
+        letterSpacing: "-0.02em",
+        fontFamily: "display",
+      } as TypographyVariant,
+
+      // H1 - Page titles
+      h1: {
+        fontSize: {
+          mobile: "1.875rem", // 30px
+          tablet: "2.25rem", // 36px
+          desktop: "2.5rem", // 40px
+        },
+        lineHeight: {
+          mobile: 1.2,
+          tablet: 1.2,
+          desktop: 1.1,
+        },
+        fontWeight: 600,
+        fontFamily: "display",
+      } as TypographyVariant,
+
+      // H2 - Section titles
+      h2: {
+        fontSize: {
+          mobile: "1.5rem", // 24px
+          tablet: "1.75rem", // 28px
+          desktop: "2rem", // 32px
+        },
+        lineHeight: {
+          mobile: 1.3,
+          tablet: 1.3,
+          desktop: 1.2,
+        },
+        fontWeight: 600,
+        fontFamily: "display",
+      } as TypographyVariant,
+
+      // H3 - Subsection titles
+      h3: {
+        fontSize: {
+          mobile: "1.25rem", // 20px
+          tablet: "1.375rem", // 22px
+          desktop: "1.5rem", // 24px
+        },
+        lineHeight: {
+          mobile: 1.4,
+          tablet: 1.4,
+          desktop: 1.3,
+        },
+        fontWeight: 600,
+        fontFamily: "primary",
+      } as TypographyVariant,
+
+      // H4 - Component headers
+      h4: {
+        fontSize: {
+          mobile: "1.125rem", // 18px
+          tablet: "1.25rem", // 20px
+          desktop: "1.375rem", // 22px
+        },
+        lineHeight: {
+          mobile: 1.4,
+          tablet: 1.4,
+          desktop: 1.4,
+        },
+        fontWeight: 500,
+        fontFamily: "primary",
+      } as TypographyVariant,
+
+      // Body1 - Main content
+      body1: {
+        fontSize: {
+          mobile: "1rem", // 16px
+          tablet: "1.125rem", // 18px
+          desktop: "1.125rem", // 18px
+        },
+        lineHeight: {
+          mobile: 1.5,
+          tablet: 1.6,
+          desktop: 1.6,
+        },
+        fontWeight: 400,
+        fontFamily: "primary",
+      } as TypographyVariant,
+
+      // Body2 - Secondary content
+      body2: {
+        fontSize: {
+          mobile: "0.875rem", // 14px
+          tablet: "1rem", // 16px
+          desktop: "1rem", // 16px
+        },
+        lineHeight: {
+          mobile: 1.5,
+          tablet: 1.5,
+          desktop: 1.5,
+        },
+        fontWeight: 400,
+        fontFamily: "primary",
+      } as TypographyVariant,
+
+      // Button - Interface elements
+      button: {
+        fontSize: {
+          mobile: "0.875rem", // 14px
+          tablet: "1rem", // 16px
+          desktop: "1rem", // 16px
+        },
+        lineHeight: {
+          mobile: 1.4,
+          tablet: 1.4,
+          desktop: 1.4,
+        },
+        fontWeight: 500,
+        fontFamily: "display",
+      } as TypographyVariant,
+
+      // Caption - Small text, metadata
+      caption: {
+        fontSize: {
+          mobile: "0.75rem", // 12px
+          tablet: "0.875rem", // 14px
+          desktop: "0.875rem", // 14px
+        },
+        lineHeight: {
+          mobile: 1.4,
+          tablet: 1.4,
+          desktop: 1.4,
+        },
+        fontWeight: 400,
+        fontFamily: "primary",
+      } as TypographyVariant,
     },
   },
 
+  // Spacing system
   spacing: {
     tight: {
       mobile: "4px",
@@ -277,8 +400,7 @@ export const getAllThemeVariables = (): {
         typography: {
           fontFamily: SEMANTIC_TOKENS.typography.fontFamily,
           fontWeight: SEMANTIC_TOKENS.typography.fontWeight,
-          fontSize: {} as any,
-          lineHeight: {} as any,
+          variants: {} as any,
         },
         spacing: {} as any,
       };
@@ -290,7 +412,7 @@ export const getAllThemeVariables = (): {
           tokens.color[category][name] = colorDef[mode];
           if (colorDef.needsRGB) {
             const colorValue = colorDef[mode];
-            tokens.color[category][name + "-rgb"] = hexToRgb(colorValue);
+            tokens.color[category][name + "RGB"] = hexToRgb(colorValue);
           }
         });
       });
@@ -302,19 +424,19 @@ export const getAllThemeVariables = (): {
         }
       );
 
-      // Add typography responsive values
-      tokens.typography.fontSize = {};
-      tokens.typography.lineHeight = {};
-
-      Object.entries(SEMANTIC_TOKENS.typography.fontSize).forEach(
-        ([name, responsiveValue]) => {
-          tokens.typography.fontSize[name] = responsiveValue[breakpoint];
-        }
-      );
-
-      Object.entries(SEMANTIC_TOKENS.typography.lineHeight).forEach(
-        ([name, responsiveValue]) => {
-          tokens.typography.lineHeight[name] = responsiveValue[breakpoint];
+      // Add typography variants with responsive values
+      Object.entries(SEMANTIC_TOKENS.typography.variants).forEach(
+        ([variantName, variant]) => {
+          tokens.typography.variants[variantName] = {
+            fontSize: variant.fontSize[breakpoint],
+            lineHeight: variant.lineHeight[breakpoint],
+            fontWeight: variant.fontWeight,
+            fontFamily:
+              SEMANTIC_TOKENS.typography.fontFamily[variant.fontFamily],
+            ...(variant.letterSpacing && {
+              letterSpacing: variant.letterSpacing,
+            }),
+          };
         }
       );
 

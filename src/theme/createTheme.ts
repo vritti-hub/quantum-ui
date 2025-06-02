@@ -1,5 +1,10 @@
 import { createTheme } from "@mui/material/styles";
-import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
+import {
+  ButtonTheme,
+  PaperTheme,
+  TextFieldTheme,
+  TypographyTheme,
+} from "./components";
 import { getAllThemeVariables, SEMANTIC_TOKENS } from "./semanticTokens";
 
 export const createQuantumTheme = (mode: "light" | "dark") => {
@@ -75,7 +80,17 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
     },
 
     typography: {
-      fontFamily: "var(--quantum-typography-fontFamily)",
+      // Base typography settings - Space Grotesk for everything
+      fontFamily: SEMANTIC_TOKENS.typography.fontFamily.primary,
+      fontWeightLight: SEMANTIC_TOKENS.typography.fontWeight.light,
+      fontWeightRegular: SEMANTIC_TOKENS.typography.fontWeight.normal,
+      fontWeightMedium: SEMANTIC_TOKENS.typography.fontWeight.medium,
+      fontWeightBold: SEMANTIC_TOKENS.typography.fontWeight.bold,
+
+      // Override MUI's default responsive font sizes to use our tokens
+      // These will be overridden by our Typography component theme
+      fontSize: 16, // Base font size
+      htmlFontSize: 16,
     },
 
     shape: {
@@ -83,10 +98,22 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
     },
 
     components: {
+      // CSS Variables injection
       MuiCssBaseline: {
         styleOverrides: {
+          // Add Space Grotesk font loading
+          "@font-face": {
+            fontFamily: "Space Grotesk",
+            fontDisplay: "swap",
+          },
+
           // Light mode - mobile first (base styles)
-          ":root": lightMobile,
+          ":root": {
+            ...lightMobile,
+            // Ensure font is loaded
+            fontFamily: SEMANTIC_TOKENS.typography.fontFamily.primary,
+          },
+
           // Dark mode - mobile first
           '[data-theme="dark"]': darkMobile,
 
@@ -101,12 +128,20 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
             ":root": lightDesktop,
             '[data-theme="dark"]': darkDesktop,
           },
+
+          // Ensure all text uses Space Grotesk by default
+          "html, body": {
+            fontFamily: SEMANTIC_TOKENS.typography.fontFamily.primary,
+            fontDisplay: "swap",
+          },
         },
       },
 
+      // Component theme overrides
       MuiButton: ButtonTheme,
       MuiPaper: PaperTheme,
       MuiTextField: TextFieldTheme,
+      MuiTypography: TypographyTheme, // ✅ Add Typography theme
     },
   });
 
