@@ -1,33 +1,17 @@
 import { createTheme } from "@mui/material/styles";
 import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
-import { SEMANTIC_TOKENS, getAllVariables } from "./semanticTokens";
+import { getAllThemeVariables, SEMANTIC_TOKENS } from "./semanticTokens";
 
-const themeCache = new Map<string, ReturnType<typeof createTheme>>();
-
-const generateThemeCacheKey = (
-  mode: "light" | "dark",
-  screenWidth: number
-): string => {
-  // Round screen width to reduce cache entries
-  const roundedWidth = Math.round(screenWidth / 50) * 50;
-  return `${mode}-${roundedWidth}`;
-};
-
-export const createQuantumTheme = (
-  mode: "light" | "dark",
-  screenWidth: number
-) => {
-  const width = screenWidth;
-  const cacheKey = generateThemeCacheKey(mode, width);
-
-  // Return cached theme if available
-  if (themeCache.has(cacheKey)) {
-    return themeCache.get(cacheKey)!;
-  }
-
-  // Generate CSS variables for both modes
-  const lightModeVariables = getAllVariables("light", width);
-  const darkModeVariables = getAllVariables("dark", width);
+export const createQuantumTheme = (mode: "light" | "dark") => {
+  // Generate CSS variables for all breakpoints
+  const {
+    lightDesktop,
+    lightMobile,
+    lightTablet,
+    darkDesktop,
+    darkMobile,
+    darkTablet,
+  } = getAllThemeVariables();
 
   // Get current mode colors for MUI palette
   const colors = SEMANTIC_TOKENS.color;
@@ -101,8 +85,22 @@ export const createQuantumTheme = (
     components: {
       MuiCssBaseline: {
         styleOverrides: {
-          ":root": lightModeVariables,
-          '[data-theme="dark"]': darkModeVariables,
+          // Light mode - mobile first (base styles)
+          ":root": lightMobile,
+          // Dark mode - mobile first
+          '[data-theme="dark"]': darkMobile,
+
+          // Light mode - tablet and up & Dark mode - tablet and up
+          "@media (min-width: 768px)": {
+            ":root": lightTablet,
+            '[data-theme="dark"]': darkTablet,
+          },
+
+          // Light mode - desktop and up & Dark mode - desktop and up
+          "@media (min-width: 1024px)": {
+            ":root": lightDesktop,
+            '[data-theme="dark"]': darkDesktop,
+          },
         },
       },
 
@@ -112,6 +110,5 @@ export const createQuantumTheme = (
     },
   });
 
-  themeCache.set(cacheKey, theme);
   return theme;
 };

@@ -27,11 +27,6 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   children,
   defaultColorScheme = "light",
 }) => {
-  const [screenWidth, setScreenWidth] = useState<number>(() =>
-    typeof window !== "undefined" ? window.innerWidth : 1024
-  );
-
-  // ✅ Use React state for color scheme instead of reading from DOM
   const [colorScheme, setColorScheme] = useState<"light" | "dark">(() => {
     if (typeof window === "undefined") return defaultColorScheme;
 
@@ -39,20 +34,8 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     return (savedScheme as "light" | "dark") || defaultColorScheme;
   });
 
-  // Theme creation - recreates when color scheme or screen width changes
-  const theme = createQuantumTheme(colorScheme, screenWidth);
-
-  // Handle window resize - only for responsive variables
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const handleResize = () => {
-      setScreenWidth(window.innerWidth);
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  // Theme creation - only depends on color scheme now
+  const theme = createQuantumTheme(colorScheme);
 
   // Sync DOM attribute and localStorage when colorScheme state changes
   useEffect(() => {
