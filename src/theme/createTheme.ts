@@ -14,7 +14,7 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
   } = getAllThemeVariables();
 
   // Get current mode colors for MUI palette
-  const colors = SEMANTIC_TOKENS.color;
+  const colors = SEMANTIC_TOKENS.colors;
   const currentModeColors = {
     actionPrimary: colors.action.primary[mode],
     actionSecondary: colors.action.secondary[mode],

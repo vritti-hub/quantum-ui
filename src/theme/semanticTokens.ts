@@ -15,11 +15,7 @@ interface ResponsiveValue<T> {
 
 // THE definitive design system
 export const SEMANTIC_TOKENS = {
-  // ========================================
-  // STATIC SEMANTIC TOKENS (mode-dependent only)
-  // ========================================
-
-  color: {
+  colors: {
     // Action colors
     action: {
       primary: {
@@ -288,7 +284,7 @@ export const getAllThemeVariables = (): {
       };
 
       // Process colors with RGB support
-      Object.entries(SEMANTIC_TOKENS.color).forEach(([category, colors]) => {
+      Object.entries(SEMANTIC_TOKENS.colors).forEach(([category, colors]) => {
         tokens.color[category] = {};
         Object.entries(colors).forEach(([name, colorDef]) => {
           tokens.color[category][name] = colorDef[mode];
