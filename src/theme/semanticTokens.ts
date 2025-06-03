@@ -205,7 +205,7 @@ export const SEMANTIC_TOKENS = {
           tablet: 1.2,
           desktop: 1.1,
         },
-        fontWeight: 600,
+        fontWeight: 700,
         fontFamily: "display",
       } as TypographyVariant,
 
