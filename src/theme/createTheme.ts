@@ -165,6 +165,37 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
       // CSS Variables injection
       MuiCssBaseline: {
         styleOverrides: {
+          "@keyframes quantumConfidenceRotate": {
+            "0%": { transform: "rotate(0deg)" },
+            "100%": { transform: "rotate(360deg)" },
+          },
+
+          // Energy burst animation for button clicks
+          "@keyframes quantumEnergyBurst": {
+            "0%": {
+              transform: "translate(-50%, -50%) scale(0)",
+              opacity: 1,
+            },
+            "100%": {
+              transform: "translate(-50%, -50%) scale(2)",
+              opacity: 0,
+            },
+          },
+
+          // Warning rotate animation for destructive buttons (similar to primary)
+          "@keyframes quantumWarningRotate": {
+            "0%": { transform: "rotate(0deg)" },
+            "100%": { transform: "rotate(360deg)" },
+          },
+
+          // Respect reduced motion preferences
+          "@media (prefers-reduced-motion: reduce)": {
+            "*": {
+              animationDuration: "0.01ms !important",
+              animationIterationCount: "1 !important",
+              transitionDuration: "0.01ms !important",
+            },
+          },
           // Add Space Grotesk font loading
           "@font-face": {
             fontFamily: "Space Grotesk",

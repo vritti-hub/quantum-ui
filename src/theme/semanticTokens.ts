@@ -35,10 +35,24 @@ export const SEMANTIC_TOKENS = {
       secondary: {
         light: palette.emeraldAccent[500],
         dark: palette.emeraldAccent[500],
+        needsRGB: true,
       } as ColorDefinition,
       destructive: {
         light: palette.red[500],
         dark: palette.red[500],
+      } as ColorDefinition,
+    },
+
+    effects: {
+      primaryGlow: {
+        light: palette.universalBlue[500], // Same as primary for consistency
+        dark: palette.universalBlue[500],
+        needsRGB: true,
+      } as ColorDefinition,
+      shimmer: {
+        light: palette.pure.white,
+        dark: palette.pure.white,
+        needsRGB: true,
       } as ColorDefinition,
     },
 
