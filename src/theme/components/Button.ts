@@ -54,15 +54,18 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           content: '""',
           position: "absolute",
           inset: "-2px",
-          background: `radial-gradient(
-            ellipse at top left,
-            var(--quantum-color-action-primary) 0%,
-            transparent 50%
-          ), radial-gradient(
-            ellipse at bottom right,
-            var(--quantum-color-action-primary) 0%,
-            transparent 50%
-          )`,
+          background: `
+            radial-gradient(
+              ellipse at top left,
+              var(--quantum-color-action-primary) 0%,
+              transparent 50%
+            ), 
+            radial-gradient(
+              ellipse at bottom right,
+              var(--quantum-color-action-primary) 0%,
+              transparent 50%
+            )
+          `,
           borderRadius: "inherit",
           zIndex: -1,
           opacity: 0,
@@ -73,12 +76,13 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
         },
 
         "&:hover:not(:disabled)": {
+          // ✅ FIXED: Using CSS color-mix instead of hardcoded values
           backgroundColor:
-            "color-mix(in srgb, var(--quantum-color-action-primary) 85%, black)",
+            "color-mix(in srgb, var(--quantum-color-action-primary) 85%, var(--quantum-color-text-primary))",
           boxShadow: `
             0 6px 10px 0 rgba(var(--quantum-color-action-primaryRGB), 0.4),
             0 0 10px rgba(var(--quantum-color-action-primaryRGB), 0.6),
-            inset 0 0 10px rgba(255, 255, 255, 0.1)
+            inset 0 0 10px rgba(var(--quantum-color-effects-shimmerRGB), 0.1)
           `,
           transform: "translateY(-2px)",
 
@@ -87,7 +91,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           },
         },
 
-        // Click energy burst effect with primary color
+        // ✅ UNIFIED: Click energy burst effect
         "&:active::after": {
           content: '""',
           position: "absolute",
@@ -127,7 +131,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
       },
 
       // ======================
-      // DESTRUCTIVE: PROMINENT WARNING
+      // DESTRUCTIVE: PROMINENT WARNING (IDENTICAL TO PRIMARY)
       // ======================
       "&[data-intent='destructive']": {
         backgroundColor: "var(--quantum-color-feedback-error)",
@@ -136,36 +140,40 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
         boxShadow:
           "0 4px 14px 0 rgba(var(--quantum-color-feedback-errorRGB), 0.3)",
 
-        // Warning energy field - similar to primary but with error color
+        // ✅ UNIFIED: Identical confidence energy field effect (same as primary)
         "&::before": {
           content: '""',
           position: "absolute",
           inset: "-2px",
-          background: `radial-gradient(
-            ellipse at top left,
-            var(--quantum-color-feedback-error) 0%,
-            transparent 50%
-          ), radial-gradient(
-            ellipse at bottom right,
-            var(--quantum-color-feedback-error) 0%,
-            transparent 50%
-          )`,
+          background: `
+            radial-gradient(
+              ellipse at top left,
+              var(--quantum-color-feedback-error) 0%,
+              transparent 50%
+            ), 
+            radial-gradient(
+              ellipse at bottom right,
+              var(--quantum-color-feedback-error) 0%,
+              transparent 50%
+            )
+          `,
           borderRadius: "inherit",
           zIndex: -1,
           opacity: 0,
-          animation: "quantumWarningRotate 4s linear infinite",
+          animation: "quantumConfidenceRotate 6s linear infinite", // ✅ UNIFIED: Same timing as primary
           "@media (prefers-reduced-motion: reduce)": {
             animation: "none",
           },
         },
 
         "&:hover:not(:disabled)": {
+          // ✅ UNIFIED: Same hover effects as primary
           backgroundColor:
-            "color-mix(in srgb, var(--quantum-color-feedback-error) 85%, black)",
+            "color-mix(in srgb, var(--quantum-color-feedback-error) 85%, var(--quantum-color-text-primary))",
           boxShadow: `
-            0 6px 20px 0 rgba(var(--quantum-color-feedback-errorRGB), 0.4),
-            0 0 30px rgba(var(--quantum-color-feedback-errorRGB), 0.6),
-            inset 0 0 20px rgba(255, 255, 255, 0.1)
+            0 6px 10px 0 rgba(var(--quantum-color-feedback-errorRGB), 0.4),
+            0 0 10px rgba(var(--quantum-color-feedback-errorRGB), 0.6),
+            inset 0 0 10px rgba(var(--quantum-color-effects-shimmerRGB), 0.1)
           `,
           transform: "translateY(-2px)",
 
@@ -174,7 +182,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           },
         },
 
-        // Click energy burst effect with error color
+        // ✅ UNIFIED: Identical click energy burst effect
         "&:active::after": {
           content: '""',
           position: "absolute",
@@ -210,7 +218,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           inset: 0,
           background: `radial-gradient(
             circle at center,
-            rgba(var(--quantum-color-action-primaryRGBA), 0.05) 0%,
+            rgba(var(--quantum-color-action-primaryRGB), 0.05) 0%,
             transparent 70%
           )`,
           borderRadius: "inherit",
@@ -222,7 +230,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           backgroundColor: "var(--quantum-color-surface-secondary)",
           color: "var(--quantum-color-action-primary)",
           boxShadow:
-            "0 2px 8px rgba(var(--quantum-color-action-primaryRGBA), 0.1)",
+            "0 2px 8px rgba(var(--quantum-color-action-primaryRGB), 0.1)",
 
           "&::before": {
             opacity: 1,
@@ -231,7 +239,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
       },
     },
 
-    // Size variants with enhanced spacing
+    // ✅ ENHANCED: Consistent size variants with proper scaling
     sizeSmall: {
       padding:
         "var(--quantum-spacing-tight) var(--quantum-spacing-comfortable)",

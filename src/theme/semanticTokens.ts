@@ -40,18 +40,6 @@ export const SEMANTIC_TOKENS = {
       destructive: {
         light: palette.red[500],
         dark: palette.red[500],
-      } as ColorDefinition,
-    },
-
-    effects: {
-      primaryGlow: {
-        light: palette.universalBlue[500], // Same as primary for consistency
-        dark: palette.universalBlue[500],
-        needsRGB: true,
-      } as ColorDefinition,
-      shimmer: {
-        light: palette.pure.white,
-        dark: palette.pure.white,
         needsRGB: true,
       } as ColorDefinition,
     },
@@ -77,6 +65,7 @@ export const SEMANTIC_TOKENS = {
       primary: {
         light: palette.lightNeutral[900], // Pure black
         dark: palette.darkNeutral[50], // Pure white
+        needsRGB: true,
       } as ColorDefinition,
       secondary: {
         light: palette.lightNeutral[700], // High contrast secondary
@@ -109,6 +98,7 @@ export const SEMANTIC_TOKENS = {
       error: {
         light: palette.red[500],
         dark: palette.red[500],
+        needsRGB: true,
       } as ColorDefinition,
       info: {
         light: palette.blue[500],
