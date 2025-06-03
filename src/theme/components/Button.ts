@@ -4,12 +4,13 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
   styleOverrides: {
     root: {
       borderRadius: "var(--quantum-borderRadius-medium)",
-      fontFamily: "var(--quantum-typography-fontFamily)",
+      fontFamily: "var(--quantum-typography-fontFamily-display)", // Space Grotesk for buttons
       fontWeight: "var(--quantum-typography-fontWeight-medium)",
+      fontSize: "var(--quantum-typography-variants-button-fontSize)", // Use button variant size
+      lineHeight: "var(--quantum-typography-variants-button-lineHeight)",
       textTransform: "none",
       transition:
         "all var(--quantum-animation-duration-normal) var(--quantum-animation-easing-standard)",
-      lineHeight: "var(--quantum-typography-lineHeight-normal)",
       cursor: "pointer",
 
       "&:focus-visible": {
@@ -78,7 +79,6 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
         },
       },
 
-      // ✅ Ghost intent uses secondary text color (unchanged)
       "&[data-intent='ghost']": {
         backgroundColor: "transparent",
         color: "var(--quantum-color-text-secondary)",
@@ -96,19 +96,28 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
       },
     },
 
+    // ✅ UPDATED: More compact sizes using CSS variables
     sizeSmall: {
-      padding: "6px 16px",
-      fontSize: "var(--quantum-typography-fontSize-body)",
+      padding:
+        "var(--quantum-spacing-tight) var(--quantum-spacing-comfortable)", // 4px 12px on mobile, scales up
+      fontSize: "var(--quantum-typography-variants-caption-fontSize)", // Smaller text for compact buttons
+      lineHeight: "var(--quantum-typography-variants-caption-lineHeight)",
+      minHeight: "32px", // Ensure good touch target
     },
 
     sizeMedium: {
-      padding: "10px 20px",
-      fontSize: "var(--quantum-typography-fontSize-body)",
+      padding: "var(--quantum-spacing-normal) var(--quantum-spacing-spacious)", // 8px 16px on mobile, scales up
+      fontSize: "var(--quantum-typography-variants-button-fontSize)", // Standard button text size
+      lineHeight: "var(--quantum-typography-variants-button-lineHeight)",
+      minHeight: "40px", // Good balance for business interfaces
     },
 
     sizeLarge: {
-      padding: "14px 28px",
-      fontSize: "var(--quantum-typography-fontSize-body)",
+      padding:
+        "var(--quantum-spacing-comfortable) var(--quantum-spacing-loose)", // 12px 24px on mobile, scales up
+      fontSize: "var(--quantum-typography-variants-body2-fontSize)", // Slightly larger for emphasis
+      lineHeight: "var(--quantum-typography-variants-body2-lineHeight)",
+      minHeight: "48px", // Prominent buttons
     },
   },
 };

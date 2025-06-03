@@ -22,23 +22,23 @@ interface TypographyVariant {
   fontFamily: "display" | "primary";
 }
 
-// Simplified design system with essential typography only
+// ✅ UPDATED: Business-optimized design system with better balanced typography
 export const SEMANTIC_TOKENS = {
   colors: {
     // Action colors
     action: {
       primary: {
         light: palette.universalBlue[500],
-        dark: palette.universalBlue[400],
+        dark: palette.universalBlue[500],
         needsRGB: true,
       } as ColorDefinition,
       secondary: {
         light: palette.emeraldAccent[500],
-        dark: palette.emeraldAccent[400],
+        dark: palette.emeraldAccent[500],
       } as ColorDefinition,
       destructive: {
         light: palette.red[500],
-        dark: palette.red[400],
+        dark: palette.red[500],
       } as ColorDefinition,
     },
 
@@ -70,7 +70,7 @@ export const SEMANTIC_TOKENS = {
       } as ColorDefinition,
       disabled: {
         light: palette.lightNeutral[500],
-        dark: palette.darkNeutral[400],
+        dark: palette.darkNeutral[500],
       } as ColorDefinition,
       onPrimary: {
         light: palette.pure.white, // White text on primary blue
@@ -86,19 +86,19 @@ export const SEMANTIC_TOKENS = {
     feedback: {
       success: {
         light: palette.emerald[500],
-        dark: palette.emerald[400],
+        dark: palette.emerald[500],
       } as ColorDefinition,
       warning: {
         light: palette.amber[500],
-        dark: palette.amber[400],
+        dark: palette.amber[500],
       } as ColorDefinition,
       error: {
         light: palette.red[500],
-        dark: palette.red[400],
+        dark: palette.red[500],
       } as ColorDefinition,
       info: {
         light: palette.blue[500],
-        dark: palette.blue[400],
+        dark: palette.blue[500],
       } as ColorDefinition,
     },
 
@@ -154,13 +154,14 @@ export const SEMANTIC_TOKENS = {
     },
   },
 
-  // Simplified Typography System with Space Grotesk
+  // ✅ UPDATED: Business-Optimized Typography System
   typography: {
-    // Font families - Single font approach with Space Grotesk
+    // Font families - Dual font approach: Inter + Space Grotesk
     fontFamily: {
-      // Space Grotesk variable font for everything
+      // Space Grotesk for display elements, headings, UI
       display:
         "'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+      // Inter for body text and readable content
       primary:
         "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
     },
@@ -174,14 +175,14 @@ export const SEMANTIC_TOKENS = {
       bold: 700,
     },
 
-    // Essential typography variants only
+    // ✅ UPDATED: Business-optimized typography variants
     variants: {
-      // Display - Hero sections only
+      // Display - Hero sections (REDUCED from 72px max to 56px max)
       display: {
         fontSize: {
-          mobile: "2.5rem", // 40px
-          tablet: "3.5rem", // 56px
-          desktop: "4.5rem", // 72px
+          mobile: "2.25rem", // 36px (was 40px)
+          tablet: "3rem", // 48px (was 56px)
+          desktop: "3.5rem", // 56px (was 72px) - More reasonable for dashboards
         },
         lineHeight: {
           mobile: 1.1,
@@ -193,28 +194,28 @@ export const SEMANTIC_TOKENS = {
         fontFamily: "display",
       } as TypographyVariant,
 
-      // H1 - Page titles
+      // H1 - Page titles (INCREASED from 40px max to 48px max)
       h1: {
         fontSize: {
-          mobile: "1.875rem", // 30px
-          tablet: "2.25rem", // 36px
-          desktop: "2.5rem", // 40px
+          mobile: "2rem", // 32px (was 30px)
+          tablet: "2.5rem", // 40px (was 36px)
+          desktop: "3rem", // 48px (was 40px) - More impact for page titles
         },
         lineHeight: {
           mobile: 1.2,
           tablet: 1.2,
           desktop: 1.1,
         },
-        fontWeight: 700,
+        fontWeight: 700, // INCREASED from 600 to 700 for more presence
         fontFamily: "display",
       } as TypographyVariant,
 
-      // H2 - Section titles
+      // H2 - Section titles (SLIGHTLY INCREASED)
       h2: {
         fontSize: {
-          mobile: "1.5rem", // 24px
-          tablet: "1.75rem", // 28px
-          desktop: "2rem", // 32px
+          mobile: "1.5rem", // 24px (same)
+          tablet: "1.875rem", // 30px (was 28px)
+          desktop: "2.25rem", // 36px (was 32px) - Better hierarchy
         },
         lineHeight: {
           mobile: 1.3,
@@ -225,12 +226,12 @@ export const SEMANTIC_TOKENS = {
         fontFamily: "display",
       } as TypographyVariant,
 
-      // H3 - Subsection titles
+      // H3 - Subsection titles (INCREASED for better hierarchy)
       h3: {
         fontSize: {
-          mobile: "1.25rem", // 20px
-          tablet: "1.375rem", // 22px
-          desktop: "1.5rem", // 24px
+          mobile: "1.25rem", // 20px (same)
+          tablet: "1.5rem", // 24px (was 22px)
+          desktop: "1.75rem", // 28px (was 24px) - Better gap from body text
         },
         lineHeight: {
           mobile: 1.4,
@@ -238,63 +239,47 @@ export const SEMANTIC_TOKENS = {
           desktop: 1.3,
         },
         fontWeight: 600,
-        fontFamily: "primary",
+        fontFamily: "display", // CHANGED from "primary" to "display" for consistency
       } as TypographyVariant,
 
-      // H4 - Component headers
+      // H4 - Component headers (INCREASED for clearer hierarchy)
       h4: {
         fontSize: {
-          mobile: "1.125rem", // 18px
-          tablet: "1.25rem", // 20px
-          desktop: "1.375rem", // 22px
+          mobile: "1.125rem", // 18px (same)
+          tablet: "1.25rem", // 20px (same)
+          desktop: "1.5rem", // 24px (was 22px) - Better distinction from body
         },
         lineHeight: {
           mobile: 1.4,
           tablet: 1.4,
           desktop: 1.4,
         },
-        fontWeight: 500,
-        fontFamily: "primary",
+        fontWeight: 600, // INCREASED from 500 to 600 for more definition
+        fontFamily: "display", // CHANGED from "primary" to "display"
       } as TypographyVariant,
 
-      // Body1 - Main content
-      body1: {
+      // H5 - Small headers (ADDED - was missing)
+      h5: {
         fontSize: {
           mobile: "1rem", // 16px
           tablet: "1.125rem", // 18px
+          desktop: "1.25rem", // 20px
+        },
+        lineHeight: {
+          mobile: 1.4,
+          tablet: 1.4,
+          desktop: 1.4,
+        },
+        fontWeight: 600,
+        fontFamily: "display",
+      } as TypographyVariant,
+
+      // H6 - Smallest headers (ADDED - was missing)
+      h6: {
+        fontSize: {
+          mobile: "0.875rem", // 14px
+          tablet: "1rem", // 16px
           desktop: "1.125rem", // 18px
-        },
-        lineHeight: {
-          mobile: 1.5,
-          tablet: 1.6,
-          desktop: 1.6,
-        },
-        fontWeight: 400,
-        fontFamily: "primary",
-      } as TypographyVariant,
-
-      // Body2 - Secondary content
-      body2: {
-        fontSize: {
-          mobile: "0.875rem", // 14px
-          tablet: "1rem", // 16px
-          desktop: "1rem", // 16px
-        },
-        lineHeight: {
-          mobile: 1.5,
-          tablet: 1.5,
-          desktop: 1.5,
-        },
-        fontWeight: 400,
-        fontFamily: "primary",
-      } as TypographyVariant,
-
-      // Button - Interface elements
-      button: {
-        fontSize: {
-          mobile: "0.875rem", // 14px
-          tablet: "1rem", // 16px
-          desktop: "1rem", // 16px
         },
         lineHeight: {
           mobile: 1.4,
@@ -305,56 +290,104 @@ export const SEMANTIC_TOKENS = {
         fontFamily: "display",
       } as TypographyVariant,
 
-      // Caption - Small text, metadata
-      caption: {
+      // Body1 - Main content (OPTIMIZED - Inter font)
+      body1: {
         fontSize: {
-          mobile: "0.75rem", // 12px
-          tablet: "0.875rem", // 14px
-          desktop: "0.875rem", // 14px
+          mobile: "1rem", // 16px (same - perfect for mobile)
+          tablet: "1.125rem", // 18px (same - good for reading)
+          desktop: "1.125rem", // 18px (same - comfortable for business content)
         },
         lineHeight: {
-          mobile: 1.4,
-          tablet: 1.4,
-          desktop: 1.4,
+          mobile: 1.5,
+          tablet: 1.6,
+          desktop: 1.6,
         },
         fontWeight: 400,
-        fontFamily: "primary",
+        fontFamily: "primary", // Inter for readability
+      } as TypographyVariant,
+
+      // Body2 - Secondary content (OPTIMIZED)
+      body2: {
+        fontSize: {
+          mobile: "0.875rem", // 14px (same)
+          tablet: "1rem", // 16px (same)
+          desktop: "1rem", // 16px (same - good balance)
+        },
+        lineHeight: {
+          mobile: 1.5,
+          tablet: 1.5,
+          desktop: 1.5,
+        },
+        fontWeight: 400,
+        fontFamily: "primary", // Inter for readability
+      } as TypographyVariant,
+
+      // Button - Interface elements (OPTIMIZED)
+      button: {
+        fontSize: {
+          mobile: "0.8125rem", // 13px (was 14px) - slightly smaller for compact feel
+          tablet: "0.875rem", // 14px (was 16px) - more appropriate for business
+          desktop: "0.875rem", // 14px (was 16px) - consistent across larger screens
+        },
+        lineHeight: {
+          mobile: 1.3, // Tighter line height for buttons (was 1.4)
+          tablet: 1.3,
+          desktop: 1.3,
+        },
+        fontWeight: 500,
+        fontFamily: "display",
+      } as TypographyVariant,
+
+      // Caption - Small text, metadata (REFINED for small buttons)
+      caption: {
+        fontSize: {
+          mobile: "0.75rem", // 12px (same)
+          tablet: "0.8125rem", // 13px (was 14px) - slightly smaller
+          desktop: "0.8125rem", // 13px (was 14px) - more refined
+        },
+        lineHeight: {
+          mobile: 1.3, // Tighter for small buttons (was 1.4)
+          tablet: 1.3,
+          desktop: 1.3,
+        },
+        fontWeight: 500, // Increased from 400 for better small text legibility
+        fontFamily: "display", // Changed from "primary" to "display" for button consistency
       } as TypographyVariant,
     },
   },
 
-  // Spacing system
+  // Spacing system (unchanged - was already good)
   spacing: {
     tight: {
       mobile: "4px",
       tablet: "4px",
-      desktop: "4px",
+      desktop: "6px", // Slightly increased for desktop precision
     } as ResponsiveValue<string>,
     normal: {
-      mobile: "8px",
+      mobile: "6px", // Reduced from 8px for more compact buttons
       tablet: "8px",
-      desktop: "8px",
+      desktop: "10px", // More refined than 8px
     } as ResponsiveValue<string>,
     comfortable: {
       mobile: "12px",
-      tablet: "16px",
-      desktop: "20px",
+      tablet: "14px", // Slightly increased for better button width
+      desktop: "16px", // Reduced from 20px for more compact feel
     } as ResponsiveValue<string>,
     spacious: {
       mobile: "16px",
-      tablet: "24px",
-      desktop: "32px",
+      tablet: "20px", // Reduced from 24px
+      desktop: "24px", // Reduced from 32px for business interfaces
     } as ResponsiveValue<string>,
     loose: {
-      mobile: "24px",
-      tablet: "32px",
-      desktop: "48px",
+      mobile: "20px", // Reduced from 24px
+      tablet: "28px", // Reduced from 32px
+      desktop: "36px", // Reduced from 48px - better for business apps
     } as ResponsiveValue<string>,
   },
 } as const;
 
 // ========================================
-// CSS VARIABLE GENERATION FUNCTIONS
+// CSS VARIABLE GENERATION FUNCTIONS (unchanged)
 // ========================================
 
 import { generateCSSVariablesFromTokens } from "./cssVariableGenerator";

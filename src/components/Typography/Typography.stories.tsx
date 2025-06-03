@@ -1,5 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
+import { QuantumButton } from "../Button/Button";
+import { QuantumPaper } from "../Paper/Paper";
+import { QuantumTextField } from "../TextField/TextField";
 import { QuantumTypography } from "./Typography";
 
 const meta: Meta<typeof QuantumTypography> = {
@@ -10,7 +13,7 @@ const meta: Meta<typeof QuantumTypography> = {
     docs: {
       description: {
         component:
-          "Enhanced Typography component using Space Grotesk variable font with semantic intent-based styling and responsive scaling across mobile, tablet, and desktop viewports.",
+          "Enhanced Typography component using Inter for body text and Space Grotesk for display elements. Features responsive scaling, semantic intents, and optimized readability for business applications.",
       },
     },
   },
@@ -51,79 +54,179 @@ type Story = StoryObj<typeof QuantumTypography>;
 export const Default: Story = {
   args: {
     variant: "body1",
-    children: "Default typography using Space Grotesk",
+    children:
+      "Vritti AI helps entrepreneurs manage multiple businesses with intelligent insights.",
   },
 };
 
-export const AllVariants: Story = {
+export const DualFontSystem: Story = {
   render: () => (
-    <Stack spacing={3}>
-      <Typography variant="h3" gutterBottom>
-        Typography Hierarchy
-      </Typography>
-      <Typography variant="body2" color="text.secondary" gutterBottom>
-        All typography variants using Space Grotesk variable font with
-        responsive scaling
-      </Typography>
+    <Stack spacing={4}>
+      <QuantumTypography variant="h2" gutterBottom>
+        Dual Font System
+      </QuantumTypography>
+      <QuantumTypography variant="body2" intent="secondary" gutterBottom>
+        Space Grotesk for display elements and Inter for body text, optimized
+        for business applications
+      </QuantumTypography>
 
-      <Stack spacing={2}>
-        {/* Headings */}
-        <Box>
-          <Typography variant="overline" color="text.secondary">
-            HEADINGS
+      {/* Space Grotesk Examples */}
+      <QuantumPaper variant="glass">
+        <Box p={4}>
+          <Typography variant="overline" color="text.secondary" gutterBottom>
+            SPACE GROTESK - DISPLAY & UI
           </Typography>
-          <Typography variant="h1" gutterBottom>
-            H1 - Main Headlines (Display Size)
-          </Typography>
-          <Typography variant="h2" gutterBottom>
-            H2 - Page Titles
-          </Typography>
-          <Typography variant="h3" gutterBottom>
-            H3 - Section Titles
+
+          <Stack spacing={3}>
+            <Typography variant="h1" gutterBottom>
+              Vritti AI Dashboard
+            </Typography>
+            <Typography variant="h2" gutterBottom>
+              Business Portfolio Analytics
+            </Typography>
+            <Typography variant="h3" gutterBottom>
+              Revenue Optimization Insights
+            </Typography>
+            <Typography variant="h4" gutterBottom>
+              Customer Satisfaction Metrics
+            </Typography>
+
+            <Stack direction="row" spacing={2} mt={2}>
+              <QuantumButton intent="primary">Analyze Business</QuantumButton>
+              <QuantumButton intent="secondary">View Reports</QuantumButton>
+            </Stack>
+          </Stack>
+        </Box>
+      </QuantumPaper>
+
+      {/* Inter Examples */}
+      <QuantumPaper variant="standard">
+        <Box p={4}>
+          <QuantumTypography variant="overline" intent="secondary" gutterBottom>
+            INTER - BODY TEXT & CONTENT
+          </QuantumTypography>
+
+          <Stack spacing={2}>
+            <Typography variant="body1" paragraph>
+              Vritti AI is an AI-powered business orchestration platform
+              designed for serial entrepreneurs managing multiple businesses.
+              Unlike traditional business software, Vritti acts as a dominant AI
+              partner that rivals the business owner's intelligence, providing
+              strategic insights and challenging business decisions across an
+              entire business portfolio.
+            </Typography>
+
+            <QuantumTypography variant="body2" intent="secondary" paragraph>
+              The platform integrates data from salons, restaurants, clinics,
+              and design studios to identify cross-business opportunities,
+              optimize resource allocation, and provide actionable intelligence
+              that transforms how entrepreneurs scale their ventures.
+            </QuantumTypography>
+
+            <QuantumTypography variant="caption" intent="secondary">
+              Last updated: 2 minutes ago • Data synced across 12 businesses
+            </QuantumTypography>
+          </Stack>
+        </Box>
+      </QuantumPaper>
+    </Stack>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Demonstrates the dual font system: Space Grotesk for headlines and UI elements, Inter for body text and readable content.",
+      },
+    },
+  },
+};
+
+export const BusinessDashboardExample: Story = {
+  render: () => (
+    <Stack spacing={4}>
+      <QuantumTypography variant="h2" gutterBottom>
+        Vritti AI Business Dashboard
+      </QuantumTypography>
+
+      {/* Main Dashboard Card */}
+      <QuantumPaper variant="elevated">
+        <Box p={4}>
+          <Typography variant="h1" gutterBottom color="primary">
+            $847,392
           </Typography>
           <Typography variant="h4" gutterBottom>
-            H4 - Subsection Titles
-          </Typography>
-          <Typography variant="h5" gutterBottom>
-            H5 - Component Headers
-          </Typography>
-          <Typography variant="h6" gutterBottom>
-            H6 - Small Headers
-          </Typography>
-        </Box>
-
-        {/* Body Text */}
-        <Box>
-          <Typography variant="overline" color="text.secondary">
-            BODY TEXT
+            Total Portfolio Revenue
           </Typography>
           <Typography variant="body1" paragraph>
-            Body1 - This is the primary body text variant, perfect for main
-            content and paragraphs. It uses a comfortable font size and line
-            height optimized for reading across all devices.
+            Your business portfolio generated $847,392 in revenue this month,
+            representing a 23% increase over last month. This growth is driven
+            by optimization recommendations implemented across your salon and
+            restaurant locations.
           </Typography>
-          <Typography variant="body2" paragraph>
-            Body2 - This is the secondary body text variant, ideal for
-            supporting content, descriptions, and less prominent text that
-            complements the main content.
-          </Typography>
-        </Box>
 
-        {/* Interface Text */}
-        <Box>
-          <Typography variant="overline" color="text.secondary">
-            INTERFACE TEXT
-          </Typography>
-          <Typography variant="button" display="block" gutterBottom>
-            Button - Interface Element Text
-          </Typography>
-          <Typography variant="caption" display="block" gutterBottom>
-            Caption - Small text for metadata and labels
-          </Typography>
-          <Typography variant="overline" display="block">
-            Overline - Category labels and breadcrumbs
-          </Typography>
+          <Stack direction="row" spacing={4} mt={3}>
+            <Box>
+              <Typography variant="h3" color="success.main">
+                ↑ 23%
+              </Typography>
+              <Typography variant="caption">Month over Month</Typography>
+            </Box>
+            <Box>
+              <Typography variant="h3" color="primary">
+                12
+              </Typography>
+              <Typography variant="caption">Active Businesses</Typography>
+            </Box>
+            <Box>
+              <Typography variant="h3" color="warning.main">
+                5
+              </Typography>
+              <Typography variant="caption">Optimization Alerts</Typography>
+            </Box>
+          </Stack>
         </Box>
+      </QuantumPaper>
+
+      {/* Business Cards Grid */}
+      <Stack direction="row" spacing={3} flexWrap="wrap" useFlexGap>
+        <QuantumPaper variant="standard" sx={{ flex: 1, minWidth: 280 }}>
+          <Box p={3}>
+            <Typography variant="h4" gutterBottom>
+              Downtown Salon
+            </Typography>
+            <QuantumTypography variant="body2" intent="secondary" paragraph>
+              Beauty salon specializing in premium hair services and wellness
+              treatments
+            </QuantumTypography>
+            <Typography variant="body1" paragraph>
+              Customer satisfaction increased 15% after implementing
+              AI-recommended appointment scheduling. Average service time
+              reduced by 12 minutes while maintaining quality standards.
+            </Typography>
+            <Typography variant="caption" color="success.main">
+              Performance: Excellent
+            </Typography>
+          </Box>
+        </QuantumPaper>
+
+        <QuantumPaper variant="standard" sx={{ flex: 1, minWidth: 280 }}>
+          <Box p={3}>
+            <Typography variant="h4" gutterBottom>
+              Riverside Restaurant
+            </Typography>
+            <QuantumTypography variant="body2" intent="secondary" paragraph>
+              Farm-to-table restaurant featuring locally sourced ingredients
+            </QuantumTypography>
+            <Typography variant="body1" paragraph>
+              Menu optimization resulted in 18% increase in average order value.
+              Popular dishes identified through AI analysis now drive 34% of
+              evening revenue.
+            </Typography>
+            <Typography variant="caption" color="warning.main">
+              Performance: Good
+            </Typography>
+          </Box>
+        </QuantumPaper>
       </Stack>
     </Stack>
   ),
@@ -131,303 +234,433 @@ export const AllVariants: Story = {
     docs: {
       description: {
         story:
-          "Complete typography hierarchy showing all available variants with Space Grotesk.",
+          "Real-world business dashboard showing typography hierarchy in a Vritti AI context with revenue metrics and business cards.",
       },
     },
   },
 };
 
-export const ResponsiveScaling: Story = {
-  render: () => (
-    <Stack spacing={4}>
-      <Typography variant="h3" gutterBottom>
-        Responsive Typography Demo
-      </Typography>
-      <Typography variant="body2" color="text.secondary" gutterBottom>
-        Resize your browser to see how typography scales across mobile, tablet,
-        and desktop breakpoints
-      </Typography>
-
-      <Box
-        sx={{
-          p: 3,
-          border: "1px solid var(--quantum-color-border-default)",
-          borderRadius: "var(--quantum-borderRadius-medium)",
-          backgroundColor: "var(--quantum-color-surface-secondary)",
-        }}
-      >
-        <Typography variant="h1" gutterBottom>
-          Hero Headline
-        </Typography>
-        <Typography variant="h3" gutterBottom color="text.secondary">
-          Responsive Subheading
-        </Typography>
-        <Typography variant="body1" paragraph>
-          This content demonstrates how typography automatically scales based on
-          viewport width. The font sizes are optimized for each breakpoint:
-          mobile (touch-friendly), tablet (arm's length reading), and desktop
-          (comfortable desk viewing).
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Secondary content that maintains readability across all screen sizes
-          while providing appropriate visual hierarchy.
-        </Typography>
-      </Box>
-
-      <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-        <Box sx={{ minWidth: 200 }}>
-          <Typography variant="caption" color="text.secondary">
-            {`Mobile (< 768px)`}
-          </Typography>
-          <Typography variant="body2">Touch-optimized sizes</Typography>
-        </Box>
-        <Box sx={{ minWidth: 200 }}>
-          <Typography variant="caption" color="text.secondary">
-            Tablet (768px+)
-          </Typography>
-          <Typography variant="body2">Arm's length reading</Typography>
-        </Box>
-        <Box sx={{ minWidth: 200 }}>
-          <Typography variant="caption" color="text.secondary">
-            Desktop (1024px+)
-          </Typography>
-          <Typography variant="body2">Desk viewing comfort</Typography>
-        </Box>
-      </Stack>
-    </Stack>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Demonstrates responsive typography scaling across different viewport sizes.",
-      },
-    },
-  },
-};
-
-export const IntentColors: Story = {
+export const ChatInterfaceExample: Story = {
   render: () => (
     <Stack spacing={3}>
-      <Typography variant="h4" gutterBottom>
-        Typography Intent Colors
-      </Typography>
-      <Typography variant="body2" color="text.secondary" gutterBottom>
-        Semantic color intents that automatically adapt to light and dark themes
-      </Typography>
+      <QuantumTypography variant="h3" gutterBottom>
+        AI Business Assistant Chat
+      </QuantumTypography>
 
-      <Stack spacing={2}>
-        <QuantumTypography variant="body1" intent="primary">
-          Primary Intent - Main content text with highest emphasis
-        </QuantumTypography>
-        <QuantumTypography variant="body1" intent="secondary">
-          Secondary Intent - Supporting text with medium emphasis
-        </QuantumTypography>
-        <QuantumTypography variant="body1" intent="disabled">
-          Disabled Intent - Inactive or disabled text with low emphasis
-        </QuantumTypography>
-      </Stack>
+      <QuantumPaper variant="glass">
+        <Box p={3}>
+          {/* Chat Header */}
+          <Box borderBottom="1px solid" borderColor="divider" pb={2} mb={3}>
+            <Typography variant="h5" gutterBottom>
+              Vritti AI Assistant
+            </Typography>
+            <Typography variant="body2" color="success.main">
+              Online • Analyzing 12 businesses
+            </Typography>
+          </Box>
 
-      <Box
-        sx={{
-          p: 3,
-          backgroundColor: "var(--quantum-color-surface-secondary)",
-          borderRadius: "var(--quantum-borderRadius-medium)",
-          border: "1px solid var(--quantum-color-border-default)",
-        }}
-      >
-        <Typography variant="h5" gutterBottom>
-          On Secondary Surface
-        </Typography>
-        <Stack spacing={1}>
-          <QuantumTypography variant="body1" intent="primary">
-            Primary text maintains contrast on different surfaces
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary">
-            Secondary text adapts appropriately to surface changes
-          </QuantumTypography>
-        </Stack>
-      </Box>
+          {/* Chat Messages */}
+          <Stack spacing={3}>
+            {/* User Message */}
+            <Box display="flex" justifyContent="flex-end">
+              <Box maxWidth="70%">
+                <QuantumPaper variant="subtle">
+                  <Box p={2}>
+                    <Typography variant="body1">
+                      How is my salon performing compared to last month?
+                    </Typography>
+                    <QuantumTypography
+                      variant="caption"
+                      intent="secondary"
+                      mt={1}
+                    >
+                      2:34 PM
+                    </QuantumTypography>
+                  </Box>
+                </QuantumPaper>
+              </Box>
+            </Box>
+
+            {/* AI Response */}
+            <Box display="flex" justifyContent="flex-start">
+              <Box maxWidth="80%">
+                <QuantumPaper variant="standard">
+                  <Box p={3}>
+                    <Typography variant="h6" gutterBottom color="primary">
+                      Downtown Salon Performance Analysis
+                    </Typography>
+
+                    <Typography variant="body1" paragraph>
+                      Your salon is performing exceptionally well this month.
+                      Here are the key metrics:
+                    </Typography>
+
+                    <Typography variant="body2" component="div" sx={{ pl: 2 }}>
+                      • Revenue: $28,450 (↑ 15% vs last month)
+                      <br />
+                      • Customer satisfaction: 4.8/5 (↑ 0.3 points)
+                      <br />
+                      • Appointment efficiency: 89% (↑ 12%)
+                      <br />• New customer acquisition: 34 clients
+                    </Typography>
+
+                    <Typography variant="body1" paragraph mt={2}>
+                      The AI-recommended scheduling optimization has reduced
+                      wait times by 12 minutes and improved customer flow during
+                      peak hours.
+                    </Typography>
+
+                    <QuantumTypography
+                      variant="body2"
+                      intent="secondary"
+                      paragraph
+                    >
+                      <strong>Recommendation:</strong> Consider extending your
+                      most popular service packages based on current booking
+                      patterns.
+                    </QuantumTypography>
+
+                    <QuantumTypography variant="caption" intent="secondary">
+                      2:34 PM • Analysis based on last 30 days
+                    </QuantumTypography>
+                  </Box>
+                </QuantumPaper>
+              </Box>
+            </Box>
+
+            {/* User Follow-up */}
+            <Box display="flex" justifyContent="flex-end">
+              <Box maxWidth="70%">
+                <QuantumPaper variant="subtle">
+                  <Box p={2}>
+                    <Typography variant="body1">
+                      What about cross-selling opportunities with my restaurant?
+                    </Typography>
+                    <QuantumTypography
+                      variant="caption"
+                      intent="secondary"
+                      mt={1}
+                    >
+                      2:35 PM
+                    </QuantumTypography>
+                  </Box>
+                </QuantumPaper>
+              </Box>
+            </Box>
+
+            {/* AI Strategic Response */}
+            <Box display="flex" justifyContent="flex-start">
+              <Box maxWidth="80%">
+                <QuantumPaper variant="standard">
+                  <Box p={3}>
+                    <Typography variant="h6" gutterBottom color="primary">
+                      Cross-Business Opportunity Analysis
+                    </Typography>
+
+                    <Typography variant="body1" paragraph>
+                      I've identified significant synergy potential between your
+                      salon and restaurant:
+                    </Typography>
+
+                    <Typography variant="body2" paragraph>
+                      <strong>Customer Overlap:</strong> 23% of your salon
+                      clients have also dined at Riverside Restaurant in the
+                      past 6 months.
+                    </Typography>
+
+                    <Typography variant="body2" paragraph>
+                      <strong>Proposed Strategy:</strong> Launch a "Pamper &
+                      Dine" package offering 15% restaurant discount for salon
+                      appointments over $150. Projected impact:
+                    </Typography>
+
+                    <Typography
+                      variant="body2"
+                      component="div"
+                      sx={{ pl: 2, color: "success.main" }}
+                    >
+                      • Salon revenue increase: $2,300/month
+                      <br />
+                      • Restaurant revenue increase: $1,800/month
+                      <br />• Customer retention improvement: 31%
+                    </Typography>
+
+                    <QuantumTypography
+                      variant="caption"
+                      intent="secondary"
+                      mt={2}
+                    >
+                      2:35 PM • Cross-business analysis complete
+                    </QuantumTypography>
+                  </Box>
+                </QuantumPaper>
+              </Box>
+            </Box>
+          </Stack>
+
+          {/* Chat Input */}
+          <Box mt={3} pt={2} borderTop="1px solid" borderColor="divider">
+            <Stack direction="row" spacing={2}>
+              <QuantumTextField
+                placeholder="Ask Vritti AI about your businesses..."
+                fullWidth
+                size="small"
+              />
+              <QuantumButton intent="primary" size="small">
+                Send
+              </QuantumButton>
+            </Stack>
+          </Box>
+        </Box>
+      </QuantumPaper>
     </Stack>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          "Typography with semantic color intents that adapt to themes and surface backgrounds.",
+          "Realistic chat interface showing typography in conversational AI context with business insights and recommendations.",
       },
     },
   },
 };
 
-export const BusinessContent: Story = {
+export const ResponsiveTypographyDemo: Story = {
   render: () => (
     <Stack spacing={4}>
-      <Typography variant="h3" gutterBottom>
-        Business Application Example
-      </Typography>
+      <QuantumTypography variant="h2" gutterBottom>
+        Responsive Typography Scaling
+      </QuantumTypography>
+      <QuantumTypography variant="body2" intent="secondary" gutterBottom>
+        {`Resize your browser to see typography scale across mobile (< 768px), tablet (768px+), and desktop (1024px+) breakpoints`}
+      </QuantumTypography>
 
-      {/* Business Card */}
-      <Box
-        sx={{
-          p: 4,
-          backgroundColor: "var(--quantum-color-surface-secondary)",
-          borderRadius: "var(--quantum-borderRadius-large)",
-          border: "1px solid var(--quantum-color-border-default)",
-        }}
-      >
-        <Typography variant="h2" gutterBottom>
-          Vritti AI Dashboard
-        </Typography>
-        <Typography variant="body1" paragraph color="text.secondary">
-          AI-powered business orchestration platform for serial entrepreneurs
-        </Typography>
+      <QuantumPaper variant="elevated">
+        <Box p={4}>
+          <Typography variant="h1" gutterBottom>
+            Vritti AI Business Intelligence
+          </Typography>
+          <Typography variant="h3" gutterBottom>
+            Transform your multi-business portfolio with AI-powered insights
+          </Typography>
+          <Typography variant="body1" paragraph>
+            Vritti AI analyzes data across all your businesses to identify
+            opportunities that traditional single-business tools miss. Our
+            platform integrates seamlessly with salons, restaurants, clinics,
+            and retail operations to provide cross-business intelligence that
+            drives growth.
+          </Typography>
+          <Typography variant="body2" paragraph color="text.secondary">
+            Join over 2,500 serial entrepreneurs who have increased their
+            portfolio revenue by an average of 34% within the first six months
+            of using Vritti AI's business orchestration platform.
+          </Typography>
 
-        <Stack spacing={3}>
-          <Box>
-            <Typography variant="h4" gutterBottom>
-              Business Portfolio Overview
+          <Stack direction="row" spacing={2} mt={3}>
+            <QuantumButton intent="primary">Start Free Trial</QuantumButton>
+            <QuantumButton intent="secondary">Schedule Demo</QuantumButton>
+          </Stack>
+        </Box>
+      </QuantumPaper>
+
+      {/* Responsive Breakdown */}
+      <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
+        <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+          <Box p={3} textAlign="center">
+            <Typography variant="h6" gutterBottom>
+              📱 Mobile
             </Typography>
-            <Typography variant="body1" paragraph>
-              Manage multiple businesses with intelligent insights and
-              cross-business analytics.
-            </Typography>
-
-            <Stack direction="row" spacing={4} sx={{ mt: 2 }}>
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  Active Businesses
-                </Typography>
-                <Typography variant="h3" color="primary">
-                  12
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  Across 4 industries
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  Monthly Revenue
-                </Typography>
-                <Typography variant="h3" color="success.main">
-                  $284K
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  ↑ 23% from last month
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  AI Insights
-                </Typography>
-                <Typography variant="h3" color="warning.main">
-                  47
-                </Typography>
-                <Typography variant="caption" color="text.secondary">
-                  Optimization opportunities
-                </Typography>
-              </Box>
-            </Stack>
-          </Box>
-
-          <Box>
-            <Typography variant="h5" gutterBottom>
-              Recent Business Updates
-            </Typography>
-            <Stack spacing={2}>
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  Downtown Salon
-                </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  Customer satisfaction increased by 15% after implementing
-                  AI-recommended appointment scheduling optimization.
-                </Typography>
-                <Typography variant="caption" color="text.disabled">
-                  Updated 2 hours ago
-                </Typography>
-              </Box>
-
-              <Box>
-                <Typography variant="h6" gutterBottom>
-                  Riverside Restaurant
-                </Typography>
-                <Typography variant="body2" color="text.secondary" paragraph>
-                  Menu optimization suggestions resulted in 12% increase in
-                  average order value during dinner service.
-                </Typography>
-                <Typography variant="caption" color="text.disabled">
-                  Updated 5 hours ago
-                </Typography>
-              </Box>
-            </Stack>
-          </Box>
-        </Stack>
-      </Box>
-
-      {/* Form Example */}
-      <Box
-        sx={{
-          p: 3,
-          backgroundColor: "var(--quantum-color-surface-primary)",
-          borderRadius: "var(--quantum-borderRadius-medium)",
-          border: "1px solid var(--quantum-color-border-default)",
-        }}
-      >
-        <Typography variant="h4" gutterBottom>
-          Add New Business
-        </Typography>
-        <Typography variant="body2" color="text.secondary" paragraph>
-          Let Vritti AI analyze and optimize your new business venture
-        </Typography>
-
-        <Stack spacing={2}>
-          <Box>
-            <Typography variant="h6" component="label" gutterBottom>
-              Business Name
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Enter the name of your business as it appears legally
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography variant="h6" component="label" gutterBottom>
-              Industry Type
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              Select the primary industry for AI-powered insights
-            </Typography>
-          </Box>
-
-          <Box>
-            <Typography
-              variant="button"
-              sx={{
-                display: "inline-block",
-                px: 3,
-                py: 1.5,
-                backgroundColor: "primary.main",
-                color: "primary.contrastText",
-                borderRadius: 1,
-                textAlign: "center",
-                cursor: "pointer",
-              }}
+            <QuantumTypography
+              variant="caption"
+              intent="secondary"
+              gutterBottom
             >
-              Connect Business
+              {`< 768px`}
+            </QuantumTypography>
+            <Typography variant="body2">
+              Touch-optimized sizes for on-the-go business management
             </Typography>
           </Box>
-        </Stack>
-      </Box>
+        </QuantumPaper>
+
+        <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+          <Box p={3} textAlign="center">
+            <Typography variant="h6" gutterBottom>
+              💻 Tablet
+            </Typography>
+            <QuantumTypography
+              variant="caption"
+              intent="secondary"
+              gutterBottom
+            >
+              768px - 1024px
+            </QuantumTypography>
+            <Typography variant="body2">
+              Balanced for arm's length reading and touch interaction
+            </Typography>
+          </Box>
+        </QuantumPaper>
+
+        <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+          <Box p={3} textAlign="center">
+            <Typography variant="h6" gutterBottom>
+              🖥️ Desktop
+            </Typography>
+            <QuantumTypography
+              variant="caption"
+              intent="secondary"
+              gutterBottom
+            >
+              1024px+
+            </QuantumTypography>
+            <Typography variant="body2">
+              Optimized for desk viewing and detailed analysis
+            </Typography>
+          </Box>
+        </QuantumPaper>
+      </Stack>
     </Stack>
   ),
   parameters: {
     docs: {
       description: {
         story:
-          "Real-world business application example showing typography in context of Vritti AI platform.",
+          "Demonstrates responsive typography scaling with Vritti AI business context showing how text adapts across different viewport sizes.",
+      },
+    },
+  },
+};
+
+export const ContentHierarchyShowcase: Story = {
+  render: () => (
+    <Stack spacing={4}>
+      <QuantumTypography variant="h2" gutterBottom>
+        Content Hierarchy & Readability
+      </QuantumTypography>
+
+      <QuantumPaper variant="standard">
+        <Box p={4}>
+          {/* Article Header */}
+          <QuantumTypography variant="overline" intent="primary" gutterBottom>
+            BUSINESS INSIGHTS
+          </QuantumTypography>
+          <Typography variant="h1" gutterBottom>
+            The Future of Multi-Business Management
+          </Typography>
+          <QuantumTypography variant="h4" intent="secondary" gutterBottom>
+            How AI is revolutionizing the way serial entrepreneurs scale their
+            ventures
+          </QuantumTypography>
+
+          <Stack direction="row" spacing={2} mb={3}>
+            <QuantumTypography variant="caption" intent="secondary">
+              By Vritti AI Research Team
+            </QuantumTypography>
+            <QuantumTypography variant="caption" intent="secondary">
+              •
+            </QuantumTypography>
+            <QuantumTypography variant="caption" intent="secondary">
+              8 min read
+            </QuantumTypography>
+            <QuantumTypography variant="caption" intent="secondary">
+              •
+            </QuantumTypography>
+            <QuantumTypography variant="caption" intent="secondary">
+              Published Dec 15, 2024
+            </QuantumTypography>
+          </Stack>
+
+          <Box borderLeft="3px solid" borderColor="primary.main" pl={3} mb={4}>
+            <Typography variant="body1" sx={{ fontStyle: "italic" }}>
+              "Managing multiple businesses isn't just about juggling different
+              operations—it's about orchestrating them into a symphony of mutual
+              growth and shared intelligence."
+            </Typography>
+          </Box>
+
+          {/* Article Content */}
+          <Typography variant="h2" gutterBottom mt={4}>
+            The Challenge of Portfolio Management
+          </Typography>
+
+          <Typography variant="body1" paragraph>
+            Serial entrepreneurs face a unique challenge that traditional
+            business tools weren't designed to solve. While single-business
+            platforms excel at managing individual operations, they create
+            information silos that prevent owners from seeing the bigger picture
+            across their portfolio.
+          </Typography>
+
+          <Typography variant="body1" paragraph>
+            Consider Sarah Chen, who owns three salons, two restaurants, and a
+            boutique fitness studio in Portland. Before implementing Vritti AI,
+            she managed each business separately, missing crucial insights about
+            shared customer bases, seasonal patterns that affected multiple
+            ventures, and opportunities for cross-promotion.
+          </Typography>
+
+          <Typography variant="h3" gutterBottom mt={3}>
+            The Power of Cross-Business Intelligence
+          </Typography>
+
+          <Typography variant="body1" paragraph>
+            Vritti AI's breakthrough comes from analyzing data patterns across
+            entire business portfolios. The platform doesn't just track
+            individual business performance—it identifies relationships,
+            synergies, and optimization opportunities that span multiple
+            ventures.
+          </Typography>
+
+          <Typography variant="body2" color="text.secondary" paragraph>
+            For instance, the platform might discover that 40% of salon
+            customers also frequent the owner's restaurant during lunch hours,
+            revealing an opportunity for a "Beauty & Bite" lunch package that
+            could increase revenue for both businesses.
+          </Typography>
+
+          <Typography variant="h4" gutterBottom mt={3}>
+            Key Benefits for Portfolio Owners
+          </Typography>
+
+          <Typography variant="body1" component="div">
+            <Box component="ul" sx={{ pl: 3 }}>
+              <Box component="li" mb={1}>
+                <strong>Unified Analytics:</strong> See performance metrics
+                across all businesses in one dashboard
+              </Box>
+              <Box component="li" mb={1}>
+                <strong>Cross-Business Insights:</strong> Identify customer
+                overlap and shared opportunities
+              </Box>
+              <Box component="li" mb={1}>
+                <strong>Resource Optimization:</strong> Allocate staff,
+                inventory, and capital more efficiently
+              </Box>
+              <Box component="li" mb={1}>
+                <strong>Predictive Intelligence:</strong> AI forecasts trends
+                that affect multiple businesses
+              </Box>
+            </Box>
+          </Typography>
+
+          <QuantumTypography
+            variant="caption"
+            intent="secondary"
+            mt={4}
+            display="block"
+          >
+            Want to learn how Vritti AI can transform your business portfolio?
+            Schedule a personalized demo with our team.
+          </QuantumTypography>
+        </Box>
+      </QuantumPaper>
+    </Stack>
+  ),
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Comprehensive content hierarchy example showing how typography creates clear information structure in long-form business content.",
       },
     },
   },
@@ -437,13 +670,14 @@ export const Playground: Story = {
   args: {
     variant: "body1",
     intent: "primary",
-    children: "Customize this typography example",
+    children:
+      "Vritti AI empowers serial entrepreneurs with intelligent business insights across their entire portfolio.",
   },
   parameters: {
     docs: {
       description: {
         story:
-          "Use the controls panel to experiment with different typography variants and intents.",
+          "Use the controls panel to experiment with different typography variants and intents in a business context.",
       },
     },
   },
