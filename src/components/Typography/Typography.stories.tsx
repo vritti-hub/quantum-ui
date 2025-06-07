@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Button } from "../Button/Button";
 import { Paper } from "../Paper/Paper";
@@ -73,7 +73,7 @@ export const DualFontSystem: Story = {
       {/* Space Grotesk Examples */}
       <Paper variant="glass">
         <Box p={4}>
-          <Typography variant="overline" color="text.secondary" gutterBottom>
+          <Typography variant="overline" intent="secondary" gutterBottom>
             SPACE GROTESK - DISPLAY & UI
           </Typography>
 
@@ -269,11 +269,7 @@ export const ChatInterfaceExample: Story = {
                     <Typography variant="body1">
                       How is my salon performing compared to last month?
                     </Typography>
-                    <Typography
-                      variant="caption"
-                      intent="secondary"
-                      mt={1}
-                    >
+                    <Typography variant="caption" intent="secondary" mt={1}>
                       2:34 PM
                     </Typography>
                   </Box>
@@ -310,11 +306,7 @@ export const ChatInterfaceExample: Story = {
                       peak hours.
                     </Typography>
 
-                    <Typography
-                      variant="body2"
-                      intent="secondary"
-                      paragraph
-                    >
+                    <Typography variant="body2" intent="secondary" paragraph>
                       <strong>Recommendation:</strong> Consider extending your
                       most popular service packages based on current booking
                       patterns.
@@ -336,11 +328,7 @@ export const ChatInterfaceExample: Story = {
                     <Typography variant="body1">
                       What about cross-selling opportunities with my restaurant?
                     </Typography>
-                    <Typography
-                      variant="caption"
-                      intent="secondary"
-                      mt={1}
-                    >
+                    <Typography variant="caption" intent="secondary" mt={1}>
                       2:35 PM
                     </Typography>
                   </Box>
@@ -385,11 +373,7 @@ export const ChatInterfaceExample: Story = {
                       <br />• Customer retention improvement: 31%
                     </Typography>
 
-                    <Typography
-                      variant="caption"
-                      intent="secondary"
-                      mt={2}
-                    >
+                    <Typography variant="caption" intent="secondary" mt={2}>
                       2:35 PM • Cross-business analysis complete
                     </Typography>
                   </Box>
@@ -450,7 +434,7 @@ export const ResponsiveTypographyDemo: Story = {
             and retail operations to provide cross-business intelligence that
             drives growth.
           </Typography>
-          <Typography variant="body2" paragraph color="text.secondary">
+          <Typography variant="body2" paragraph intent="secondary">
             Join over 2,500 serial entrepreneurs who have increased their
             portfolio revenue by an average of 34% within the first six months
             of using Vritti AI's business orchestration platform.
@@ -470,11 +454,7 @@ export const ResponsiveTypographyDemo: Story = {
             <Typography variant="h6" gutterBottom>
               📱 Mobile
             </Typography>
-            <Typography
-              variant="caption"
-              intent="secondary"
-              gutterBottom
-            >
+            <Typography variant="caption" intent="secondary" gutterBottom>
               {`< 768px`}
             </Typography>
             <Typography variant="body2">
@@ -488,11 +468,7 @@ export const ResponsiveTypographyDemo: Story = {
             <Typography variant="h6" gutterBottom>
               💻 Tablet
             </Typography>
-            <Typography
-              variant="caption"
-              intent="secondary"
-              gutterBottom
-            >
+            <Typography variant="caption" intent="secondary" gutterBottom>
               768px - 1024px
             </Typography>
             <Typography variant="body2">
@@ -506,11 +482,7 @@ export const ResponsiveTypographyDemo: Story = {
             <Typography variant="h6" gutterBottom>
               🖥️ Desktop
             </Typography>
-            <Typography
-              variant="caption"
-              intent="secondary"
-              gutterBottom
-            >
+            <Typography variant="caption" intent="secondary" gutterBottom>
               1024px+
             </Typography>
             <Typography variant="body2">
@@ -611,7 +583,7 @@ export const ContentHierarchyShowcase: Story = {
             ventures.
           </Typography>
 
-          <Typography variant="body2" color="text.secondary" paragraph>
+          <Typography variant="body2" intent="secondary" paragraph>
             For instance, the platform might discover that 40% of salon
             customers also frequent the owner's restaurant during lunch hours,
             revealing an opportunity for a "Beauty & Bite" lunch package that
