@@ -1,8 +1,8 @@
 import { Box, Stack, Typography } from "@mui/material";
 import React, { useCallback, useState } from "react";
-import { QuantumButton } from "./components/Button/Button";
-import { QuantumPaper } from "./components/Paper/Paper";
-import { QuantumTextField } from "./components/TextField/TextField";
+import { Button } from "./components/Button/Button";
+import { Paper } from "./components/Paper/Paper";
+import { TextField } from "./components/TextField/TextField";
 import { ThemeProvider, useTheme } from "./theme/ThemeProvider";
 
 // ✅ Optimized: Memoized content component
@@ -46,19 +46,19 @@ const AppContent = React.memo(() => {
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Clean semantic design system
           </Typography>
-          <QuantumButton intent="secondary" onClick={toggleColorScheme}>
+          <Button intent="secondary" onClick={toggleColorScheme}>
             Theme: {colorScheme}
-          </QuantumButton>
+          </Button>
         </Box>
 
         {/* Glass Form Card */}
-        <QuantumPaper variant="glass">
+        <Paper variant="glass">
           <Box padding={4}>
             <Typography variant="h5" gutterBottom>
               Contact Form
             </Typography>
             <Stack spacing={3}>
-              <QuantumTextField
+              <TextField
                 label="Email Address"
                 type="email"
                 value={email}
@@ -67,7 +67,7 @@ const AppContent = React.memo(() => {
                 required
               />
 
-              <QuantumTextField
+              <TextField
                 label="Message"
                 multiline
                 rows={4}
@@ -77,19 +77,19 @@ const AppContent = React.memo(() => {
               />
 
               <Stack direction="row" spacing={2}>
-                <QuantumButton intent="primary" onClick={handleSendMessage}>
+                <Button intent="primary" onClick={handleSendMessage}>
                   Send Message
-                </QuantumButton>
-                <QuantumButton intent="ghost" onClick={handleClear}>
+                </Button>
+                <Button intent="ghost" onClick={handleClear}>
                   Clear
-                </QuantumButton>
+                </Button>
               </Stack>
             </Stack>
           </Box>
-        </QuantumPaper>
+        </Paper>
 
         {/* Button Showcase */}
-        <QuantumPaper variant="elevated">
+        <Paper variant="elevated">
           <Box padding={4}>
             <Typography variant="h5" gutterBottom>
               Button Types
@@ -101,15 +101,15 @@ const AppContent = React.memo(() => {
                   Primary Actions
                 </Typography>
                 <Stack direction="row" spacing={2} flexWrap="wrap">
-                  <QuantumButton intent="primary" size="small">
+                  <Button intent="primary" size="small">
                     Small Primary
-                  </QuantumButton>
-                  <QuantumButton intent="primary" size="medium">
+                  </Button>
+                  <Button intent="primary" size="medium">
                     Medium Primary
-                  </QuantumButton>
-                  <QuantumButton intent="primary" size="large">
+                  </Button>
+                  <Button intent="primary" size="large">
                     Large Primary
-                  </QuantumButton>
+                  </Button>
                 </Stack>
               </Box>
 
@@ -119,11 +119,11 @@ const AppContent = React.memo(() => {
                   Secondary Actions
                 </Typography>
                 <Stack direction="row" spacing={2} flexWrap="wrap">
-                  <QuantumButton intent="secondary">Cancel</QuantumButton>
-                  <QuantumButton intent="secondary">Learn More</QuantumButton>
-                  <QuantumButton intent="secondary" disabled>
+                  <Button intent="secondary">Cancel</Button>
+                  <Button intent="secondary">Learn More</Button>
+                  <Button intent="secondary" disabled>
                     Disabled
-                  </QuantumButton>
+                  </Button>
                 </Stack>
               </Box>
 
@@ -133,12 +133,12 @@ const AppContent = React.memo(() => {
                   Destructive Actions
                 </Typography>
                 <Stack direction="row" spacing={2} flexWrap="wrap">
-                  <QuantumButton intent="destructive">
+                  <Button intent="destructive">
                     Delete Account
-                  </QuantumButton>
-                  <QuantumButton intent="destructive">
+                  </Button>
+                  <Button intent="destructive">
                     Remove Item
-                  </QuantumButton>
+                  </Button>
                 </Stack>
               </Box>
 
@@ -148,14 +148,14 @@ const AppContent = React.memo(() => {
                   Ghost Actions
                 </Typography>
                 <Stack direction="row" spacing={2} flexWrap="wrap">
-                  <QuantumButton intent="ghost">Skip for now</QuantumButton>
-                  <QuantumButton intent="ghost">View Details</QuantumButton>
-                  <QuantumButton intent="ghost">Maybe Later</QuantumButton>
+                  <Button intent="ghost">Skip for now</Button>
+                  <Button intent="ghost">View Details</Button>
+                  <Button intent="ghost">Maybe Later</Button>
                 </Stack>
               </Box>
             </Stack>
           </Box>
-        </QuantumPaper>
+        </Paper>
 
         {/* Surface Types Demo */}
         <Box>
@@ -164,7 +164,7 @@ const AppContent = React.memo(() => {
           </Typography>
           <Stack spacing={3}>
             {/* Standard Paper */}
-            <QuantumPaper variant="standard">
+            <Paper variant="standard">
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Standard Surface
@@ -174,10 +174,10 @@ const AppContent = React.memo(() => {
                   content cards.
                 </Typography>
               </Box>
-            </QuantumPaper>
+            </Paper>
 
             {/* Glass Paper */}
-            <QuantumPaper variant="glass">
+            <Paper variant="glass">
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Glass Surface
@@ -187,10 +187,10 @@ const AppContent = React.memo(() => {
                   and floating elements.
                 </Typography>
               </Box>
-            </QuantumPaper>
+            </Paper>
 
             {/* Elevated Paper */}
-            <QuantumPaper variant="elevated">
+            <Paper variant="elevated">
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Elevated Surface
@@ -200,10 +200,10 @@ const AppContent = React.memo(() => {
                   highlighted content.
                 </Typography>
               </Box>
-            </QuantumPaper>
+            </Paper>
 
             {/* Subtle Paper */}
-            <QuantumPaper variant="subtle">
+            <Paper variant="subtle">
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Subtle Surface
@@ -213,12 +213,12 @@ const AppContent = React.memo(() => {
                   content.
                 </Typography>
               </Box>
-            </QuantumPaper>
+            </Paper>
           </Stack>
         </Box>
 
         {/* Navigation Example */}
-        <QuantumPaper variant="glass">
+        <Paper variant="glass">
           <Box
             padding={2}
             display="flex"
@@ -227,15 +227,15 @@ const AppContent = React.memo(() => {
           >
             <Typography variant="h6">Navigation Bar</Typography>
             <Stack direction="row" spacing={1}>
-              <QuantumButton intent="primary" size="small">
+              <Button intent="primary" size="small">
                 Sign In
-              </QuantumButton>
-              <QuantumButton intent="ghost" size="small">
+              </Button>
+              <Button intent="ghost" size="small">
                 Menu
-              </QuantumButton>
+              </Button>
             </Stack>
           </Box>
-        </QuantumPaper>
+        </Paper>
 
         {/* Footer */}
         <Box textAlign="center" paddingY={3}>

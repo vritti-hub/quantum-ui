@@ -1,13 +1,13 @@
 import { Box, Stack } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
-import { QuantumPaper } from "../Paper/Paper";
-import { QuantumTextField } from "../TextField/TextField";
-import { QuantumTypography } from "../Typography/Typography";
-import { QuantumButton } from "./Button";
+import { Paper } from "../Paper/Paper";
+import { TextField } from "../TextField/TextField";
+import { Typography } from "../Typography/Typography";
+import { Button } from "./Button";
 
-const meta: Meta<typeof QuantumButton> = {
+const meta: Meta<typeof Button> = {
   title: "Components/Button",
-  component: QuantumButton,
+  component: Button,
   parameters: {
     layout: "padded",
     docs: {
@@ -44,7 +44,7 @@ const meta: Meta<typeof QuantumButton> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof QuantumButton>;
+type Story = StoryObj<typeof Button>;
 
 export const Default: Story = {
   args: {
@@ -56,138 +56,138 @@ export const Default: Story = {
 export const BusinessActionsByIntent: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Vritti AI Business Actions
-      </QuantumTypography>
-      <QuantumTypography variant="body2" intent="secondary" gutterBottom>
+      </Typography>
+      <Typography variant="body2" intent="secondary" gutterBottom>
         Button intents matched to real business scenarios and action importance
         levels
-      </QuantumTypography>
+      </Typography>
 
       {/* Primary Actions - Critical Business Operations */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Primary Actions
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Critical business operations that drive revenue and growth
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={3}>
             <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              <QuantumButton intent="primary" size="large">
+              <Button intent="primary" size="large">
                 Generate Business Report
-              </QuantumButton>
-              <QuantumButton intent="primary" size="medium">
+              </Button>
+              <Button intent="primary" size="medium">
                 Optimize Portfolio
-              </QuantumButton>
-              <QuantumButton intent="primary" size="small">
+              </Button>
+              <Button intent="primary" size="small">
                 Start AI Analysis
-              </QuantumButton>
+              </Button>
             </Stack>
 
-            <QuantumTypography variant="caption" intent="secondary">
+            <Typography variant="caption" intent="secondary">
               Use for: Revenue analysis, portfolio optimization, critical
               business decisions
-            </QuantumTypography>
+            </Typography>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Secondary Actions - Supporting Operations */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Secondary Actions
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Supporting operations and alternative choices
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={3}>
             <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              <QuantumButton intent="secondary" size="large">
+              <Button intent="secondary" size="large">
                 View Detailed Metrics
-              </QuantumButton>
-              <QuantumButton intent="secondary" size="medium">
+              </Button>
+              <Button intent="secondary" size="medium">
                 Export Data
-              </QuantumButton>
-              <QuantumButton intent="secondary" size="small">
+              </Button>
+              <Button intent="secondary" size="small">
                 Schedule Review
-              </QuantumButton>
-              <QuantumButton intent="secondary" size="medium" disabled>
+              </Button>
+              <Button intent="secondary" size="medium" disabled>
                 Sync in Progress
-              </QuantumButton>
+              </Button>
             </Stack>
 
-            <QuantumTypography variant="caption" intent="secondary">
+            <Typography variant="caption" intent="secondary">
               Use for: Data exploration, export functions, scheduling, secondary
               paths
-            </QuantumTypography>
+            </Typography>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Destructive Actions - High Risk Operations */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Destructive Actions
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             High-risk operations requiring user confirmation
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={3}>
             <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              <QuantumButton intent="destructive" size="large">
+              <Button intent="destructive" size="large">
                 Remove Business
-              </QuantumButton>
-              <QuantumButton intent="destructive" size="medium">
+              </Button>
+              <Button intent="destructive" size="medium">
                 Delete Portfolio
-              </QuantumButton>
-              <QuantumButton intent="destructive" size="small">
+              </Button>
+              <Button intent="destructive" size="small">
                 Clear Data
-              </QuantumButton>
+              </Button>
             </Stack>
 
-            <QuantumTypography variant="caption" intent="secondary">
+            <Typography variant="caption" intent="secondary">
               Use for: Data deletion, business removal, irreversible actions
-            </QuantumTypography>
+            </Typography>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Ghost Actions - Subtle Operations */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Ghost Actions
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Subtle operations and optional interactions
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={3}>
             <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              <QuantumButton intent="ghost" size="large">
+              <Button intent="ghost" size="large">
                 Maybe Later
-              </QuantumButton>
-              <QuantumButton intent="ghost" size="medium">
+              </Button>
+              <Button intent="ghost" size="medium">
                 Learn More
-              </QuantumButton>
-              <QuantumButton intent="ghost" size="small">
+              </Button>
+              <Button intent="ghost" size="small">
                 Skip Tour
-              </QuantumButton>
+              </Button>
             </Stack>
 
-            <QuantumTypography variant="caption" intent="secondary">
+            <Typography variant="caption" intent="secondary">
               Use for: Optional actions, help links, dismissible prompts
-            </QuantumTypography>
+            </Typography>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
     </Stack>
   ),
   parameters: {
@@ -203,12 +203,12 @@ export const BusinessActionsByIntent: Story = {
 export const BusinessDashboardActions: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Business Dashboard Interface
-      </QuantumTypography>
+      </Typography>
 
       {/* Main Dashboard Actions */}
-      <QuantumPaper variant="elevated">
+      <Paper variant="elevated">
         <Box p={4}>
           <Stack
             direction="row"
@@ -217,87 +217,87 @@ export const BusinessDashboardActions: Story = {
             mb={3}
           >
             <Box>
-              <QuantumTypography variant="h3" gutterBottom>
+              <Typography variant="h3" gutterBottom>
                 Portfolio Overview
-              </QuantumTypography>
-              <QuantumTypography variant="body2" intent="secondary">
+              </Typography>
+              <Typography variant="body2" intent="secondary">
                 Real-time insights across 12 active businesses
-              </QuantumTypography>
+              </Typography>
             </Box>
             <Stack direction="row" spacing={2}>
-              <QuantumButton intent="secondary" size="small">
+              <Button intent="secondary" size="small">
                 Last 30 Days
-              </QuantumButton>
-              <QuantumButton intent="primary" size="small">
+              </Button>
+              <Button intent="primary" size="small">
                 Generate Report
-              </QuantumButton>
+              </Button>
             </Stack>
           </Stack>
 
           {/* Key Metrics Cards */}
           <Stack direction={{ xs: "column", md: "row" }} spacing={3} mb={4}>
-            <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+            <Paper variant="glass" sx={{ flex: 1 }}>
               <Box p={3} textAlign="center">
-                <QuantumTypography variant="h1" gutterBottom>
+                <Typography variant="h1" gutterBottom>
                   $847K
-                </QuantumTypography>
-                <QuantumTypography variant="h6" gutterBottom>
+                </Typography>
+                <Typography variant="h6" gutterBottom>
                   Total Revenue
-                </QuantumTypography>
-                <QuantumTypography
+                </Typography>
+                <Typography
                   variant="body2"
                   intent="secondary"
                   gutterBottom
                 >
                   ↑ 23% from last month
-                </QuantumTypography>
-                <QuantumButton intent="ghost" size="small" fullWidth>
+                </Typography>
+                <Button intent="ghost" size="small" fullWidth>
                   View Breakdown
-                </QuantumButton>
+                </Button>
               </Box>
-            </QuantumPaper>
+            </Paper>
 
-            <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+            <Paper variant="glass" sx={{ flex: 1 }}>
               <Box p={3} textAlign="center">
-                <QuantumTypography variant="h1" gutterBottom>
+                <Typography variant="h1" gutterBottom>
                   89%
-                </QuantumTypography>
-                <QuantumTypography variant="h6" gutterBottom>
+                </Typography>
+                <Typography variant="h6" gutterBottom>
                   Satisfaction
-                </QuantumTypography>
-                <QuantumTypography
+                </Typography>
+                <Typography
                   variant="body2"
                   intent="secondary"
                   gutterBottom
                 >
                   Across all locations
-                </QuantumTypography>
-                <QuantumButton intent="ghost" size="small" fullWidth>
+                </Typography>
+                <Button intent="ghost" size="small" fullWidth>
                   Customer Feedback
-                </QuantumButton>
+                </Button>
               </Box>
-            </QuantumPaper>
+            </Paper>
 
-            <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+            <Paper variant="glass" sx={{ flex: 1 }}>
               <Box p={3} textAlign="center">
-                <QuantumTypography variant="h1" gutterBottom>
+                <Typography variant="h1" gutterBottom>
                   47
-                </QuantumTypography>
-                <QuantumTypography variant="h6" gutterBottom>
+                </Typography>
+                <Typography variant="h6" gutterBottom>
                   AI Insights
-                </QuantumTypography>
-                <QuantumTypography
+                </Typography>
+                <Typography
                   variant="body2"
                   intent="secondary"
                   gutterBottom
                 >
                   Optimization opportunities
-                </QuantumTypography>
-                <QuantumButton intent="primary" size="small" fullWidth>
+                </Typography>
+                <Button intent="primary" size="small" fullWidth>
                   Review Insights
-                </QuantumButton>
+                </Button>
               </Box>
-            </QuantumPaper>
+            </Paper>
           </Stack>
 
           {/* Action Bar */}
@@ -306,114 +306,114 @@ export const BusinessDashboardActions: Story = {
             spacing={2}
             justifyContent="center"
           >
-            <QuantumButton intent="primary" size="large">
+            <Button intent="primary" size="large">
               Optimize All Businesses
-            </QuantumButton>
-            <QuantumButton intent="secondary" size="large">
+            </Button>
+            <Button intent="secondary" size="large">
               Schedule Deep Analysis
-            </QuantumButton>
-            <QuantumButton intent="ghost" size="large">
+            </Button>
+            <Button intent="ghost" size="large">
               View Historical Trends
-            </QuantumButton>
+            </Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Business Management Cards */}
       <Stack direction={{ xs: "column", lg: "row" }} spacing={3}>
         {/* Salon Management */}
-        <QuantumPaper variant="standard" sx={{ flex: 1 }}>
+        <Paper variant="standard" sx={{ flex: 1 }}>
           <Box p={3}>
-            <QuantumTypography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               Downtown Salon
-            </QuantumTypography>
-            <QuantumTypography variant="body2" intent="secondary" paragraph>
+            </Typography>
+            <Typography variant="body2" intent="secondary" paragraph>
               Premium beauty services with AI-optimized scheduling
-            </QuantumTypography>
+            </Typography>
 
             <Stack spacing={2} mb={3}>
               <Box display="flex" justifyContent="space-between">
-                <QuantumTypography variant="body2">
+                <Typography variant="body2">
                   Today's Revenue:
-                </QuantumTypography>
-                <QuantumTypography variant="body2">$2,847</QuantumTypography>
+                </Typography>
+                <Typography variant="body2">$2,847</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <QuantumTypography variant="body2">
+                <Typography variant="body2">
                   Appointments:
-                </QuantumTypography>
-                <QuantumTypography variant="body2">23/28</QuantumTypography>
+                </Typography>
+                <Typography variant="body2">23/28</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <QuantumTypography variant="body2">
+                <Typography variant="body2">
                   Wait Time:
-                </QuantumTypography>
-                <QuantumTypography variant="body2">8 min avg</QuantumTypography>
+                </Typography>
+                <Typography variant="body2">8 min avg</Typography>
               </Box>
             </Stack>
 
             <Stack spacing={2}>
-              <QuantumButton intent="primary" fullWidth>
+              <Button intent="primary" fullWidth>
                 Optimize Schedule
-              </QuantumButton>
+              </Button>
               <Stack direction="row" spacing={2}>
-                <QuantumButton intent="secondary" size="small" sx={{ flex: 1 }}>
+                <Button intent="secondary" size="small" sx={{ flex: 1 }}>
                   View Calendar
-                </QuantumButton>
-                <QuantumButton intent="ghost" size="small" sx={{ flex: 1 }}>
+                </Button>
+                <Button intent="ghost" size="small" sx={{ flex: 1 }}>
                   Staff Reports
-                </QuantumButton>
+                </Button>
               </Stack>
             </Stack>
           </Box>
-        </QuantumPaper>
+        </Paper>
 
         {/* Restaurant Management */}
-        <QuantumPaper variant="standard" sx={{ flex: 1 }}>
+        <Paper variant="standard" sx={{ flex: 1 }}>
           <Box p={3}>
-            <QuantumTypography variant="h4" gutterBottom>
+            <Typography variant="h4" gutterBottom>
               Riverside Restaurant
-            </QuantumTypography>
-            <QuantumTypography variant="body2" intent="secondary" paragraph>
+            </Typography>
+            <Typography variant="body2" intent="secondary" paragraph>
               Farm-to-table dining with AI menu optimization
-            </QuantumTypography>
+            </Typography>
 
             <Stack spacing={2} mb={3}>
               <Box display="flex" justifyContent="space-between">
-                <QuantumTypography variant="body2">
+                <Typography variant="body2">
                   Today's Revenue:
-                </QuantumTypography>
-                <QuantumTypography variant="body2">$4,235</QuantumTypography>
+                </Typography>
+                <Typography variant="body2">$4,235</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <QuantumTypography variant="body2">
+                <Typography variant="body2">
                   Tables Served:
-                </QuantumTypography>
-                <QuantumTypography variant="body2">67</QuantumTypography>
+                </Typography>
+                <Typography variant="body2">67</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between">
-                <QuantumTypography variant="body2">
+                <Typography variant="body2">
                   Avg Order Value:
-                </QuantumTypography>
-                <QuantumTypography variant="body2">$63</QuantumTypography>
+                </Typography>
+                <Typography variant="body2">$63</Typography>
               </Box>
             </Stack>
 
             <Stack spacing={2}>
-              <QuantumButton intent="primary" fullWidth>
+              <Button intent="primary" fullWidth>
                 Analyze Menu Performance
-              </QuantumButton>
+              </Button>
               <Stack direction="row" spacing={2}>
-                <QuantumButton intent="secondary" size="small" sx={{ flex: 1 }}>
+                <Button intent="secondary" size="small" sx={{ flex: 1 }}>
                   Inventory
-                </QuantumButton>
-                <QuantumButton intent="ghost" size="small" sx={{ flex: 1 }}>
+                </Button>
+                <Button intent="ghost" size="small" sx={{ flex: 1 }}>
                   Reviews
-                </QuantumButton>
+                </Button>
               </Stack>
             </Stack>
           </Box>
-        </QuantumPaper>
+        </Paper>
       </Stack>
     </Stack>
   ),
@@ -430,40 +430,40 @@ export const BusinessDashboardActions: Story = {
 export const BusinessFormActions: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Business Form Interactions
-      </QuantumTypography>
+      </Typography>
 
       {/* Add New Business Form */}
-      <QuantumPaper variant="glass">
+      <Paper variant="glass">
         <Box p={4}>
-          <QuantumTypography variant="h3" gutterBottom>
+          <Typography variant="h3" gutterBottom>
             Add New Business to Portfolio
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Let Vritti AI analyze and optimize your new business venture
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={3} maxWidth={500}>
-            <QuantumTextField
+            <TextField
               label="Business Name"
               placeholder="Enter business name"
               fullWidth
             />
 
-            <QuantumTextField
+            <TextField
               label="Industry Type"
               placeholder="Salon, Restaurant, Clinic, etc."
               fullWidth
             />
 
-            <QuantumTextField
+            <TextField
               label="Monthly Revenue"
               placeholder="$0 - $100,000+"
               fullWidth
             />
 
-            <QuantumTextField
+            <TextField
               label="Number of Employees"
               placeholder="1-50+ employees"
               fullWidth
@@ -471,116 +471,116 @@ export const BusinessFormActions: Story = {
 
             {/* Form Actions */}
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} pt={2}>
-              <QuantumButton intent="primary" size="large" sx={{ flex: 1 }}>
+              <Button intent="primary" size="large" sx={{ flex: 1 }}>
                 Connect Business
-              </QuantumButton>
-              <QuantumButton intent="secondary" size="large" sx={{ flex: 1 }}>
+              </Button>
+              <Button intent="secondary" size="large" sx={{ flex: 1 }}>
                 Save as Draft
-              </QuantumButton>
+              </Button>
             </Stack>
 
             <Stack direction="row" justifyContent="center">
-              <QuantumButton intent="ghost" size="small">
+              <Button intent="ghost" size="small">
                 Cancel and Return to Dashboard
-              </QuantumButton>
+              </Button>
             </Stack>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Business Settings Form */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="h3" gutterBottom>
+          <Typography variant="h3" gutterBottom>
             Business Settings & Preferences
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={4} maxWidth={600}>
             {/* Notification Preferences */}
             <Box>
-              <QuantumTypography variant="h5" gutterBottom>
+              <Typography variant="h5" gutterBottom>
                 AI Notification Preferences
-              </QuantumTypography>
-              <QuantumTypography variant="body2" intent="secondary" paragraph>
+              </Typography>
+              <Typography variant="body2" intent="secondary" paragraph>
                 Choose how often you want to receive AI insights and
                 recommendations
-              </QuantumTypography>
+              </Typography>
 
               <Stack direction="row" spacing={2} mb={2}>
-                <QuantumButton intent="secondary" size="small">
+                <Button intent="secondary" size="small">
                   Real-time
-                </QuantumButton>
-                <QuantumButton intent="ghost" size="small">
+                </Button>
+                <Button intent="ghost" size="small">
                   Daily Summary
-                </QuantumButton>
-                <QuantumButton intent="ghost" size="small">
+                </Button>
+                <Button intent="ghost" size="small">
                   Weekly Report
-                </QuantumButton>
+                </Button>
               </Stack>
             </Box>
 
             {/* Data Sharing Settings */}
             <Box>
-              <QuantumTypography variant="h5" gutterBottom>
+              <Typography variant="h5" gutterBottom>
                 Cross-Business Analytics
-              </QuantumTypography>
-              <QuantumTypography variant="body2" intent="secondary" paragraph>
+              </Typography>
+              <Typography variant="body2" intent="secondary" paragraph>
                 Allow Vritti AI to analyze patterns across your business
                 portfolio for better insights
-              </QuantumTypography>
+              </Typography>
 
               <Stack direction="row" spacing={2} mb={2}>
-                <QuantumButton intent="primary" size="small">
+                <Button intent="primary" size="small">
                   Enable Full Analysis
-                </QuantumButton>
-                <QuantumButton intent="secondary" size="small">
+                </Button>
+                <Button intent="secondary" size="small">
                   Limited Sharing
-                </QuantumButton>
-                <QuantumButton intent="ghost" size="small">
+                </Button>
+                <Button intent="ghost" size="small">
                   Individual Only
-                </QuantumButton>
+                </Button>
               </Stack>
             </Box>
 
             {/* Action Buttons */}
             <Stack direction={{ xs: "column", sm: "row" }} spacing={2} pt={3}>
-              <QuantumButton intent="primary" size="large">
+              <Button intent="primary" size="large">
                 Save Preferences
-              </QuantumButton>
-              <QuantumButton intent="secondary" size="large">
+              </Button>
+              <Button intent="secondary" size="large">
                 Reset to Defaults
-              </QuantumButton>
-              <QuantumButton intent="destructive" size="large">
+              </Button>
+              <Button intent="destructive" size="large">
                 Delete Account
-              </QuantumButton>
+              </Button>
             </Stack>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Confirmation Dialog Simulation */}
-      <QuantumPaper variant="elevated">
+      <Paper variant="elevated">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Confirmation Required
-          </QuantumTypography>
-          <QuantumTypography variant="body1" paragraph>
+          </Typography>
+          <Typography variant="body1" paragraph>
             Are you sure you want to remove "Downtown Salon" from your business
             portfolio? This action cannot be undone.
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             This will permanently delete all historical data, analytics, and AI
             insights for this business.
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <QuantumButton intent="ghost">Cancel</QuantumButton>
-            <QuantumButton intent="destructive">
+            <Button intent="ghost">Cancel</Button>
+            <Button intent="destructive">
               Yes, Remove Business
-            </QuantumButton>
+            </Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
     </Stack>
   ),
   parameters: {
@@ -596,89 +596,89 @@ export const BusinessFormActions: Story = {
 export const ThemeAdaptiveButtons: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Theme-Adaptive Business Buttons
-      </QuantumTypography>
-      <QuantumTypography variant="body2" intent="secondary" gutterBottom>
+      </Typography>
+      <Typography variant="body2" intent="secondary" gutterBottom>
         Switch between light and dark themes using the Storybook toolbar to see
         button adaptation
-      </QuantumTypography>
+      </Typography>
 
       {/* Primary Surface Testing */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             On Primary Surface
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Business dashboard main content area
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-            <QuantumButton intent="primary">Analyze Portfolio</QuantumButton>
-            <QuantumButton intent="secondary">Export Reports</QuantumButton>
-            <QuantumButton intent="destructive">Remove Business</QuantumButton>
-            <QuantumButton intent="ghost">View Details</QuantumButton>
+            <Button intent="primary">Analyze Portfolio</Button>
+            <Button intent="secondary">Export Reports</Button>
+            <Button intent="destructive">Remove Business</Button>
+            <Button intent="ghost">View Details</Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Secondary Surface Testing */}
-      <QuantumPaper variant="glass">
+      <Paper variant="glass">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             On Glass Surface
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Modal dialogs and overlay interfaces
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-            <QuantumButton intent="primary">Confirm Analysis</QuantumButton>
-            <QuantumButton intent="secondary">Save Changes</QuantumButton>
-            <QuantumButton intent="destructive">Delete Data</QuantumButton>
-            <QuantumButton intent="ghost">Cancel</QuantumButton>
+            <Button intent="primary">Confirm Analysis</Button>
+            <Button intent="secondary">Save Changes</Button>
+            <Button intent="destructive">Delete Data</Button>
+            <Button intent="ghost">Cancel</Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Elevated Surface Testing */}
-      <QuantumPaper variant="elevated">
+      <Paper variant="elevated">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             On Elevated Surface
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Important cards and highlighted content
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-            <QuantumButton intent="primary">Optimize Now</QuantumButton>
-            <QuantumButton intent="secondary">Schedule Later</QuantumButton>
-            <QuantumButton intent="destructive">Reset Settings</QuantumButton>
-            <QuantumButton intent="ghost">Learn More</QuantumButton>
+            <Button intent="primary">Optimize Now</Button>
+            <Button intent="secondary">Schedule Later</Button>
+            <Button intent="destructive">Reset Settings</Button>
+            <Button intent="ghost">Learn More</Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Subtle Surface Testing */}
-      <QuantumPaper variant="subtle">
+      <Paper variant="subtle">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             On Subtle Surface
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Background sections and less important content
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-            <QuantumButton intent="primary">Start Trial</QuantumButton>
-            <QuantumButton intent="secondary">Contact Sales</QuantumButton>
-            <QuantumButton intent="destructive">End Subscription</QuantumButton>
-            <QuantumButton intent="ghost">Maybe Later</QuantumButton>
+            <Button intent="primary">Start Trial</Button>
+            <Button intent="secondary">Contact Sales</Button>
+            <Button intent="destructive">End Subscription</Button>
+            <Button intent="ghost">Maybe Later</Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
     </Stack>
   ),
   parameters: {
@@ -694,30 +694,30 @@ export const ThemeAdaptiveButtons: Story = {
 export const InteractiveBusinessScenarios: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Interactive Business Scenarios
-      </QuantumTypography>
-      <QuantumTypography variant="body2" intent="secondary" gutterBottom>
+      </Typography>
+      <Typography variant="body2" intent="secondary" gutterBottom>
         Click buttons to experience realistic business workflows and feedback
-      </QuantumTypography>
+      </Typography>
 
       {/* Revenue Optimization */}
-      <QuantumPaper variant="elevated">
+      <Paper variant="elevated">
         <Box p={4}>
-          <QuantumTypography variant="h3" gutterBottom>
+          <Typography variant="h3" gutterBottom>
             Revenue Optimization Opportunity
-          </QuantumTypography>
-          <QuantumTypography variant="body1" paragraph>
+          </Typography>
+          <Typography variant="body1" paragraph>
             Vritti AI has identified a potential 18% revenue increase across
             your salon and restaurant operations through improved customer flow
             optimization.
-          </QuantumTypography>
-          <QuantumTypography variant="body2" intent="secondary" paragraph>
+          </Typography>
+          <Typography variant="body2" intent="secondary" paragraph>
             Implementation time: 2-3 weeks • Expected ROI: $12,400/month
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2}>
-            <QuantumButton
+            <Button
               intent="primary"
               onClick={() =>
                 alert(
@@ -726,40 +726,40 @@ export const InteractiveBusinessScenarios: Story = {
               }
             >
               Implement Optimization
-            </QuantumButton>
-            <QuantumButton
+            </Button>
+            <Button
               intent="secondary"
               onClick={() =>
                 alert("Detailed analysis report downloaded to your dashboard.")
               }
             >
               Download Full Report
-            </QuantumButton>
-            <QuantumButton
+            </Button>
+            <Button
               intent="ghost"
               onClick={() =>
                 alert("Optimization opportunity saved for later review.")
               }
             >
               Review Later
-            </QuantumButton>
+            </Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Business Alert */}
-      <QuantumPaper variant="glass">
+      <Paper variant="glass">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             🚨 Business Performance Alert
-          </QuantumTypography>
-          <QuantumTypography variant="body1" paragraph>
+          </Typography>
+          <Typography variant="body1" paragraph>
             Downtown Salon's customer satisfaction has dropped to 3.2/5 in the
             past week. Immediate attention recommended.
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2}>
-            <QuantumButton
+            <Button
               intent="primary"
               onClick={() =>
                 alert(
@@ -768,41 +768,41 @@ export const InteractiveBusinessScenarios: Story = {
               }
             >
               Address Immediately
-            </QuantumButton>
-            <QuantumButton
+            </Button>
+            <Button
               intent="secondary"
               onClick={() =>
                 alert("Staff meeting scheduled for tomorrow morning at 9 AM.")
               }
             >
               Schedule Staff Meeting
-            </QuantumButton>
-            <QuantumButton
+            </Button>
+            <Button
               intent="ghost"
               onClick={() =>
                 alert("Customer feedback analysis sent to your email.")
               }
             >
               View Customer Feedback
-            </QuantumButton>
+            </Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Data Export Request */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="h4" gutterBottom>
+          <Typography variant="h4" gutterBottom>
             Data Export & Analytics
-          </QuantumTypography>
-          <QuantumTypography variant="body1" paragraph>
+          </Typography>
+          <Typography variant="body1" paragraph>
             Generate comprehensive reports for tax preparation, investor
             meetings, or strategic planning.
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={3}>
             <Stack direction="row" spacing={2} flexWrap="wrap" useFlexGap>
-              <QuantumButton
+              <Button
                 intent="primary"
                 onClick={() =>
                   alert(
@@ -811,8 +811,8 @@ export const InteractiveBusinessScenarios: Story = {
                 }
               >
                 Generate Portfolio Report
-              </QuantumButton>
-              <QuantumButton
+              </Button>
+              <Button
                 intent="secondary"
                 onClick={() =>
                   alert(
@@ -821,19 +821,19 @@ export const InteractiveBusinessScenarios: Story = {
                 }
               >
                 Export Financial Data
-              </QuantumButton>
-              <QuantumButton
+              </Button>
+              <Button
                 intent="secondary"
                 onClick={() =>
                   alert("Customer analytics dashboard opened in new tab.")
                 }
               >
                 Customer Analytics
-              </QuantumButton>
+              </Button>
             </Stack>
 
             <Stack direction="row" spacing={2}>
-              <QuantumButton
+              <Button
                 intent="destructive"
                 onClick={() => {
                   if (
@@ -848,17 +848,17 @@ export const InteractiveBusinessScenarios: Story = {
                 }}
               >
                 Clear All Historical Data
-              </QuantumButton>
-              <QuantumButton
+              </Button>
+              <Button
                 intent="ghost"
                 onClick={() => alert("Data retention policy document opened.")}
               >
                 View Data Policy
-              </QuantumButton>
+              </Button>
             </Stack>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
     </Stack>
   ),
   parameters: {

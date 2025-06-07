@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export interface QuantumPaperProps extends Omit<MuiPaperProps, "variant"> {
+export interface PaperProps extends Omit<MuiPaperProps, "variant"> {
   /**
    * Visual style variant
    * - standard: Default paper styling
@@ -20,7 +20,7 @@ export interface QuantumPaperProps extends Omit<MuiPaperProps, "variant"> {
   children: React.ReactNode;
 }
 
-export const QuantumPaper = React.memo<QuantumPaperProps>(
+export const Paper = React.memo<PaperProps>(
   ({ variant = "standard", children, ...props }) => {
     return (
       <MuiPaper data-variant={variant} elevation={0} {...props}>
@@ -30,4 +30,4 @@ export const QuantumPaper = React.memo<QuantumPaperProps>(
   }
 );
 
-QuantumPaper.displayName = "QuantumPaper";
+Paper.displayName = "Paper";

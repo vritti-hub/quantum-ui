@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export interface QuantumTypographyProps extends MuiTypographyProps {
+export interface TypographyProps extends MuiTypographyProps {
   /**
    * Semantic intent for text color
    * - primary: Primary text color (default)
@@ -26,7 +26,7 @@ const INTENT_TO_COLOR_MAP = {
   disabled: "text.disabled",
 } as const;
 
-export const QuantumTypography = React.memo<QuantumTypographyProps>(
+export const Typography = React.memo<TypographyProps>(
   ({ intent = "primary", color, children, ...props }) => {
     // Use intent color if no explicit color provided
     const finalColor = color || INTENT_TO_COLOR_MAP[intent];
@@ -39,4 +39,4 @@ export const QuantumTypography = React.memo<QuantumTypographyProps>(
   }
 );
 
-QuantumTypography.displayName = "QuantumTypography";
+Typography.displayName = "Typography";

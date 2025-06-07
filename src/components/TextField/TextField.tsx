@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export interface QuantumTextFieldProps
+export interface TextFieldProps
   extends Omit<MuiTextFieldProps, "variant" | "color"> {
   /**
    * The current state of the field for validation feedback
@@ -64,7 +64,7 @@ const DENSITY_TO_SIZE_MAP = {
   spacious: "medium", // MUI doesn't have large, medium is largest
 } as const;
 
-export const QuantumTextField = React.memo<QuantumTextFieldProps>(
+export const TextField = React.memo<TextFieldProps>(
   ({
     state = "normal",
     density = "comfortable",
@@ -86,4 +86,4 @@ export const QuantumTextField = React.memo<QuantumTextFieldProps>(
   }
 );
 
-QuantumTextField.displayName = "QuantumTextField";
+TextField.displayName = "TextField";

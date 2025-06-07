@@ -1,11 +1,11 @@
-export { QuantumButton } from "./Button/Button";
-export type { QuantumButtonProps } from "./Button/Button";
+export { Button } from "./Button/Button";
+export type { ButtonProps } from "./Button/Button";
 
-export { QuantumTextField } from "./TextField/TextField";
-export type { QuantumTextFieldProps } from "./TextField/TextField";
+export { TextField } from "./TextField/TextField";
+export type { TextFieldProps } from "./TextField/TextField";
 
-export { QuantumPaper } from "./Paper/Paper";
-export type { QuantumPaperProps } from "./Paper/Paper";
+export { Paper } from "./Paper/Paper";
+export type { PaperProps } from "./Paper/Paper";
 
-export { QuantumTypography } from "./Typography/Typography";
-export type { QuantumTypographyProps } from "./Typography/Typography";
+export { Typography } from "./Typography/Typography";
+export type { TypographyProps } from "./Typography/Typography";

@@ -1,10 +1,10 @@
 import { Box, Stack, Typography } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
-import { QuantumTextField } from "./TextField";
+import { TextField } from "./TextField";
 
-const meta: Meta<typeof QuantumTextField> = {
+const meta: Meta<typeof TextField> = {
   title: "Components/TextField",
-  component: QuantumTextField,
+  component: TextField,
   parameters: {
     layout: "padded",
     docs: {
@@ -53,7 +53,7 @@ const meta: Meta<typeof QuantumTextField> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof QuantumTextField>;
+type Story = StoryObj<typeof TextField>;
 
 export const Default: Story = {
   args: {
@@ -74,25 +74,25 @@ export const AllStates: Story = {
         switching themes to see adaptive colors.
       </Typography>
       <Stack spacing={2} sx={{ maxWidth: 400 }}>
-        <QuantumTextField
+        <TextField
           label="Normal Field"
           state="normal"
           placeholder="This is a normal field"
           message="This is helper text"
         />
-        <QuantumTextField
+        <TextField
           label="Success Field"
           state="success"
           value="john@example.com"
           message="Email is valid"
         />
-        <QuantumTextField
+        <TextField
           label="Warning Field"
           state="warning"
           value="john@"
           message="Please complete your email address"
         />
-        <QuantumTextField
+        <TextField
           label="Error Field"
           state="error"
           value="invalid-email"
@@ -123,19 +123,19 @@ export const DensityLevels: Story = {
         needs.
       </Typography>
       <Stack spacing={2} sx={{ maxWidth: 400 }}>
-        <QuantumTextField
+        <TextField
           label="Compact Density"
           density="compact"
           placeholder="Smaller padding and text"
           message="Compact density for tight layouts"
         />
-        <QuantumTextField
+        <TextField
           label="Comfortable Density"
           density="comfortable"
           placeholder="Standard padding and text"
           message="Comfortable density for most use cases"
         />
-        <QuantumTextField
+        <TextField
           label="Spacious Density"
           density="spacious"
           placeholder="Larger padding and text"
@@ -177,8 +177,8 @@ export const ThemeAdaptiveFields: Story = {
           On Secondary Surface
         </Typography>
         <Stack spacing={2} sx={{ maxWidth: 400 }}>
-          <QuantumTextField label="Username" placeholder="Enter username" />
-          <QuantumTextField
+          <TextField label="Username" placeholder="Enter username" />
+          <TextField
             label="Password"
             type="password"
             placeholder="Enter password"
@@ -198,12 +198,12 @@ export const ThemeAdaptiveFields: Story = {
           On Primary Surface
         </Typography>
         <Stack spacing={2} sx={{ maxWidth: 400 }}>
-          <QuantumTextField
+          <TextField
             label="Email Address"
             type="email"
             placeholder="your@email.com"
           />
-          <QuantumTextField
+          <TextField
             label="Phone Number"
             type="tel"
             placeholder="+1 (555) 123-4567"
@@ -249,17 +249,17 @@ export const CompleteForm: Story = {
         </Typography>
 
         <Stack spacing={2}>
-          <QuantumTextField
+          <TextField
             label="First Name"
             required
             placeholder="Enter your first name"
           />
-          <QuantumTextField
+          <TextField
             label="Last Name"
             required
             placeholder="Enter your last name"
           />
-          <QuantumTextField
+          <TextField
             label="Email Address"
             type="email"
             required
@@ -267,24 +267,24 @@ export const CompleteForm: Story = {
             value="john@example.com"
             message="Email is available"
           />
-          <QuantumTextField
+          <TextField
             label="Password"
             type="password"
             required
             state="warning"
             message="Password should be stronger"
           />
-          <QuantumTextField
+          <TextField
             label="Phone Number"
             type="tel"
             placeholder="+1 (555) 123-4567"
             message="Optional: for account security"
           />
-          <QuantumTextField
+          <TextField
             label="Company"
             placeholder="Enter your company name"
           />
-          <QuantumTextField
+          <TextField
             label="Bio"
             multiline
             rows={3}

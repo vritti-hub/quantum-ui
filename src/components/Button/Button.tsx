@@ -4,7 +4,7 @@ import {
 } from "@mui/material";
 import React from "react";
 
-export interface QuantumButtonProps
+export interface ButtonProps
   extends Omit<MuiButtonProps, "variant" | "color"> {
   /**
    * The intent/purpose of the button
@@ -44,7 +44,7 @@ const INTENT_TO_MUI_PROPS = {
   ghost: { variant: "text" as const, color: "inherit" as const },
 } as const;
 
-export const QuantumButton = React.memo<QuantumButtonProps>(
+export const Button = React.memo<ButtonProps>(
   ({ intent = "primary", size = "medium", children, ...props }) => {
     // ✅ Direct lookup - no function calls
     const muiProps = INTENT_TO_MUI_PROPS[intent];
@@ -57,4 +57,4 @@ export const QuantumButton = React.memo<QuantumButtonProps>(
   }
 );
 
-QuantumButton.displayName = "QuantumButton";
+Button.displayName = "Button";

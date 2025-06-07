@@ -1,13 +1,13 @@
 import { Box, Stack, Typography } from "@mui/material";
 import type { Meta, StoryObj } from "@storybook/react";
-import { QuantumButton } from "../Button/Button";
-import { QuantumPaper } from "../Paper/Paper";
-import { QuantumTextField } from "../TextField/TextField";
-import { QuantumTypography } from "./Typography";
+import { Button } from "../Button/Button";
+import { Paper } from "../Paper/Paper";
+import { TextField } from "../TextField/TextField";
+import { Typography } from "./Typography";
 
-const meta: Meta<typeof QuantumTypography> = {
+const meta: Meta<typeof Typography> = {
   title: "Components/Typography",
-  component: QuantumTypography,
+  component: Typography,
   parameters: {
     layout: "padded",
     docs: {
@@ -49,7 +49,7 @@ const meta: Meta<typeof QuantumTypography> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof QuantumTypography>;
+type Story = StoryObj<typeof Typography>;
 
 export const Default: Story = {
   args: {
@@ -62,16 +62,16 @@ export const Default: Story = {
 export const DualFontSystem: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Dual Font System
-      </QuantumTypography>
-      <QuantumTypography variant="body2" intent="secondary" gutterBottom>
+      </Typography>
+      <Typography variant="body2" intent="secondary" gutterBottom>
         Space Grotesk for display elements and Inter for body text, optimized
         for business applications
-      </QuantumTypography>
+      </Typography>
 
       {/* Space Grotesk Examples */}
-      <QuantumPaper variant="glass">
+      <Paper variant="glass">
         <Box p={4}>
           <Typography variant="overline" color="text.secondary" gutterBottom>
             SPACE GROTESK - DISPLAY & UI
@@ -92,19 +92,19 @@ export const DualFontSystem: Story = {
             </Typography>
 
             <Stack direction="row" spacing={2} mt={2}>
-              <QuantumButton intent="primary">Analyze Business</QuantumButton>
-              <QuantumButton intent="secondary">View Reports</QuantumButton>
+              <Button intent="primary">Analyze Business</Button>
+              <Button intent="secondary">View Reports</Button>
             </Stack>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Inter Examples */}
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
-          <QuantumTypography variant="overline" intent="secondary" gutterBottom>
+          <Typography variant="overline" intent="secondary" gutterBottom>
             INTER - BODY TEXT & CONTENT
-          </QuantumTypography>
+          </Typography>
 
           <Stack spacing={2}>
             <Typography variant="body1" paragraph>
@@ -116,19 +116,19 @@ export const DualFontSystem: Story = {
               entire business portfolio.
             </Typography>
 
-            <QuantumTypography variant="body2" intent="secondary" paragraph>
+            <Typography variant="body2" intent="secondary" paragraph>
               The platform integrates data from salons, restaurants, clinics,
               and design studios to identify cross-business opportunities,
               optimize resource allocation, and provide actionable intelligence
               that transforms how entrepreneurs scale their ventures.
-            </QuantumTypography>
+            </Typography>
 
-            <QuantumTypography variant="caption" intent="secondary">
+            <Typography variant="caption" intent="secondary">
               Last updated: 2 minutes ago • Data synced across 12 businesses
-            </QuantumTypography>
+            </Typography>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
     </Stack>
   ),
   parameters: {
@@ -144,12 +144,12 @@ export const DualFontSystem: Story = {
 export const BusinessDashboardExample: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Vritti AI Business Dashboard
-      </QuantumTypography>
+      </Typography>
 
       {/* Main Dashboard Card */}
-      <QuantumPaper variant="elevated">
+      <Paper variant="elevated">
         <Box p={4}>
           <Typography variant="h1" gutterBottom color="primary">
             $847,392
@@ -185,19 +185,19 @@ export const BusinessDashboardExample: Story = {
             </Box>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Business Cards Grid */}
       <Stack direction="row" spacing={3} flexWrap="wrap" useFlexGap>
-        <QuantumPaper variant="standard" sx={{ flex: 1, minWidth: 280 }}>
+        <Paper variant="standard" sx={{ flex: 1, minWidth: 280 }}>
           <Box p={3}>
             <Typography variant="h4" gutterBottom>
               Downtown Salon
             </Typography>
-            <QuantumTypography variant="body2" intent="secondary" paragraph>
+            <Typography variant="body2" intent="secondary" paragraph>
               Beauty salon specializing in premium hair services and wellness
               treatments
-            </QuantumTypography>
+            </Typography>
             <Typography variant="body1" paragraph>
               Customer satisfaction increased 15% after implementing
               AI-recommended appointment scheduling. Average service time
@@ -207,16 +207,16 @@ export const BusinessDashboardExample: Story = {
               Performance: Excellent
             </Typography>
           </Box>
-        </QuantumPaper>
+        </Paper>
 
-        <QuantumPaper variant="standard" sx={{ flex: 1, minWidth: 280 }}>
+        <Paper variant="standard" sx={{ flex: 1, minWidth: 280 }}>
           <Box p={3}>
             <Typography variant="h4" gutterBottom>
               Riverside Restaurant
             </Typography>
-            <QuantumTypography variant="body2" intent="secondary" paragraph>
+            <Typography variant="body2" intent="secondary" paragraph>
               Farm-to-table restaurant featuring locally sourced ingredients
-            </QuantumTypography>
+            </Typography>
             <Typography variant="body1" paragraph>
               Menu optimization resulted in 18% increase in average order value.
               Popular dishes identified through AI analysis now drive 34% of
@@ -226,7 +226,7 @@ export const BusinessDashboardExample: Story = {
               Performance: Good
             </Typography>
           </Box>
-        </QuantumPaper>
+        </Paper>
       </Stack>
     </Stack>
   ),
@@ -243,11 +243,11 @@ export const BusinessDashboardExample: Story = {
 export const ChatInterfaceExample: Story = {
   render: () => (
     <Stack spacing={3}>
-      <QuantumTypography variant="h3" gutterBottom>
+      <Typography variant="h3" gutterBottom>
         AI Business Assistant Chat
-      </QuantumTypography>
+      </Typography>
 
-      <QuantumPaper variant="glass">
+      <Paper variant="glass">
         <Box p={3}>
           {/* Chat Header */}
           <Box borderBottom="1px solid" borderColor="divider" pb={2} mb={3}>
@@ -264,27 +264,27 @@ export const ChatInterfaceExample: Story = {
             {/* User Message */}
             <Box display="flex" justifyContent="flex-end">
               <Box maxWidth="70%">
-                <QuantumPaper variant="subtle">
+                <Paper variant="subtle">
                   <Box p={2}>
                     <Typography variant="body1">
                       How is my salon performing compared to last month?
                     </Typography>
-                    <QuantumTypography
+                    <Typography
                       variant="caption"
                       intent="secondary"
                       mt={1}
                     >
                       2:34 PM
-                    </QuantumTypography>
+                    </Typography>
                   </Box>
-                </QuantumPaper>
+                </Paper>
               </Box>
             </Box>
 
             {/* AI Response */}
             <Box display="flex" justifyContent="flex-start">
               <Box maxWidth="80%">
-                <QuantumPaper variant="standard">
+                <Paper variant="standard">
                   <Box p={3}>
                     <Typography variant="h6" gutterBottom color="primary">
                       Downtown Salon Performance Analysis
@@ -310,7 +310,7 @@ export const ChatInterfaceExample: Story = {
                       peak hours.
                     </Typography>
 
-                    <QuantumTypography
+                    <Typography
                       variant="body2"
                       intent="secondary"
                       paragraph
@@ -318,40 +318,40 @@ export const ChatInterfaceExample: Story = {
                       <strong>Recommendation:</strong> Consider extending your
                       most popular service packages based on current booking
                       patterns.
-                    </QuantumTypography>
+                    </Typography>
 
-                    <QuantumTypography variant="caption" intent="secondary">
+                    <Typography variant="caption" intent="secondary">
                       2:34 PM • Analysis based on last 30 days
-                    </QuantumTypography>
+                    </Typography>
                   </Box>
-                </QuantumPaper>
+                </Paper>
               </Box>
             </Box>
 
             {/* User Follow-up */}
             <Box display="flex" justifyContent="flex-end">
               <Box maxWidth="70%">
-                <QuantumPaper variant="subtle">
+                <Paper variant="subtle">
                   <Box p={2}>
                     <Typography variant="body1">
                       What about cross-selling opportunities with my restaurant?
                     </Typography>
-                    <QuantumTypography
+                    <Typography
                       variant="caption"
                       intent="secondary"
                       mt={1}
                     >
                       2:35 PM
-                    </QuantumTypography>
+                    </Typography>
                   </Box>
-                </QuantumPaper>
+                </Paper>
               </Box>
             </Box>
 
             {/* AI Strategic Response */}
             <Box display="flex" justifyContent="flex-start">
               <Box maxWidth="80%">
-                <QuantumPaper variant="standard">
+                <Paper variant="standard">
                   <Box p={3}>
                     <Typography variant="h6" gutterBottom color="primary">
                       Cross-Business Opportunity Analysis
@@ -385,15 +385,15 @@ export const ChatInterfaceExample: Story = {
                       <br />• Customer retention improvement: 31%
                     </Typography>
 
-                    <QuantumTypography
+                    <Typography
                       variant="caption"
                       intent="secondary"
                       mt={2}
                     >
                       2:35 PM • Cross-business analysis complete
-                    </QuantumTypography>
+                    </Typography>
                   </Box>
-                </QuantumPaper>
+                </Paper>
               </Box>
             </Box>
           </Stack>
@@ -401,18 +401,18 @@ export const ChatInterfaceExample: Story = {
           {/* Chat Input */}
           <Box mt={3} pt={2} borderTop="1px solid" borderColor="divider">
             <Stack direction="row" spacing={2}>
-              <QuantumTextField
+              <TextField
                 placeholder="Ask Vritti AI about your businesses..."
                 fullWidth
                 size="small"
               />
-              <QuantumButton intent="primary" size="small">
+              <Button intent="primary" size="small">
                 Send
-              </QuantumButton>
+              </Button>
             </Stack>
           </Box>
         </Box>
-      </QuantumPaper>
+      </Paper>
     </Stack>
   ),
   parameters: {
@@ -428,14 +428,14 @@ export const ChatInterfaceExample: Story = {
 export const ResponsiveTypographyDemo: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Responsive Typography Scaling
-      </QuantumTypography>
-      <QuantumTypography variant="body2" intent="secondary" gutterBottom>
+      </Typography>
+      <Typography variant="body2" intent="secondary" gutterBottom>
         {`Resize your browser to see typography scale across mobile (< 768px), tablet (768px+), and desktop (1024px+) breakpoints`}
-      </QuantumTypography>
+      </Typography>
 
-      <QuantumPaper variant="elevated">
+      <Paper variant="elevated">
         <Box p={4}>
           <Typography variant="h1" gutterBottom>
             Vritti AI Business Intelligence
@@ -457,67 +457,67 @@ export const ResponsiveTypographyDemo: Story = {
           </Typography>
 
           <Stack direction="row" spacing={2} mt={3}>
-            <QuantumButton intent="primary">Start Free Trial</QuantumButton>
-            <QuantumButton intent="secondary">Schedule Demo</QuantumButton>
+            <Button intent="primary">Start Free Trial</Button>
+            <Button intent="secondary">Schedule Demo</Button>
           </Stack>
         </Box>
-      </QuantumPaper>
+      </Paper>
 
       {/* Responsive Breakdown */}
       <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
-        <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+        <Paper variant="glass" sx={{ flex: 1 }}>
           <Box p={3} textAlign="center">
             <Typography variant="h6" gutterBottom>
               📱 Mobile
             </Typography>
-            <QuantumTypography
+            <Typography
               variant="caption"
               intent="secondary"
               gutterBottom
             >
               {`< 768px`}
-            </QuantumTypography>
+            </Typography>
             <Typography variant="body2">
               Touch-optimized sizes for on-the-go business management
             </Typography>
           </Box>
-        </QuantumPaper>
+        </Paper>
 
-        <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+        <Paper variant="glass" sx={{ flex: 1 }}>
           <Box p={3} textAlign="center">
             <Typography variant="h6" gutterBottom>
               💻 Tablet
             </Typography>
-            <QuantumTypography
+            <Typography
               variant="caption"
               intent="secondary"
               gutterBottom
             >
               768px - 1024px
-            </QuantumTypography>
+            </Typography>
             <Typography variant="body2">
               Balanced for arm's length reading and touch interaction
             </Typography>
           </Box>
-        </QuantumPaper>
+        </Paper>
 
-        <QuantumPaper variant="glass" sx={{ flex: 1 }}>
+        <Paper variant="glass" sx={{ flex: 1 }}>
           <Box p={3} textAlign="center">
             <Typography variant="h6" gutterBottom>
               🖥️ Desktop
             </Typography>
-            <QuantumTypography
+            <Typography
               variant="caption"
               intent="secondary"
               gutterBottom
             >
               1024px+
-            </QuantumTypography>
+            </Typography>
             <Typography variant="body2">
               Optimized for desk viewing and detailed analysis
             </Typography>
           </Box>
-        </QuantumPaper>
+        </Paper>
       </Stack>
     </Stack>
   ),
@@ -534,40 +534,40 @@ export const ResponsiveTypographyDemo: Story = {
 export const ContentHierarchyShowcase: Story = {
   render: () => (
     <Stack spacing={4}>
-      <QuantumTypography variant="h2" gutterBottom>
+      <Typography variant="h2" gutterBottom>
         Content Hierarchy & Readability
-      </QuantumTypography>
+      </Typography>
 
-      <QuantumPaper variant="standard">
+      <Paper variant="standard">
         <Box p={4}>
           {/* Article Header */}
-          <QuantumTypography variant="overline" intent="primary" gutterBottom>
+          <Typography variant="overline" intent="primary" gutterBottom>
             BUSINESS INSIGHTS
-          </QuantumTypography>
+          </Typography>
           <Typography variant="h1" gutterBottom>
             The Future of Multi-Business Management
           </Typography>
-          <QuantumTypography variant="h4" intent="secondary" gutterBottom>
+          <Typography variant="h4" intent="secondary" gutterBottom>
             How AI is revolutionizing the way serial entrepreneurs scale their
             ventures
-          </QuantumTypography>
+          </Typography>
 
           <Stack direction="row" spacing={2} mb={3}>
-            <QuantumTypography variant="caption" intent="secondary">
+            <Typography variant="caption" intent="secondary">
               By Vritti AI Research Team
-            </QuantumTypography>
-            <QuantumTypography variant="caption" intent="secondary">
+            </Typography>
+            <Typography variant="caption" intent="secondary">
               •
-            </QuantumTypography>
-            <QuantumTypography variant="caption" intent="secondary">
+            </Typography>
+            <Typography variant="caption" intent="secondary">
               8 min read
-            </QuantumTypography>
-            <QuantumTypography variant="caption" intent="secondary">
+            </Typography>
+            <Typography variant="caption" intent="secondary">
               •
-            </QuantumTypography>
-            <QuantumTypography variant="caption" intent="secondary">
+            </Typography>
+            <Typography variant="caption" intent="secondary">
               Published Dec 15, 2024
-            </QuantumTypography>
+            </Typography>
           </Stack>
 
           <Box borderLeft="3px solid" borderColor="primary.main" pl={3} mb={4}>
@@ -643,7 +643,7 @@ export const ContentHierarchyShowcase: Story = {
             </Box>
           </Typography>
 
-          <QuantumTypography
+          <Typography
             variant="caption"
             intent="secondary"
             mt={4}
@@ -651,9 +651,9 @@ export const ContentHierarchyShowcase: Story = {
           >
             Want to learn how Vritti AI can transform your business portfolio?
             Schedule a personalized demo with our team.
-          </QuantumTypography>
+          </Typography>
         </Box>
-      </QuantumPaper>
+      </Paper>
     </Stack>
   ),
   parameters: {
