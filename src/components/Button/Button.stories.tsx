@@ -1,5 +1,5 @@
 import { Box, Stack } from "@mui/material";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Paper } from "../Paper/Paper";
 import { TextField } from "../TextField/TextField";
 import { Typography } from "../Typography/Typography";

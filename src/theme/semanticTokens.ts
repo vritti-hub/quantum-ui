@@ -167,7 +167,7 @@ export const SEMANTIC_TOKENS = {
         "'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
       // Inter for body text and readable content
       primary:
-        "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
+        "'Quicksand','Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif",
     },
 
     // Font weights
@@ -408,14 +408,16 @@ const hexToRgb = (hex: string): string => {
   ].join(", ");
 };
 
-export const getAllThemeVariables = (): {
+interface ThemeVariables {
   lightMobile: Record<string, string>;
   lightTablet: Record<string, string>;
   lightDesktop: Record<string, string>;
   darkMobile: Record<string, string>;
   darkTablet: Record<string, string>;
   darkDesktop: Record<string, string>;
-} => {
+}
+
+export const getAllThemeVariables = (): ThemeVariables => {
   const modes: ("light" | "dark")[] = ["light", "dark"];
   const breakpoints: ("mobile" | "tablet" | "desktop")[] = [
     "mobile",
@@ -423,13 +425,13 @@ export const getAllThemeVariables = (): {
     "desktop",
   ];
 
-  const result = {} as any;
+  const result = {} as Record<string, Record<string, string>>;
 
   modes.forEach((mode) => {
     breakpoints.forEach((breakpoint) => {
       // Create tokens object for both static and responsive values
       const tokens = {
-        color: {} as any,
+        color: {} as Record<string, Record<string, string>>,
         borderRadius: SEMANTIC_TOKENS.borderRadius,
         shadows: SEMANTIC_TOKENS.shadows,
         glassmorphism: SEMANTIC_TOKENS.glassmorphism,
@@ -437,9 +439,9 @@ export const getAllThemeVariables = (): {
         typography: {
           fontFamily: SEMANTIC_TOKENS.typography.fontFamily,
           fontWeight: SEMANTIC_TOKENS.typography.fontWeight,
-          variants: {} as any,
+          variants: {} as Record<string, Record<string, string | number>>,
         },
-        spacing: {} as any,
+        spacing: {} as Record<string, string>,
       };
 
       // Process colors with RGB support
@@ -485,5 +487,5 @@ export const getAllThemeVariables = (): {
     });
   });
 
-  return result;
+  return result as unknown as ThemeVariables;
 };
