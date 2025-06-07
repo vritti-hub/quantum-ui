@@ -3,7 +3,7 @@ import React, { useCallback, useState } from "react";
 import { Button } from "./components/Button/Button";
 import { Paper } from "./components/Paper/Paper";
 import { TextField } from "./components/TextField/TextField";
-import { ThemeProvider, useTheme } from "./theme/ThemeProvider";
+import { ThemeProvider, useTheme } from "./theme";
 
 // ✅ Optimized: Memoized content component
 const AppContent = React.memo(() => {
