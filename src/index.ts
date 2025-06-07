@@ -11,8 +11,9 @@ export type { TypographyProps } from "./components/Typography/Typography";
 
 // Theme system exports
 export { createQuantumTheme } from "./theme/createTheme";
-export { ThemeProvider, useTheme } from "./theme/ThemeProvider";
-export type { ThemeContextType } from "./theme/ThemeProvider";
+export { ThemeProvider } from "./theme/ThemeProvider";
+export { useTheme } from "./theme/useTheme";
+export type { ThemeContextType } from "./theme/useTheme";
 
 // Design tokens for advanced usage
 export { SEMANTIC_TOKENS } from "./theme/semanticTokens";

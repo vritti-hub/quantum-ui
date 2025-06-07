@@ -107,7 +107,7 @@ export const DualFontSystem: Story = {
           </Typography>
 
           <Stack spacing={2}>
-            <Typography variant="body1" paragraph>
+            <Typography variant="body1">
               Vritti AI is an AI-powered business orchestration platform
               designed for serial entrepreneurs managing multiple businesses.
               Unlike traditional business software, Vritti acts as a dominant AI

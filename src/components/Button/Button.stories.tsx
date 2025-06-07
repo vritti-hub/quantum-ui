@@ -70,7 +70,7 @@ export const BusinessActionsByIntent: Story = {
           <Typography variant="h4" gutterBottom>
             Primary Actions
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Critical business operations that drive revenue and growth
           </Typography>
 
@@ -101,7 +101,7 @@ export const BusinessActionsByIntent: Story = {
           <Typography variant="h4" gutterBottom>
             Secondary Actions
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Supporting operations and alternative choices
           </Typography>
 
@@ -135,7 +135,7 @@ export const BusinessActionsByIntent: Story = {
           <Typography variant="h4" gutterBottom>
             Destructive Actions
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             High-risk operations requiring user confirmation
           </Typography>
 
@@ -165,7 +165,7 @@ export const BusinessActionsByIntent: Story = {
           <Typography variant="h4" gutterBottom>
             Ghost Actions
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Subtle operations and optional interactions
           </Typography>
 
@@ -327,7 +327,7 @@ export const BusinessDashboardActions: Story = {
             <Typography variant="h4" gutterBottom>
               Downtown Salon
             </Typography>
-            <Typography variant="body2" intent="secondary" paragraph>
+            <Typography variant="body2" intent="secondary">
               Premium beauty services with AI-optimized scheduling
             </Typography>
 
@@ -374,7 +374,7 @@ export const BusinessDashboardActions: Story = {
             <Typography variant="h4" gutterBottom>
               Riverside Restaurant
             </Typography>
-            <Typography variant="body2" intent="secondary" paragraph>
+            <Typography variant="body2" intent="secondary">
               Farm-to-table dining with AI menu optimization
             </Typography>
 
@@ -440,7 +440,7 @@ export const BusinessFormActions: Story = {
           <Typography variant="h3" gutterBottom>
             Add New Business to Portfolio
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Let Vritti AI analyze and optimize your new business venture
           </Typography>
 
@@ -501,7 +501,7 @@ export const BusinessFormActions: Story = {
               <Typography variant="h5" gutterBottom>
                 AI Notification Preferences
               </Typography>
-              <Typography variant="body2" intent="secondary" paragraph>
+              <Typography variant="body2" intent="secondary">
                 Choose how often you want to receive AI insights and
                 recommendations
               </Typography>
@@ -524,7 +524,7 @@ export const BusinessFormActions: Story = {
               <Typography variant="h5" gutterBottom>
                 Cross-Business Analytics
               </Typography>
-              <Typography variant="body2" intent="secondary" paragraph>
+              <Typography variant="body2" intent="secondary">
                 Allow Vritti AI to analyze patterns across your business
                 portfolio for better insights
               </Typography>
@@ -564,11 +564,11 @@ export const BusinessFormActions: Story = {
           <Typography variant="h4" gutterBottom>
             Confirmation Required
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1">
             Are you sure you want to remove "Downtown Salon" from your business
             portfolio? This action cannot be undone.
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             This will permanently delete all historical data, analytics, and AI
             insights for this business.
           </Typography>
@@ -610,7 +610,7 @@ export const ThemeAdaptiveButtons: Story = {
           <Typography variant="h4" gutterBottom>
             On Primary Surface
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Business dashboard main content area
           </Typography>
 
@@ -629,7 +629,7 @@ export const ThemeAdaptiveButtons: Story = {
           <Typography variant="h4" gutterBottom>
             On Glass Surface
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Modal dialogs and overlay interfaces
           </Typography>
 
@@ -648,7 +648,7 @@ export const ThemeAdaptiveButtons: Story = {
           <Typography variant="h4" gutterBottom>
             On Elevated Surface
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Important cards and highlighted content
           </Typography>
 
@@ -667,7 +667,7 @@ export const ThemeAdaptiveButtons: Story = {
           <Typography variant="h4" gutterBottom>
             On Subtle Surface
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Background sections and less important content
           </Typography>
 
@@ -707,12 +707,12 @@ export const InteractiveBusinessScenarios: Story = {
           <Typography variant="h3" gutterBottom>
             Revenue Optimization Opportunity
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1">
             Vritti AI has identified a potential 18% revenue increase across
             your salon and restaurant operations through improved customer flow
             optimization.
           </Typography>
-          <Typography variant="body2" intent="secondary" paragraph>
+          <Typography variant="body2" intent="secondary">
             Implementation time: 2-3 weeks • Expected ROI: $12,400/month
           </Typography>
 
@@ -753,7 +753,7 @@ export const InteractiveBusinessScenarios: Story = {
           <Typography variant="h4" gutterBottom>
             🚨 Business Performance Alert
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1">
             Downtown Salon's customer satisfaction has dropped to 3.2/5 in the
             past week. Immediate attention recommended.
           </Typography>
@@ -795,7 +795,7 @@ export const InteractiveBusinessScenarios: Story = {
           <Typography variant="h4" gutterBottom>
             Data Export & Analytics
           </Typography>
-          <Typography variant="body1" paragraph>
+          <Typography variant="body1">
             Generate comprehensive reports for tax preparation, investor
             meetings, or strategic planning.
           </Typography>

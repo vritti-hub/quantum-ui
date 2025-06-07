@@ -1,22 +1,8 @@
 import { CssBaseline } from "@mui/material";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createQuantumTheme } from "./createTheme";
-
-export interface ThemeContextType {
-  toggleColorScheme: () => void;
-  colorScheme: "light" | "dark";
-}
-
-const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
-
-export const useTheme = () => {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
-};
+import { ThemeContext } from "./useTheme";
 
 interface ThemeProviderProps {
   children: React.ReactNode;

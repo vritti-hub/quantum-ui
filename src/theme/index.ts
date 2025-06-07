@@ -1,6 +1,7 @@
 export { createQuantumTheme } from "./createTheme";
-export { ThemeProvider, useTheme } from "./ThemeProvider";
-export type { ThemeContextType } from "./ThemeProvider";
+export { ThemeProvider } from "./ThemeProvider";
+export { useTheme } from "./useTheme";
+export type { ThemeContextType } from "./useTheme";
 
 // Design tokens and utilities
 export { SEMANTIC_TOKENS } from "./semanticTokens";

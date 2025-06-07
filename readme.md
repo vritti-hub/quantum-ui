@@ -1,54 +1,131 @@
-# React + TypeScript + Vite
+# Quantum UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern React component library built with TypeScript, Material-UI, and design tokens. Quantum UI provides a comprehensive set of business-focused components with a sophisticated theme system supporting light/dark modes and responsive design.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+✨ **Modern Design System** - Built with semantic design tokens and responsive breakpoints  
+🎨 **Dual Font System** - Space Grotesk for display elements, Inter for body text  
+🌓 **Theme Support** - Built-in light/dark mode with smooth transitions  
+📱 **Responsive** - Mobile-first design with tablet and desktop optimizations  
+⚡ **Performance** - Optimized components with React.memo and efficient styling  
+📖 **Storybook** - Comprehensive component documentation and examples  
+🔧 **TypeScript** - Full type safety with intelligent autocomplete  
 
-## Expanding the ESLint configuration
+## Installation
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm install quantum-ui
+# or
+yarn add quantum-ui
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Quick Start
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```tsx
+import React from 'react';
+import { ThemeProvider, Button, Typography, Paper } from 'quantum-ui';
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+function App() {
+  return (
+    <ThemeProvider>
+      <Paper variant="elevated">
+        <Typography variant="h1">Welcome to Quantum UI</Typography>
+        <Typography variant="body1" intent="secondary">
+          A modern component library for business applications
+        </Typography>
+        <Button intent="primary">Get Started</Button>
+      </Paper>
+    </ThemeProvider>
+  );
+}
 ```
+
+## Components
+
+### Core Components
+- **Button** - Primary, secondary, destructive, and ghost variants
+- **Typography** - Comprehensive text styling with semantic intents
+- **TextField** - Form inputs with validation states and density options
+- **Paper** - Containers with glass, elevated, and subtle variants
+
+### Theme System
+- **ThemeProvider** - Global theme and color scheme management
+- **useTheme** - Hook for accessing theme context and toggling modes
+
+## API Reference
+
+### Button
+```tsx
+interface ButtonProps {
+  intent?: "primary" | "secondary" | "destructive" | "ghost";
+  size?: "small" | "medium" | "large";
+  fullWidth?: boolean;
+  disabled?: boolean;
+}
+```
+
+### Typography
+```tsx
+interface TypographyProps {
+  intent?: "primary" | "secondary" | "disabled";
+  variant?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "body1" | "body2" | "button" | "caption" | "overline";
+}
+```
+
+### TextField
+```tsx
+interface TextFieldProps {
+  state?: "normal" | "error" | "success" | "warning";
+  density?: "compact" | "comfortable" | "spacious";
+  label?: string;
+  message?: string;
+}
+```
+
+### Paper
+```tsx
+interface PaperProps {
+  variant?: "standard" | "glass" | "elevated" | "subtle";
+}
+```
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Run Storybook
+npm run storybook
+
+# Build library
+npm run build
+
+# Run linting
+npm run lint
+```
+
+## Design System
+
+Quantum UI is built on a sophisticated design token system that ensures consistency across all components:
+
+- **Colors**: Semantic color system with light/dark mode support
+- **Typography**: Responsive font scaling with dual font approach
+- **Spacing**: Consistent spacing scale across all breakpoints
+- **Shadows**: Elevated and glass morphism effects
+- **Animations**: Smooth transitions with reduced motion support
+
+## Browser Support
+
+- Chrome 90+
+- Firefox 88+
+- Safari 14+
+- Edge 90+
+
+## License
+
+MIT License - see LICENSE file for details.
