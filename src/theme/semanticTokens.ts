@@ -125,22 +125,65 @@ export const SEMANTIC_TOKENS = {
     },
   },
 
-  // Border radius - static values
-  borderRadius: {
-    none: "0px",
-    small: "4px",
-    medium: "8px",
-    large: "12px",
-    full: "9999px",
+  // Effects - static values
+  effects: {
+    shimmer: {
+      light: "rgba(255, 255, 255, 0.1)", // White shimmer for light mode
+      dark: "rgba(255, 255, 255, 0.05)",  // Subtle white shimmer for dark mode
+    } as ColorDefinition,
   },
 
-  // Shadows - static values
+  // Border radius - responsive values
+  borderRadius: {
+    none: {
+      mobile: "0px",
+      tablet: "0px", 
+      desktop: "0px",
+    } as ResponsiveValue<string>,
+    small: {
+      mobile: "3px",
+      tablet: "4px",
+      desktop: "4px",
+    } as ResponsiveValue<string>,
+    medium: {
+      mobile: "6px",
+      tablet: "8px",
+      desktop: "8px",
+    } as ResponsiveValue<string>,
+    large: {
+      mobile: "8px",
+      tablet: "12px",
+      desktop: "12px",
+    } as ResponsiveValue<string>,
+    full: {
+      mobile: "9999px",
+      tablet: "9999px",
+      desktop: "9999px",
+    } as ResponsiveValue<string>,
+  },
+
+  // Shadows - theme-aware values
   shadows: {
-    small: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
-    medium: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
-    large: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
-    glass: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-    glassInset: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",
+    small: {
+      light: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
+      dark: "0 1px 2px 0 rgba(0, 0, 0, 0.3)",
+    } as ColorDefinition,
+    medium: {
+      light: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
+      dark: "0 4px 6px -1px rgba(0, 0, 0, 0.4)",
+    } as ColorDefinition,
+    large: {
+      light: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+      dark: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
+    } as ColorDefinition,
+    glass: {
+      light: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+      dark: "0 8px 32px 0 rgba(59, 130, 246, 0.25)",
+    } as ColorDefinition,
+    glassInset: {
+      light: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",
+      dark: "inset 0 1px 0 0 rgba(255, 255, 255, 0.05)",
+    } as ColorDefinition,
     textField: {
       light:
         "0 4px 6px -1px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.08)",
@@ -148,11 +191,20 @@ export const SEMANTIC_TOKENS = {
     } as ColorDefinition,
   },
 
-  // Glass effects - static values
+  // Glass effects - theme-aware values
   glassmorphism: {
-    backdrop: "blur(16px)",
-    backdropLight: "blur(8px)",
-    backdropHeavy: "blur(24px)",
+    backdrop: {
+      light: "blur(16px)",
+      dark: "blur(20px)", // Stronger blur in dark mode for better effect
+    } as ColorDefinition,
+    backdropLight: {
+      light: "blur(8px)",
+      dark: "blur(12px)",
+    } as ColorDefinition,
+    backdropHeavy: {
+      light: "blur(24px)",
+      dark: "blur(32px)",
+    } as ColorDefinition,
   },
 
   // Animation - static values
@@ -479,9 +531,10 @@ export const getAllThemeVariables = (): ThemeVariables => {
       // Create tokens object for both static and responsive values
       const tokens = {
         color: {} as Record<string, Record<string, string>>,
-        borderRadius: SEMANTIC_TOKENS.borderRadius,
+        borderRadius: {} as Record<string, string>,
         shadows: {} as Record<string, string>,
-        glassmorphism: SEMANTIC_TOKENS.glassmorphism,
+        glassmorphism: {} as Record<string, string>,
+        effects: {} as Record<string, string>,
         animation: SEMANTIC_TOKENS.animation,
         typography: {
           fontFamily: SEMANTIC_TOKENS.typography.fontFamily,
@@ -511,6 +564,11 @@ export const getAllThemeVariables = (): ThemeVariables => {
         }
       );
 
+      // Add borderRadius (responsive)
+      Object.entries(SEMANTIC_TOKENS.borderRadius).forEach(([name, responsiveValue]) => {
+        tokens.borderRadius[name] = responsiveValue[breakpoint];
+      });
+
       // Add shadows (process theme-aware shadows)
       Object.entries(SEMANTIC_TOKENS.shadows).forEach(([name, shadowValue]) => {
         if (
@@ -521,6 +579,32 @@ export const getAllThemeVariables = (): ThemeVariables => {
           tokens.shadows[name] = shadowValue[mode];
         } else {
           tokens.shadows[name] = shadowValue as string;
+        }
+      });
+
+      // Add glassmorphism (theme-aware)
+      Object.entries(SEMANTIC_TOKENS.glassmorphism).forEach(([name, glassValue]) => {
+        if (
+          typeof glassValue === "object" &&
+          "light" in glassValue &&
+          "dark" in glassValue
+        ) {
+          tokens.glassmorphism[name] = glassValue[mode];
+        } else {
+          tokens.glassmorphism[name] = glassValue as string;
+        }
+      });
+
+      // Add effects (theme-aware)
+      Object.entries(SEMANTIC_TOKENS.effects).forEach(([name, effectValue]) => {
+        if (
+          typeof effectValue === "object" &&
+          "light" in effectValue &&
+          "dark" in effectValue
+        ) {
+          tokens.effects[name] = effectValue[mode];
+        } else {
+          tokens.effects[name] = effectValue as string;
         }
       });
 

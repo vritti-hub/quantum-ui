@@ -82,7 +82,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           boxShadow: `
             0 6px 10px 0 rgba(var(--quantum-color-action-primaryRGB), 0.4),
             0 0 10px rgba(var(--quantum-color-action-primaryRGB), 0.6),
-            inset 0 0 10px rgba(var(--quantum-color-effects-shimmerRGB), 0.1)
+            inset 0 0 10px var(--quantum-effects-shimmer)
           `,
           transform: "translateY(-2px)",
 
@@ -173,7 +173,7 @@ export const ButtonTheme: Components<Theme>["MuiButton"] = {
           boxShadow: `
             0 6px 10px 0 rgba(var(--quantum-color-feedback-errorRGB), 0.4),
             0 0 10px rgba(var(--quantum-color-feedback-errorRGB), 0.6),
-            inset 0 0 10px rgba(var(--quantum-color-effects-shimmerRGB), 0.1)
+            inset 0 0 10px var(--quantum-effects-shimmer)
           `,
           transform: "translateY(-2px)",
 
