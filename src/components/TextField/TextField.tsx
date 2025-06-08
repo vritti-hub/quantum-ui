@@ -12,14 +12,6 @@ export interface TextFieldProps
   state?: "normal" | "error" | "success" | "warning";
 
   /**
-   * Visual density of the field
-   * - compact: Smaller padding and font size
-   * - comfortable: Standard padding and font size
-   * - spacious: Larger padding and font size
-   */
-  density?: "compact" | "comfortable" | "spacious";
-
-  /**
    * Label for the field
    */
   label?: string;
@@ -58,25 +50,17 @@ const STATE_TO_COLOR_MAP = {
   warning: "warning",
 } as const;
 
-const DENSITY_TO_SIZE_MAP = {
-  compact: "small",
-  comfortable: "medium",
-  spacious: "medium", // MUI doesn't have large, medium is largest
-} as const;
-
 export const TextField = React.memo<TextFieldProps>(
   ({
     state = "normal",
-    density = "comfortable",
     message,
     fullWidth = true,
     ...props
   }) => {
     return (
       <MuiTextField
-        variant="outlined"
+        variant="filled"
         color={STATE_TO_COLOR_MAP[state]}
-        size={DENSITY_TO_SIZE_MAP[density]}
         error={state === "error"}
         helperText={message}
         fullWidth={fullWidth}

@@ -4,72 +4,98 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
   styleOverrides: {
     root: {
       fontFamily: "var(--quantum-typography-fontFamily)",
+      minWidth: "var(--quantum-textField-minWidth)",
 
       "& .MuiInputLabel-root": {
-        fontFamily: "inherit",
-        fontSize: "var(--quantum-typography-fontSize-body)",
+        fontFamily: "var(--quantum-typography-fontFamily-display)",
+        fontSize: "var(--quantum-textField-fontSize)",
         fontWeight: "var(--quantum-typography-fontWeight-medium)",
+        color: "var(--quantum-color-text-secondary)",
 
         "&.Mui-focused": {
           fontWeight: "var(--quantum-typography-fontWeight-semibold)",
+          color: "var(--quantum-color-action-primary)",
         },
 
         "&.MuiInputLabel-shrunk": {
           fontSize: "var(--quantum-typography-fontSize-caption)",
+          fontWeight: "var(--quantum-typography-fontWeight-semibold)",
+        },
+
+        "&.Mui-disabled": {
+          color: "var(--quantum-color-text-disabled)",
         },
       },
 
-      "& .MuiOutlinedInput-root": {
-        borderRadius: "var(--quantum-borderRadius-medium)",
-        fontSize: "var(--quantum-typography-fontSize-body)",
-        transition:
-          "all var(--quantum-animation-duration-normal) var(--quantum-animation-easing-standard)",
+      "& .MuiFilledInput-root": {
+        borderRadius: "var(--quantum-borderRadius-large)",
+        backgroundColor: "var(--quantum-color-surface-secondary)",
+        fontSize: "var(--quantum-typography-fontSize-field)",
+        transition: "none",
+        border: "1px solid var(--quantum-color-border-subtle)",
+        minHeight: "var(--quantum-textField-height)",
+        backdropFilter: "blur(8px)",
+        boxShadow:
+          "var(--quantum-shadows-small), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
 
-        "& fieldset": {
-          borderColor: "var(--quantum-color-border-default)",
-          transition:
-            "all var(--quantum-animation-duration-normal) var(--quantum-animation-easing-standard)",
+        "&:before": {
+          display: "none",
         },
 
-        "&:hover fieldset": {
-          borderColor: "var(--quantum-color-border-subtle)",
+        "&:hover:not(.Mui-disabled):before": {
+          display: "none",
         },
 
-        "&.Mui-focused fieldset": {
+        "&:after": {
+          display: "none",
+        },
+
+        "&:hover:not(.Mui-focused):not(.Mui-disabled)": {
           borderColor: "var(--quantum-color-action-primary)",
-          borderWidth: "2px",
+          boxShadow:
+            "var(--quantum-shadows-medium), inset 0 1px 0 rgba(255, 255, 255, 0.15)",
         },
 
-        "&.Mui-error fieldset": {
+        "&.Mui-focused": {
+          backgroundColor: "var(--quantum-color-surface-elevated)",
+          borderColor: "var(--quantum-color-action-primary)",
+          boxShadow:
+            "var(--quantum-shadows-large), 0 0 20px rgba(var(--quantum-color-action-primaryRGB), 0.15)",
+        },
+
+        "&.Mui-error": {
           borderColor: "var(--quantum-color-feedback-error)",
+          boxShadow:
+            "0 0 12px rgba(var(--quantum-color-feedback-errorRGB), 0.2)",
         },
 
         "&.Mui-disabled": {
           backgroundColor: "var(--quantum-color-surface-secondary)",
-
-          "& fieldset": {
-            borderColor: "var(--quantum-color-border-subtle)",
-          },
+          borderColor: "var(--quantum-color-border-subtle)",
+          opacity: 0.6,
         },
       },
 
-      "& .MuiFormHelperText-root": {
-        fontFamily: "inherit",
-        fontSize: "var(--quantum-typography-fontSize-caption)",
-        marginTop: "6px",
-        marginLeft: "4px",
-
-        "&.Mui-error": {
-          color: "var(--quantum-color-feedback-error)",
-        },
-      },
-
-      "& .MuiInputBase-input": {
+      "& .MuiFilledInput-input": {
+        paddingTop: "var(--quantum-textField-spacing-paddingTop)",
+        paddingBottom: "var(--quantum-textField-spacing-paddingBottom)",
+        paddingLeft: "var(--quantum-textField-spacing-paddingLeft)",
+        paddingRight: "0px",
+        height: "auto",
         color: "var(--quantum-color-text-primary)",
+        fontSize: "var(--quantum-textField-fontSize)",
+        fontWeight: "var(--quantum-typography-fontWeight-semibold)",
+        fontFamily: "var(--quantum-typography-fontFamily-primary)",
+        letterSpacing: "-0.01em",
 
         "&::placeholder": {
+          color: "var(--quantum-color-text-secondary)",
+          fontWeight: "var(--quantum-typography-fontWeight-normal)",
+        },
+
+        "&:focus::placeholder": {
           color: "var(--quantum-color-text-disabled)",
-          opacity: 1,
+          fontWeight: "var(--quantum-typography-fontWeight-light)",
         },
 
         "&:disabled": {
@@ -77,54 +103,50 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
           WebkitTextFillColor: "var(--quantum-color-text-disabled)",
         },
       },
+
+      "& .MuiFormHelperText-root": {
+        fontFamily: "var(--quantum-typography-variants-caption-fontFamily)",
+        fontSize: "var(--quantum-typography-variants-caption-fontSize)",
+        fontWeight: "var(--quantum-typography-variants-caption-fontWeight)",
+        lineHeight: "var(--quantum-typography-variants-caption-lineHeight)",
+        letterSpacing: "var(--quantum-typography-variants-caption-letterSpacing)",
+        marginTop: "6px",
+        marginLeft: "12px",
+        color: "var(--quantum-color-text-secondary)",
+
+        "&.Mui-error": {
+          color: "var(--quantum-color-feedback-error)",
+        },
+
+        "&.Mui-disabled": {
+          color: "var(--quantum-color-text-disabled)",
+        },
+      },
     },
   },
 
   variants: [
-    // Size variants
-    {
-      props: { size: "small" },
-      style: {
-        "& .MuiOutlinedInput-root": {
-          fontSize: "var(--quantum-typography-fontSize-caption)",
-
-          "& .MuiOutlinedInput-input": {
-            padding:
-              "var(--quantum-spacing-normal) var(--quantum-spacing-comfortable)",
-          },
-        },
-
-        "& .MuiInputLabel-root": {
-          fontSize: "var(--quantum-typography-fontSize-caption)",
-
-          "&.MuiInputLabel-shrunk": {
-            fontSize: "calc(var(--quantum-typography-fontSize-caption) * 0.85)",
-          },
-        },
-      },
-    },
-
-    {
-      props: { size: "medium" },
-      style: {
-        "& .MuiOutlinedInput-input": {
-          padding:
-            "var(--quantum-spacing-comfortable) var(--quantum-spacing-spacious)",
-        },
-      },
-    },
-
-    // State variants
+    // State variants with proper color theming
     {
       props: { color: "success" },
       style: {
-        "& .MuiOutlinedInput-root": {
-          "&.Mui-focused fieldset": {
+        "& .MuiFilledInput-root": {
+          borderColor: "var(--quantum-color-feedback-success)",
+          boxShadow:
+            "0 0 12px rgba(var(--quantum-color-feedback-successRGB), 0.2)",
+
+          "&.Mui-focused": {
             borderColor: "var(--quantum-color-feedback-success)",
+            boxShadow:
+              "var(--quantum-shadows-large), 0 0 20px rgba(var(--quantum-color-feedback-successRGB), 0.15)",
           },
         },
 
         "& .MuiInputLabel-root.Mui-focused": {
+          color: "var(--quantum-color-feedback-success)",
+        },
+
+        "& .MuiFormHelperText-root:not(.Mui-error)": {
           color: "var(--quantum-color-feedback-success)",
         },
       },
@@ -133,14 +155,42 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
     {
       props: { color: "warning" },
       style: {
-        "& .MuiOutlinedInput-root": {
-          "&.Mui-focused fieldset": {
+        "& .MuiFilledInput-root": {
+          borderColor: "var(--quantum-color-feedback-warning)",
+          boxShadow:
+            "0 0 12px rgba(var(--quantum-color-feedback-warningRGB), 0.2)",
+
+          "&.Mui-focused": {
             borderColor: "var(--quantum-color-feedback-warning)",
+            boxShadow:
+              "var(--quantum-shadows-large), 0 0 20px rgba(var(--quantum-color-feedback-warningRGB), 0.15)",
           },
         },
 
         "& .MuiInputLabel-root.Mui-focused": {
           color: "var(--quantum-color-feedback-warning)",
+        },
+
+        "& .MuiFormHelperText-root:not(.Mui-error)": {
+          color: "var(--quantum-color-feedback-warning)",
+        },
+      },
+    },
+
+    {
+      props: { color: "error" },
+      style: {
+        "& .MuiInputLabel-root.Mui-focused": {
+          color: "var(--quantum-color-feedback-error)",
+        },
+      },
+    },
+
+    {
+      props: { color: "primary" },
+      style: {
+        "& .MuiInputLabel-root.Mui-focused": {
+          color: "var(--quantum-color-action-primary)",
         },
       },
     },

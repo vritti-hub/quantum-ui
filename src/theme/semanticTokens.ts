@@ -90,10 +90,12 @@ export const SEMANTIC_TOKENS = {
       success: {
         light: palette.emerald[500],
         dark: palette.emerald[500],
+        needsRGB: true,
       } as ColorDefinition,
       warning: {
         light: palette.amber[500],
         dark: palette.amber[500],
+        needsRGB: true,
       } as ColorDefinition,
       error: {
         light: palette.red[500],
@@ -128,7 +130,7 @@ export const SEMANTIC_TOKENS = {
     full: "9999px",
   },
 
-  // Shadows - static values
+  // Shadows - static values  
   shadows: {
     small: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
     medium: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
@@ -143,6 +145,7 @@ export const SEMANTIC_TOKENS = {
     backdropLight: "blur(8px)",
     backdropHeavy: "blur(24px)",
   },
+
 
   // Animation - static values
   animation: {
@@ -297,9 +300,9 @@ export const SEMANTIC_TOKENS = {
       // Body1 - Main content (OPTIMIZED - Inter font)
       body1: {
         fontSize: {
-          mobile: "1rem", // 16px (same - perfect for mobile)
-          tablet: "1.125rem", // 18px (same - good for reading)
-          desktop: "1.125rem", // 18px (same - comfortable for business content)
+          mobile: "0.875rem", // 14px - more appropriate for web apps
+          tablet: "1rem", // 16px - reduced from 18px
+          desktop: "1rem", // 16px - reduced from 18px for better UI proportions
         },
         lineHeight: {
           mobile: 1.5,
@@ -313,9 +316,9 @@ export const SEMANTIC_TOKENS = {
       // Body2 - Secondary content (OPTIMIZED)
       body2: {
         fontSize: {
-          mobile: "0.875rem", // 14px (same)
-          tablet: "1rem", // 16px (same)
-          desktop: "1rem", // 16px (same - good balance)
+          mobile: "0.8125rem", // 13px - reduced for form fields
+          tablet: "0.875rem", // 14px - reduced from 16px
+          desktop: "0.875rem", // 14px - better for form elements
         },
         lineHeight: {
           mobile: 1.5,
@@ -329,9 +332,9 @@ export const SEMANTIC_TOKENS = {
       // Button - Interface elements (OPTIMIZED)
       button: {
         fontSize: {
-          mobile: "0.8125rem", // 13px (was 14px) - slightly smaller for compact feel
-          tablet: "0.875rem", // 14px (was 16px) - more appropriate for business
-          desktop: "0.875rem", // 14px (was 16px) - consistent across larger screens
+          mobile: "0.75rem", // 12px - reduced for more compact buttons
+          tablet: "0.8125rem", // 13px - reduced from 14px
+          desktop: "0.8125rem", // 13px - more compact for business UI
         },
         lineHeight: {
           mobile: 1.3, // Tighter line height for buttons (was 1.4)
@@ -345,9 +348,9 @@ export const SEMANTIC_TOKENS = {
       // Caption - Small text, metadata (REFINED for small buttons)
       caption: {
         fontSize: {
-          mobile: "0.75rem", // 12px (same)
-          tablet: "0.8125rem", // 13px (was 14px) - slightly smaller
-          desktop: "0.8125rem", // 13px (was 14px) - more refined
+          mobile: "0.6875rem", // 11px - reduced for metadata
+          tablet: "0.75rem", // 12px - reduced from 13px
+          desktop: "0.75rem", // 12px - appropriate for helper text
         },
         lineHeight: {
           mobile: 1.3, // Tighter for small buttons (was 1.4)
@@ -357,6 +360,43 @@ export const SEMANTIC_TOKENS = {
         fontWeight: 500, // Increased from 400 for better small text legibility
         fontFamily: "display", // Changed from "primary" to "display" for button consistency
       } as TypographyVariant,
+
+    },
+  },
+
+  // TextField component tokens
+  textField: {
+    height: {
+      mobile: "3rem", // 48px
+      tablet: "3.25rem", // 52px  
+      desktop: "3.25rem", // 52px
+    } as ResponsiveValue<string>,
+    minWidth: {
+      mobile: "280px", // Minimum mobile width
+      tablet: "320px", // Minimum tablet width
+      desktop: "360px", // Minimum desktop width
+    } as ResponsiveValue<string>,
+    fontSize: {
+      mobile: "1rem", // 16px
+      tablet: "1.25rem", // 20px
+      desktop: "1.25rem", // 20px
+    } as ResponsiveValue<string>,
+    spacing: {
+      paddingTop: {
+        mobile: "20px",
+        tablet: "28px", 
+        desktop: "28px",
+      } as ResponsiveValue<string>,
+      paddingBottom: {
+        mobile: "8px",
+        tablet: "4px",
+        desktop: "4px", 
+      } as ResponsiveValue<string>,
+      paddingLeft: {
+        mobile: "12px",
+        tablet: "12px",
+        desktop: "12px",
+      } as ResponsiveValue<string>,
     },
   },
 
@@ -442,6 +482,7 @@ export const getAllThemeVariables = (): ThemeVariables => {
           variants: {} as Record<string, Record<string, string | number>>,
         },
         spacing: {} as Record<string, string>,
+        textField: {} as Record<string, any>,
       };
 
       // Process colors with RGB support
@@ -462,6 +503,18 @@ export const getAllThemeVariables = (): ThemeVariables => {
           tokens.spacing[name] = responsiveValue[breakpoint];
         }
       );
+
+      // Add TextField tokens
+      tokens.textField = {
+        height: SEMANTIC_TOKENS.textField.height[breakpoint],
+        minWidth: SEMANTIC_TOKENS.textField.minWidth[breakpoint],
+        fontSize: SEMANTIC_TOKENS.textField.fontSize[breakpoint],
+        spacing: {
+          paddingTop: SEMANTIC_TOKENS.textField.spacing.paddingTop[breakpoint],
+          paddingBottom: SEMANTIC_TOKENS.textField.spacing.paddingBottom[breakpoint],
+          paddingLeft: SEMANTIC_TOKENS.textField.spacing.paddingLeft[breakpoint],
+        },
+      };
 
       // Add typography variants with responsive values
       Object.entries(SEMANTIC_TOKENS.typography.variants).forEach(
