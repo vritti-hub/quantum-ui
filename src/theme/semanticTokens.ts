@@ -50,6 +50,10 @@ export const SEMANTIC_TOKENS = {
         light: palette.lightNeutral[50], // Pure white
         dark: palette.darkNeutral[900], // Deep dark
       } as ColorDefinition,
+      input: {
+        light: palette.universalBlue[25], // "#F8FAFF" - very subtle blue tint for inputs
+        dark: palette.universalBlue[950], // "#000A14" - deep blue-black for inputs
+      } as ColorDefinition,
       secondary: {
         light: palette.lightNeutral[100], // Very light gray
         dark: palette.darkNeutral[800], // Dark surface

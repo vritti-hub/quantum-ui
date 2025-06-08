@@ -5,6 +5,7 @@
 export const palette = {
   // Universal Primary Blue (Excellent contrast both modes)
   universalBlue: {
+    25: "#F8FAFF", // Very subtle blue tint for input backgrounds
     50: "#EBF4FF",
     100: "#DBE9FF",
     200: "#B8D4FF",
