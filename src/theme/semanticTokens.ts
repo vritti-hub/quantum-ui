@@ -56,11 +56,11 @@ export const SEMANTIC_TOKENS = {
       } as ColorDefinition,
       secondary: {
         light: palette.lightNeutral[100], // Very light gray
-        dark: palette.darkNeutral[800], // Dark surface
+        dark: palette.darkNeutral[900], // Dark surface
       } as ColorDefinition,
       elevated: {
         light: palette.pure.white,
-        dark: palette.darkNeutral[800],
+        dark: palette.darkNeutral[900],
       } as ColorDefinition,
     },
 
@@ -134,13 +134,18 @@ export const SEMANTIC_TOKENS = {
     full: "9999px",
   },
 
-  // Shadows - static values  
+  // Shadows - static values
   shadows: {
     small: "0 1px 2px 0 rgba(0, 0, 0, 0.05)",
     medium: "0 4px 6px -1px rgba(0, 0, 0, 0.1)",
     large: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
     glass: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
     glassInset: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",
+    textField: {
+      light:
+        "0 4px 6px -1px rgba(0, 0, 0, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.08)",
+      dark: "0 4px 6px -1px rgba(187, 187, 187, 0.03), inset 0 1px 0 0 rgba(0, 0, 0, 0.4)",
+    } as ColorDefinition,
   },
 
   // Glass effects - static values
@@ -149,7 +154,6 @@ export const SEMANTIC_TOKENS = {
     backdropLight: "blur(8px)",
     backdropHeavy: "blur(24px)",
   },
-
 
   // Animation - static values
   animation: {
@@ -364,7 +368,6 @@ export const SEMANTIC_TOKENS = {
         fontWeight: 500, // Increased from 400 for better small text legibility
         fontFamily: "display", // Changed from "primary" to "display" for button consistency
       } as TypographyVariant,
-
     },
   },
 
@@ -372,7 +375,7 @@ export const SEMANTIC_TOKENS = {
   textField: {
     height: {
       mobile: "3rem", // 48px
-      tablet: "3.25rem", // 52px  
+      tablet: "3.25rem", // 52px
       desktop: "3.25rem", // 52px
     } as ResponsiveValue<string>,
     minWidth: {
@@ -382,19 +385,19 @@ export const SEMANTIC_TOKENS = {
     } as ResponsiveValue<string>,
     fontSize: {
       mobile: "1rem", // 16px
-      tablet: "1.25rem", // 20px
-      desktop: "1.25rem", // 20px
+      tablet: "1.1rem", // 20px
+      desktop: "1.1rem", // 20px
     } as ResponsiveValue<string>,
     spacing: {
       paddingTop: {
         mobile: "20px",
-        tablet: "28px", 
-        desktop: "28px",
+        tablet: "24px",
+        desktop: "24px",
       } as ResponsiveValue<string>,
       paddingBottom: {
         mobile: "8px",
         tablet: "4px",
-        desktop: "4px", 
+        desktop: "4px",
       } as ResponsiveValue<string>,
       paddingLeft: {
         mobile: "12px",
@@ -477,7 +480,7 @@ export const getAllThemeVariables = (): ThemeVariables => {
       const tokens = {
         color: {} as Record<string, Record<string, string>>,
         borderRadius: SEMANTIC_TOKENS.borderRadius,
-        shadows: SEMANTIC_TOKENS.shadows,
+        shadows: {} as Record<string, string>,
         glassmorphism: SEMANTIC_TOKENS.glassmorphism,
         animation: SEMANTIC_TOKENS.animation,
         typography: {
@@ -508,6 +511,19 @@ export const getAllThemeVariables = (): ThemeVariables => {
         }
       );
 
+      // Add shadows (process theme-aware shadows)
+      Object.entries(SEMANTIC_TOKENS.shadows).forEach(([name, shadowValue]) => {
+        if (
+          typeof shadowValue === "object" &&
+          "light" in shadowValue &&
+          "dark" in shadowValue
+        ) {
+          tokens.shadows[name] = shadowValue[mode];
+        } else {
+          tokens.shadows[name] = shadowValue as string;
+        }
+      });
+
       // Add TextField tokens
       tokens.textField = {
         height: SEMANTIC_TOKENS.textField.height[breakpoint],
@@ -515,8 +531,10 @@ export const getAllThemeVariables = (): ThemeVariables => {
         fontSize: SEMANTIC_TOKENS.textField.fontSize[breakpoint],
         spacing: {
           paddingTop: SEMANTIC_TOKENS.textField.spacing.paddingTop[breakpoint],
-          paddingBottom: SEMANTIC_TOKENS.textField.spacing.paddingBottom[breakpoint],
-          paddingLeft: SEMANTIC_TOKENS.textField.spacing.paddingLeft[breakpoint],
+          paddingBottom:
+            SEMANTIC_TOKENS.textField.spacing.paddingBottom[breakpoint],
+          paddingLeft:
+            SEMANTIC_TOKENS.textField.spacing.paddingLeft[breakpoint],
         },
       };
 

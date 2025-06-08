@@ -9,17 +9,17 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
       "& .MuiInputLabel-root": {
         fontFamily: "var(--quantum-typography-fontFamily-display)",
         fontSize: "var(--quantum-textField-fontSize)",
-        fontWeight: "var(--quantum-typography-fontWeight-medium)",
+        fontWeight: "var(--quantum-typography-fontWeight-normal)",
         color: "var(--quantum-color-text-secondary)",
 
         "&.Mui-focused": {
-          fontWeight: "var(--quantum-typography-fontWeight-semibold)",
-          color: "var(--quantum-color-action-primary)",
+          fontWeight: "var(--quantum-typography-fontWeight-normal)",
+          color: "var(--quantum-color-text-secondary)",
         },
 
         "&.MuiInputLabel-shrunk": {
           fontSize: "var(--quantum-typography-fontSize-caption)",
-          fontWeight: "var(--quantum-typography-fontWeight-semibold)",
+          fontWeight: "var(--quantum-typography-fontWeight-normal)",
         },
 
         "&.Mui-disabled": {
@@ -30,13 +30,12 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
       "& .MuiFilledInput-root": {
         borderRadius: "var(--quantum-borderRadius-large)",
         backgroundColor: "var(--quantum-color-surface-input)",
-        fontSize: "var(--quantum-typography-fontSize-field)",
+        fontSize: "var(--quantum-textField-fontSize)",
         transition: "none",
         border: "1px solid var(--quantum-color-border-subtle)",
         minHeight: "var(--quantum-textField-height)",
         backdropFilter: "blur(8px)",
-        boxShadow:
-          "var(--quantum-shadows-small), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+        boxShadow: "var(--quantum-shadows-textField)",
 
         "&:before": {
           display: "none",
@@ -52,8 +51,7 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
 
         "&:hover:not(.Mui-focused):not(.Mui-disabled)": {
           borderColor: "var(--quantum-color-action-primary)",
-          boxShadow:
-            "var(--quantum-shadows-medium), inset 0 1px 0 rgba(255, 255, 255, 0.15)",
+          boxShadow: "var(--quantum-shadows-textField)",
         },
 
         "&.Mui-focused": {
@@ -84,7 +82,7 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
         height: "auto",
         color: "var(--quantum-color-text-primary)",
         fontSize: "var(--quantum-textField-fontSize)",
-        fontWeight: "var(--quantum-typography-fontWeight-semibold)",
+        fontWeight: "var(--quantum-typography-fontWeight-medium)",
         fontFamily: "var(--quantum-typography-fontFamily-primary)",
         letterSpacing: "-0.01em",
 
@@ -111,7 +109,8 @@ export const TextFieldTheme: Components<Theme>["MuiTextField"] = {
         fontSize: "var(--quantum-typography-variants-caption-fontSize)",
         fontWeight: "var(--quantum-typography-variants-caption-fontWeight)",
         lineHeight: "var(--quantum-typography-variants-caption-lineHeight)",
-        letterSpacing: "var(--quantum-typography-variants-caption-letterSpacing)",
+        letterSpacing:
+          "var(--quantum-typography-variants-caption-letterSpacing)",
         marginTop: "6px",
         marginLeft: "12px",
         color: "var(--quantum-color-text-secondary)",
