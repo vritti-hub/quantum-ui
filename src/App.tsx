@@ -1,10 +1,10 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import React, { useCallback, useState } from "react";
-import { Button } from "./components/Button/Button";
-import { Paper } from "./components/Paper/Paper";
-import { TextField } from "./components/TextField/TextField";
-import { Typography } from "./components/Typography/Typography";
+import { Button } from "../lib/components/Button/Button";
+import { Paper } from "../lib/components/Paper/Paper";
+import { TextField } from "../lib/components/TextField/TextField";
+import { Typography } from "../lib/components/Typography/Typography";
 import { ThemeProvider, useTheme } from "../lib/theme";
 
 // ✅ Optimized: Memoized content component

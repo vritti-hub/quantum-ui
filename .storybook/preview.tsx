@@ -3,7 +3,7 @@ import { CssBaseline } from "@mui/material";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import type { Preview } from "@storybook/react-vite";
 import { useEffect } from "react";
-import { createQuantumTheme } from "../src/theme/createTheme";
+import { createQuantumTheme } from "../lib/theme/createTheme";
 
 const preview: Preview = {
   parameters: {
