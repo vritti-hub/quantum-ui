@@ -1,11 +1,5 @@
 /* Global styles for quantum-ui */
 
-/* Smooth theme transitions to prevent flickering */
-html {
-  /* Enable smooth transitions for theme changes */
-  transition: background-color 0.2s ease, color 0.2s ease;
-}
-
 /* Prevent flash of unstyled content during hydration */
 html[data-theme] {
   color-scheme: light;
@@ -13,39 +7,4 @@ html[data-theme] {
 
 html[data-theme="dark"] {
   color-scheme: dark;
-}
-
-/* Smooth transitions for all theme-related properties */
-*,
-*::before,
-*::after {
-  transition: 
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-/* Disable transitions on initial load to prevent flickering */
-.no-transition,
-.no-transition *,
-.no-transition *::before,
-.no-transition *::after {
-  transition: none !important;
-}
-
-/* Ensure transitions work properly for users who don't prefer reduced motion */
-@media (prefers-reduced-motion: no-preference) {
-  html.loaded * {
-    transition-duration: 0.2s;
-  }
-}
-
-/* For users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    transition: none !important;
-  }
 }

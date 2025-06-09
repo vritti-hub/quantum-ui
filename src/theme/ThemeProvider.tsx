@@ -1,6 +1,6 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { createQuantumTheme } from "./createTheme";
 import { ThemeContext } from "./useTheme";
 
@@ -28,22 +28,22 @@ export interface ThemeProviderProps {
 
 /**
  * Enhanced ThemeProvider that works seamlessly with ThemeScript.
- * 
+ *
  * ThemeScript handles:
  * - Initial DOM theme application (prevents flickering)
  * - Blocking script execution before React loads
- * 
+ *
  * ThemeProvider handles:
  * - React state management and context
  * - SSR-safe hydration
  * - Theme toggling and persistence
  * - Performance optimization
- * 
+ *
  * @example
  * ```tsx
  * // 1. Add ThemeScript to prevent flickering
  * <ThemeScript defaultColorScheme="light" />
- * 
+ *
  * // 2. Wrap app with ThemeProvider
  * <ThemeProvider defaultColorScheme="light">
  *   <App />
@@ -57,7 +57,9 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   attribute = "data-theme",
 }) => {
   // SSR-safe state initialization - always start with default
-  const [colorScheme, setColorScheme] = useState<"light" | "dark">(defaultColorScheme);
+  const [colorScheme, setColorScheme] = useState<"light" | "dark">(
+    defaultColorScheme
+  );
   const [isHydrated, setIsHydrated] = useState(false);
 
   // Memoized theme creation - only recreate when colorScheme changes
@@ -72,22 +74,24 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
       // Read the actual theme from DOM (set by ThemeScript)
       const domTheme = document.documentElement.getAttribute(attribute);
       const isValidTheme = domTheme === "light" || domTheme === "dark";
-      
-      if (isValidTheme && domTheme !== colorScheme) {
-        setColorScheme(domTheme);
+
+      // Only sync with DOM on initial hydration, not on subsequent renders
+      if (isValidTheme && !isHydrated) {
+        setColorScheme(domTheme as "light" | "dark");
       }
-      
+
       setIsHydrated(true);
     };
 
     // Sync immediately if DOM is ready, otherwise wait
     if (document.readyState === "loading") {
       document.addEventListener("DOMContentLoaded", syncWithDOM);
-      return () => document.removeEventListener("DOMContentLoaded", syncWithDOM);
+      return () =>
+        document.removeEventListener("DOMContentLoaded", syncWithDOM);
     } else {
       syncWithDOM();
     }
-  }, [attribute, colorScheme]);
+  }, [attribute, isHydrated]);
 
   // Theme change effect - update DOM and localStorage when React state changes
   useEffect(() => {
@@ -96,7 +100,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
     // Update DOM attribute
     document.documentElement.setAttribute(attribute, colorScheme);
-    
+
     // Persist to localStorage
     try {
       localStorage.setItem(storageKey, colorScheme);
@@ -108,7 +112,7 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
 
   // Optimized theme toggle function
   const toggleColorScheme = useCallback(() => {
-    setColorScheme(current => current === "light" ? "dark" : "light");
+    setColorScheme((current) => (current === "light" ? "dark" : "light"));
   }, []);
 
   // Set specific theme (useful for theme selection UI)
@@ -117,15 +121,25 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
   }, []);
 
   // Memoized context value to prevent unnecessary re-renders
-  const contextValue = useMemo(() => ({
-    colorScheme,
-    toggleColorScheme,
-    setTheme,
-    isHydrated,
-    // Expose configuration for debugging/advanced usage
-    storageKey,
-    attribute,
-  }), [colorScheme, toggleColorScheme, setTheme, isHydrated, storageKey, attribute]);
+  const contextValue = useMemo(
+    () => ({
+      colorScheme,
+      toggleColorScheme,
+      setTheme,
+      isHydrated,
+      // Expose configuration for debugging/advanced usage
+      storageKey,
+      attribute,
+    }),
+    [
+      colorScheme,
+      toggleColorScheme,
+      setTheme,
+      isHydrated,
+      storageKey,
+      attribute,
+    ]
+  );
 
   return (
     <ThemeContext.Provider value={contextValue}>

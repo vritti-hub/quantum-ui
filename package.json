@@ -4,29 +4,29 @@
   "version": "0.1.0",
   "type": "module",
   "sideEffects": false,
-  "main": "./dist/quantum-ui.umd.js",
-  "module": "./dist/quantum-ui.es.js",
+  "main": "./dist/index.es.js",
+  "module": "./dist/index.es.js",
   "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/quantum-ui.es.js"
+      "import": "./dist/index.es.js"
     },
     "./Button": {
-      "types": "./dist/components/Button/index.d.ts",
-      "import": "./dist/components/Button/index.es.js"
+      "types": "./dist/Button.d.ts",
+      "import": "./dist/Button.es.js"
     },
     "./TextField": {
-      "types": "./dist/components/TextField/index.d.ts",
-      "import": "./dist/components/TextField/index.es.js"
+      "types": "./dist/TextField.d.ts",
+      "import": "./dist/TextField.es.js"
     },
     "./Paper": {
-      "types": "./dist/components/Paper/index.d.ts",
-      "import": "./dist/components/Paper/index.es.js"
+      "types": "./dist/Paper.d.ts",
+      "import": "./dist/Paper.es.js"
     },
     "./Typography": {
-      "types": "./dist/components/Typography/index.d.ts",
-      "import": "./dist/components/Typography/index.es.js"
+      "types": "./dist/Typography.d.ts",
+      "import": "./dist/Typography.es.js"
     }
   },
   "files": [
@@ -34,10 +34,10 @@
   ],
   "scripts": {
     "dev": "vite",
-    "build": "tsc --project tsconfig.lib.json && vite build",
+    "build": "tsc --project tsconfig.lib.json --emitDeclarationOnly && vite build",
+    "build:js": "vite build",
     "build:types": "tsc --project tsconfig.lib.json --emitDeclarationOnly",
-    "build:lib": "vite build",
-    "build:analyze": "npm run build && npx vite-bundle-analyzer dist/quantum-ui.es.js",
+    "build:watch": "npm run build:types && vite build --watch",
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
