@@ -1,7 +1,5 @@
-import {
-  Paper as MuiPaper,
-  type PaperProps as MuiPaperProps,
-} from "@mui/material";
+import type { PaperProps as MuiPaperProps } from "@mui/material/Paper";
+import MuiPaper from "@mui/material/Paper";
 import React from "react";
 
 export interface PaperProps extends Omit<MuiPaperProps, "variant"> {

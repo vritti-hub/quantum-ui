@@ -1,7 +1,5 @@
-import {
-  TextField as MuiTextField,
-  type TextFieldProps as MuiTextFieldProps,
-} from "@mui/material";
+import type { TextFieldProps as MuiTextFieldProps } from "@mui/material/TextField";
+import MuiTextField from "@mui/material/TextField";
 import React from "react";
 
 export interface TextFieldProps
@@ -51,12 +49,7 @@ const STATE_TO_COLOR_MAP = {
 } as const;
 
 export const TextField = React.memo<TextFieldProps>(
-  ({
-    state = "normal",
-    message,
-    fullWidth = true,
-    ...props
-  }) => {
+  ({ state = "normal", message, fullWidth = true, ...props }) => {
     return (
       <MuiTextField
         variant="filled"

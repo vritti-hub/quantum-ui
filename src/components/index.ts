@@ -1,11 +1,8 @@
-export { Button } from "./Button/Button";
-export type { ButtonProps } from "./Button/Button";
-
-export { TextField } from "./TextField/TextField";
-export type { TextFieldProps } from "./TextField/TextField";
-
-export { Paper } from "./Paper/Paper";
-export type { PaperProps } from "./Paper/Paper";
-
-export { Typography } from "./Typography/Typography";
-export type { TypographyProps } from "./Typography/Typography";
+export { Button } from "./Button";
+export type { ButtonProps } from "./Button";
+export { TextField } from "./TextField";
+export type { TextFieldProps } from "./TextField";
+export { Paper } from "./Paper";
+export type { PaperProps } from "./Paper";
+export { Typography } from "./Typography";
+export type { TypographyProps } from "./Typography";

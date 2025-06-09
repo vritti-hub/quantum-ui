@@ -1,11 +1,8 @@
-import {
-  Button as MuiButton,
-  type ButtonProps as MuiButtonProps,
-} from "@mui/material";
+import type { ButtonProps as MuiButtonProps } from "@mui/material/Button";
+import MuiButton from "@mui/material/Button";
 import React from "react";
 
-export interface ButtonProps
-  extends Omit<MuiButtonProps, "variant" | "color"> {
+export interface ButtonProps extends Omit<MuiButtonProps, "variant" | "color"> {
   /**
    * The intent/purpose of the button
    * - primary: Main actions, CTAs (solid blue)

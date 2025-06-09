@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -11,6 +11,31 @@
       href="https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&family=Space+Grotesk:wght@300..700&display=swap"
       rel="stylesheet"
     />
+    <script>
+      // Prevent theme flickering by setting theme before React loads
+      (function() {
+        // Add no-transition class to prevent flickering during initial load
+        document.documentElement.classList.add('no-transition');
+        
+        try {
+          const savedScheme = localStorage.getItem('quantum-color-scheme');
+          if (savedScheme && (savedScheme === 'light' || savedScheme === 'dark')) {
+            document.documentElement.setAttribute('data-theme', savedScheme);
+          }
+        } catch (e) {
+          // Fallback to light theme if localStorage is not available
+          document.documentElement.setAttribute('data-theme', 'light');
+        }
+        
+        // Remove no-transition class after DOM is ready to enable smooth transitions
+        window.addEventListener('DOMContentLoaded', function() {
+          setTimeout(function() {
+            document.documentElement.classList.remove('no-transition');
+            document.documentElement.classList.add('loaded');
+          }, 100);
+        });
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

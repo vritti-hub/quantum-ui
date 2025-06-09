@@ -1,8 +1,10 @@
-import { Box, Stack, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
 import React, { useCallback, useState } from "react";
 import { Button } from "./components/Button/Button";
 import { Paper } from "./components/Paper/Paper";
 import { TextField } from "./components/TextField/TextField";
+import { Typography } from "./components/Typography/Typography";
 import { ThemeProvider, useTheme } from "./theme";
 
 // ✅ Optimized: Memoized content component
@@ -133,12 +135,8 @@ const AppContent = React.memo(() => {
                   Destructive Actions
                 </Typography>
                 <Stack direction="row" spacing={2} flexWrap="wrap">
-                  <Button intent="destructive">
-                    Delete Account
-                  </Button>
-                  <Button intent="destructive">
-                    Remove Item
-                  </Button>
+                  <Button intent="destructive">Delete Account</Button>
+                  <Button intent="destructive">Remove Item</Button>
                 </Stack>
               </Box>
 

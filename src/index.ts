@@ -1,19 +1,16 @@
-export { Button } from "./components/Button/Button";
-export { Paper } from "./components/Paper/Paper";
-export { TextField } from "./components/TextField/TextField";
-export { Typography } from "./components/Typography/Typography";
+// ❌ Components removed from barrel - force direct imports for performance
+// Use: import { Button, ButtonProps } from 'quantum-ui/Button'
+// Use: import { TextField, TextFieldProps } from 'quantum-ui/TextField'
+// Use: import { Paper, PaperProps } from 'quantum-ui/Paper'
+// Use: import { Typography, TypographyProps } from 'quantum-ui/Typography'
 
-// Export component types
-export type { ButtonProps } from "./components/Button/Button";
-export type { PaperProps } from "./components/Paper/Paper";
-export type { TextFieldProps } from "./components/TextField/TextField";
-export type { TypographyProps } from "./components/Typography/Typography";
-
-// Theme system exports
+// ✅ Theme system utilities (high value, often used together)
 export { createQuantumTheme } from "./theme/createTheme";
 export { ThemeProvider } from "./theme/ThemeProvider";
-export { useTheme } from "./theme/useTheme";
+export type { ThemeProviderProps } from "./theme/ThemeProvider";
+export { useTheme, useIsClient } from "./theme/useTheme";
 export type { ThemeContextType } from "./theme/useTheme";
+export { ThemeScript, getThemeScript } from "./theme/ThemeScript";
 
-// Design tokens for advanced usage
+// ✅ Design tokens (utility, small impact)
 export { SEMANTIC_TOKENS } from "./theme/semanticTokens";

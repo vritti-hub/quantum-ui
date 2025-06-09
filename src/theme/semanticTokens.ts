@@ -542,7 +542,7 @@ export const getAllThemeVariables = (): ThemeVariables => {
           variants: {} as Record<string, Record<string, string | number>>,
         },
         spacing: {} as Record<string, string>,
-        textField: {} as Record<string, any>,
+        textField: {} as Record<string, string | number | Record<string, string>>,
       };
 
       // Process colors with RGB support

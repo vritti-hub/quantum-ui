@@ -1,7 +1,5 @@
-import {
-  Typography as MuiTypography,
-  type TypographyProps as MuiTypographyProps,
-} from "@mui/material";
+import type { TypographyProps as MuiTypographyProps } from "@mui/material/Typography";
+import MuiTypography from "@mui/material/Typography";
 import React from "react";
 
 export interface TypographyProps extends MuiTypographyProps {

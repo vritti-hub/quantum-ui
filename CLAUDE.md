@@ -140,6 +140,214 @@ borderRadius: {
 - **Consistent hierarchy**: Normal → Hover → Focus → Active
 - **Theme-appropriate colors**: Different feedback intensities for light/dark modes
 
+## 🌓 Advanced Theming System
+
+### **1. SSR-Safe Theme Implementation**
+
+#### **ThemeScript Usage (Blocking Script)**
+```typescript
+// ✅ CORRECT: Add before React loads to prevent flickering
+// Next.js App Router (app/layout.tsx)
+import { ThemeScript } from 'quantum-ui';
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en">
+      <head>
+        <ThemeScript 
+          defaultColorScheme="light"
+          storageKey="quantum-color-scheme"
+          attribute="data-theme"
+          preventFlickering={true}
+        />
+      </head>
+      <body>{children}</body>
+    </html>
+  );
+}
+
+// ✅ CORRECT: Next.js Pages Router (_document.tsx)
+import { ThemeScript } from 'quantum-ui';
+
+export default function Document() {
+  return (
+    <Html>
+      <body>
+        <ThemeScript defaultColorScheme="light" />
+        <Main />
+        <NextScript />
+      </body>
+    </Html>
+  );
+}
+
+// ✅ CORRECT: Vite/CRA (index.html)
+<script type="module">
+  import { getThemeScript } from 'quantum-ui';
+  const script = document.createElement('script');
+  script.innerHTML = getThemeScript({ defaultColorScheme: 'light' });
+  document.head.appendChild(script);
+</script>
+```
+
+#### **ThemeProvider Configuration**
+```typescript
+// ✅ CORRECT: Match ThemeScript configuration exactly
+<ThemeProvider
+  defaultColorScheme="light"    // Must match ThemeScript
+  storageKey="quantum-color-scheme"  // Must match ThemeScript
+  attribute="data-theme"        // Must match ThemeScript
+>
+  <App />
+</ThemeProvider>
+```
+
+### **2. Framework-Specific Integration Patterns**
+
+#### **Next.js Integration**
+```typescript
+// ✅ App Router Pattern
+// app/layout.tsx
+import { ThemeScript } from 'quantum-ui';
+export default function RootLayout({ children }) {
+  return (
+    <html>
+      <head><ThemeScript /></head>
+      <body>{children}</body>
+    </html>
+  );
+}
+
+// app/providers.tsx
+'use client';
+import { ThemeProvider } from 'quantum-ui';
+export function Providers({ children }) {
+  return <ThemeProvider>{children}</ThemeProvider>;
+}
+
+// ✅ Pages Router Pattern
+// pages/_document.tsx - Add ThemeScript
+// pages/_app.tsx - Add ThemeProvider
+```
+
+#### **Vite Integration**
+```typescript
+// ✅ index.html - Add script before React
+// main.tsx - Add ThemeProvider wrapper
+import { ThemeProvider } from 'quantum-ui';
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+  <ThemeProvider defaultColorScheme="light">
+    <App />
+  </ThemeProvider>
+);
+```
+
+#### **Remix Integration**
+```typescript
+// ✅ app/root.tsx
+import { ThemeScript, ThemeProvider } from 'quantum-ui';
+
+export default function App() {
+  return (
+    <html>
+      <head>
+        <Meta />
+        <Links />
+        <ThemeScript defaultColorScheme="light" />
+      </head>
+      <body>
+        <ThemeProvider defaultColorScheme="light">
+          <Outlet />
+        </ThemeProvider>
+      </body>
+    </html>
+  );
+}
+```
+
+### **3. Theme Hook Usage Patterns**
+```typescript
+// ✅ CORRECT: Basic theme control
+function ThemeToggle() {
+  const { colorScheme, toggleColorScheme, isHydrated } = useTheme();
+  
+  if (!isHydrated) return <div>Loading...</div>;
+  
+  return (
+    <button onClick={toggleColorScheme}>
+      Switch to {colorScheme === 'light' ? 'dark' : 'light'}
+    </button>
+  );
+}
+
+// ✅ CORRECT: Theme selection UI
+function ThemeSelector() {
+  const { colorScheme, setTheme } = useTheme();
+  
+  return (
+    <div>
+      <button 
+        onClick={() => setTheme('light')}
+        data-active={colorScheme === 'light'}
+      >
+        Light
+      </button>
+      <button 
+        onClick={() => setTheme('dark')}
+        data-active={colorScheme === 'dark'}
+      >
+        Dark
+      </button>
+    </div>
+  );
+}
+
+// ✅ CORRECT: Client-only components
+function ClientOnlyFeature() {
+  const isClient = useIsClient();
+  
+  if (!isClient) return null;
+  
+  return <ComplexInteractiveWidget />;
+}
+```
+
+### **4. Anti-Patterns to Avoid**
+
+#### **❌ WRONG: Script inside ThemeProvider**
+```typescript
+// ❌ This causes flickering!
+export const ThemeProvider = ({ children }) => {
+  return (
+    <>
+      <ThemeScript />  {/* Too late! */}
+      <MuiThemeProvider>
+        {children}
+      </MuiThemeProvider>
+    </>
+  );
+};
+```
+
+#### **❌ WRONG: Mismatched configurations**
+```typescript
+// ❌ ThemeScript and ThemeProvider must match!
+<ThemeScript defaultColorScheme="light" storageKey="theme" />
+<ThemeProvider defaultColorScheme="dark" storageKey="quantum-theme" />
+```
+
+#### **❌ WRONG: Reading localStorage in useState**
+```typescript
+// ❌ Causes hydration mismatches
+const [theme, setTheme] = useState(() => {
+  return localStorage.getItem('theme') || 'light'; // SSR mismatch!
+});
+
+// ✅ CORRECT: Always start with default
+const [theme, setTheme] = useState(defaultTheme);
+```
+
 ## 🔧 File Organization and Naming
 
 ### **1. Semantic Tokens Structure**
@@ -163,14 +371,17 @@ semanticTokens.ts
 
 ### **3. Import Patterns**
 ```typescript
-// ✅ CORRECT: Import from theme barrel
-import { ThemeProvider } from "../theme";
+// ✅ CORRECT: Tree-shakeable direct imports (performance)
+import { Button } from 'quantum-ui/Button';
+import { TextField } from 'quantum-ui/TextField';
+import { Paper } from 'quantum-ui/Paper';
+import { Typography } from 'quantum-ui/Typography';
 
-// ✅ CORRECT: Use semantic tokens, not palette directly
-fontSize: "var(--quantum-textField-fontSize)"
+// ✅ CORRECT: Theme utilities barrel import (small impact)
+import { ThemeProvider, ThemeScript, useTheme } from 'quantum-ui';
 
-// ❌ WRONG: Direct palette usage in components
-color: palette.universalBlue[500]
+// ❌ WRONG: Component barrel imports (larger bundles)
+import { Button, TextField } from 'quantum-ui';
 ```
 
 ## 🧪 Testing and Validation
@@ -181,6 +392,7 @@ color: palette.universalBlue[500]
 - [ ] Proper contrast on all Paper variants
 - [ ] Consistent with design system patterns
 - [ ] No hardcoded values
+- [ ] Zero theme flickering on SSR
 
 ### **2. Token Validation**
 - [ ] All tokens have proper TypeScript definitions
@@ -193,6 +405,14 @@ color: palette.universalBlue[500]
 - [ ] Maintains design system consistency
 - [ ] Follows established interaction patterns
 - [ ] Accessible keyboard navigation
+- [ ] SSR-safe hydration
+
+### **4. Theme System Testing**
+- [ ] ThemeScript prevents flickering in all frameworks
+- [ ] ThemeProvider syncs correctly with DOM
+- [ ] useTheme hook provides all expected functionality
+- [ ] Theme persistence works across page reloads
+- [ ] No hydration mismatches in SSR environments
 
 ## 🚫 Common Anti-Patterns to Avoid
 
@@ -239,6 +459,23 @@ fontSize: { mobile: "1rem", desktop: "1.25rem" } // Missing tablet
 fontSize: { mobile: "1rem", tablet: "1.1rem", desktop: "1.25rem" }
 ```
 
+### **5. Theme Implementation Mistakes**
+```typescript
+// ❌ WRONG: Script placement causes flickering
+function App() {
+  return (
+    <ThemeProvider>
+      <ThemeScript />  {/* Too late! */}
+      <Content />
+    </ThemeProvider>
+  );
+}
+
+// ✅ CORRECT: Script before React
+// HTML: <ThemeScript />
+// React: <ThemeProvider><App /></ThemeProvider>
+```
+
 ## 📈 Performance Considerations
 
 ### **1. CSS Variable Generation**
@@ -251,6 +488,11 @@ fontSize: { mobile: "1rem", tablet: "1.1rem", desktop: "1.25rem" }
 - **Avoid inline styles**: Use CSS variables for better performance
 - **Optimize for animations**: Smooth transitions between theme states
 
+### **3. Bundle Optimization**
+- **Individual component imports**: ~0.5-1KB gzipped each
+- **Theme system**: ~8KB gzipped (includes MUI theme)
+- **Selective barrel exports**: Import only theme utilities from main package
+
 ## 🔄 Development Workflow
 
 ### **1. Making Changes**
@@ -259,6 +501,7 @@ fontSize: { mobile: "1rem", tablet: "1.1rem", desktop: "1.25rem" }
 3. **Update component themes** to use new tokens
 4. **Test in both themes and all breakpoints**
 5. **Verify no hardcoded values remain**
+6. **Test SSR behavior in target frameworks**
 
 ### **2. Adding New Components**
 1. **Follow established naming patterns**
@@ -266,12 +509,14 @@ fontSize: { mobile: "1rem", tablet: "1.1rem", desktop: "1.25rem" }
 3. **Use existing semantic tokens** where possible
 4. **Ensure responsive and theme-aware** design
 5. **Add to component barrel exports**
+6. **Create individual component export path**
 
 ### **3. Refactoring Guidelines**
 - **Prefer editing existing files** over creating new ones
 - **Maintain backward compatibility** when possible
 - **Update related components** that might be affected
 - **Verify all variants and states** still work correctly
+- **Test theme behavior across all supported frameworks**
 
 ---
 
@@ -306,6 +551,13 @@ primary: {
 
 This enables usage like: `rgba(var(--quantum-color-action-primaryRGB), 0.15)`
 
+### **Framework Integration Checklist**
+- [ ] **Next.js**: ThemeScript in _document.tsx or layout.tsx
+- [ ] **Vite**: ThemeScript via getThemeScript() in index.html
+- [ ] **CRA/Webpack**: Manual script in public/index.html
+- [ ] **Remix**: ThemeScript in root.tsx head
+- [ ] **All frameworks**: ThemeProvider wrapping app component
+
 ---
 
-*This document should be updated as new patterns emerge and the design system evolves.*
+*This document should be updated as new patterns emerge and the design system evolves. Always prioritize SSR-safe theming and zero-flickering user experience.*
