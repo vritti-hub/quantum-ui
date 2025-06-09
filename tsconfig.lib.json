@@ -19,7 +19,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./lib",
     
     /* Tree-shaking optimization */
     "removeComments": true,
@@ -38,13 +38,12 @@
     "isolatedModules": true
   },
   "include": [
-    "src/**/*"
+    "lib/**/*"
   ],
   "exclude": [
-    "src/**/*.stories.tsx",
-    "src/**/*.test.tsx",
-    "src/**/*.spec.tsx",
-    "src/main.tsx",
-    "src/App.tsx"
+    "lib/**/*.stories.tsx",
+    "lib/**/*.test.tsx",
+    "lib/**/*.spec.tsx",
+    "src/**/*"
   ]
 }

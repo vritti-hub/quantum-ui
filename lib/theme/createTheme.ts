@@ -31,10 +31,8 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
   };
 
   const theme = createTheme({
-    cssVariables: {
-      colorSchemeSelector: '[data-theme="%s"]',
-      disableCssColorScheme: true,
-    },
+    // Note: Material-UI cssVariables disabled to prevent interference with our theme persistence
+    // Our CSS variables are injected via MuiCssBaseline styleOverrides instead
 
     palette: {
       mode,

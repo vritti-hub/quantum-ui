@@ -91,12 +91,15 @@ export const ThemeProvider: React.FC<ThemeProviderProps> = ({
     } else {
       syncWithDOM();
     }
-  }, [attribute, isHydrated]);
+  }, [attribute]); // Remove isHydrated dependency to prevent re-runs
 
   // Theme change effect - update DOM and localStorage when React state changes
   useEffect(() => {
-    // Skip on server or before hydration
-    if (typeof window === "undefined" || !isHydrated) return;
+    // Skip on server
+    if (typeof window === "undefined") return;
+    
+    // Skip if not hydrated yet (let the hydration effect handle initial sync)
+    if (!isHydrated) return;
 
     // Update DOM attribute
     document.documentElement.setAttribute(attribute, colorScheme);

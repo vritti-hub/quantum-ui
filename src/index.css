@@ -8,3 +8,41 @@ html[data-theme] {
 html[data-theme="dark"] {
   color-scheme: dark;
 }
+
+/* Prevent white flash during theme transitions */
+html.no-transition *,
+html.no-transition *::before,
+html.no-transition *::after {
+  transition-duration: 0ms !important;
+  animation-duration: 0ms !important;
+}
+
+/* Ensure immediate backgrounds to prevent flickering */
+html[data-theme="dark"],
+html[data-theme="dark"] body,
+html[data-theme="dark"] #root {
+  background-color: #0c0c0d !important;
+}
+
+html[data-theme="light"],
+html[data-theme="light"] body,
+html[data-theme="light"] #root {
+  background-color: #ffffff !important;
+}
+
+/* Apply to all Material-UI components during hydration */
+html.no-transition[data-theme="dark"] .MuiBox-root,
+html.no-transition[data-theme="dark"] .MuiPaper-root {
+  background-color: #0c0c0d !important;
+}
+
+html.no-transition[data-theme="light"] .MuiBox-root,
+html.no-transition[data-theme="light"] .MuiPaper-root {
+  background-color: #ffffff !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}

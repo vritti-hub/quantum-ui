@@ -5,7 +5,7 @@ import { Button } from "./components/Button/Button";
 import { Paper } from "./components/Paper/Paper";
 import { TextField } from "./components/TextField/TextField";
 import { Typography } from "./components/Typography/Typography";
-import { ThemeProvider, useTheme } from "./theme";
+import { ThemeProvider, useTheme } from "../lib/theme";
 
 // ✅ Optimized: Memoized content component
 const AppContent = React.memo(() => {
@@ -36,9 +36,16 @@ const AppContent = React.memo(() => {
     },
     []
   );
-
+  // Debug logs temporarily removed to test theme persistence
   return (
-    <Box component="main" padding={3}>
+    <Box 
+      component="main" 
+      padding={3}
+      sx={{ 
+        minHeight: '100vh',
+        backgroundColor: 'background.default' 
+      }}
+    >
       <Stack spacing={4} maxWidth={600} marginX="auto">
         {/* Header */}
         <Box textAlign="center">

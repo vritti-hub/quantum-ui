@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
@@ -21,6 +21,8 @@
           const savedScheme = localStorage.getItem('quantum-color-scheme');
           if (savedScheme && (savedScheme === 'light' || savedScheme === 'dark')) {
             document.documentElement.setAttribute('data-theme', savedScheme);
+          } else {
+            document.documentElement.setAttribute('data-theme', 'light');
           }
         } catch (e) {
           // Fallback to light theme if localStorage is not available
