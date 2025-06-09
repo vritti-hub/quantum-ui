@@ -11,6 +11,13 @@ const config: StorybookConfig = {
     check: false,
     reactDocgen: "react-docgen-typescript",
   },
+  viteFinal: async (config) => {
+    // Configure base URL for GitHub Pages deployment
+    if (process.env.NODE_ENV === 'production') {
+      config.base = '/quantum-ui/';
+    }
+    return config;
+  },
 };
 
 export default config;

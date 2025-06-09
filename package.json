@@ -45,7 +45,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "build-storybook:github": "NODE_ENV=production storybook build"
   },
   "peerDependencies": {
     "@emotion/react": "^11.0.0",
