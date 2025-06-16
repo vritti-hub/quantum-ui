@@ -1,6 +1,9 @@
 {
-  "name": "quantum-ui",
+  "name": "@vritti/quantum-ui",
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "version": "0.1.0",
   "type": "module",
   "sideEffects": false,
