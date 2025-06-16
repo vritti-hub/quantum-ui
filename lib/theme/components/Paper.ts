@@ -37,6 +37,44 @@ export const PaperTheme: Components<Theme>["MuiPaper"] = {
         border: "1px solid var(--quantum-color-border-subtle)",
         boxShadow: "none",
       },
+
+      "&[data-variant='glassCard']": {
+        backgroundColor: "var(--quantum-color-surface-glass)",
+        backdropFilter: "var(--quantum-glassmorphism-backdrop)",
+        border: "1px solid var(--quantum-color-border-glass)",
+        borderRadius: "var(--quantum-borderRadius-large)",
+        transition: "all var(--quantum-animation-duration-slow) var(--quantum-animation-easing-standard)",
+
+        "&:hover": {
+          backgroundColor: "var(--quantum-color-surface-glassHover)",
+          border: "1px solid var(--quantum-color-border-glassAccent)",
+        },
+      },
+
+      "&[data-variant='glassCardHover']": {
+        backgroundColor: "var(--quantum-color-surface-glassHover)",
+        backdropFilter: "var(--quantum-glassmorphism-backdrop)",
+        border: "1px solid var(--quantum-color-border-glassAccent)",
+        borderRadius: "var(--quantum-borderRadius-large)",
+      },
+
+      "&[data-variant='interactive']": {
+        backgroundColor: "var(--quantum-color-surface-interactive)",
+        border: "1px solid var(--quantum-color-border-glass)",
+        borderRadius: "var(--quantum-borderRadius-medium)",
+        transition: "all var(--quantum-animation-duration-slow) var(--quantum-animation-easing-standard)",
+
+        "&:hover": {
+          backgroundColor: "var(--quantum-color-surface-glassHover)",
+          border: "1px solid var(--quantum-color-border-subtle)",
+        },
+      },
+
+      "&[data-variant='overlay']": {
+        backgroundColor: "var(--quantum-color-surface-overlay)",
+        backdropFilter: "var(--quantum-glassmorphism-backdropLight)",
+        border: "none",
+      },
     },
   },
 };

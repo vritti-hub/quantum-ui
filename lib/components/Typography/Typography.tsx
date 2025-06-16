@@ -8,8 +8,11 @@ export interface TypographyProps extends MuiTypographyProps {
    * - primary: Primary text color (default)
    * - secondary: Secondary text color
    * - disabled: Disabled text color
+   * - success: Success/positive state color
+   * - warning: Warning state color
+   * - brand: Brand blue color for logos and highlights
    */
-  intent?: "primary" | "secondary" | "disabled";
+  intent?: "primary" | "secondary" | "disabled" | "success" | "warning" | "brand";
 
   /**
    * Typography content
@@ -17,20 +20,38 @@ export interface TypographyProps extends MuiTypographyProps {
   children: React.ReactNode;
 }
 
-// ✅ Optimized: Constant mapping for performance
-const INTENT_TO_COLOR_MAP = {
-  primary: "text.primary",
-  secondary: "text.secondary",
-  disabled: "text.disabled",
+// ✅ Enhanced: CSS Variables mapping for theme-aware colors
+const INTENT_TO_CSS_VAR_MAP = {
+  primary: "var(--quantum-color-text-primary)",
+  secondary: "var(--quantum-color-text-secondary)", 
+  disabled: "var(--quantum-color-text-disabled)",
+  success: "var(--quantum-color-feedback-success)", // Success green from CSS vars
+  warning: "var(--quantum-color-feedback-warning)", // Warning from CSS vars
+  brand: "var(--quantum-color-action-primary)", // Brand blue
 } as const;
 
+
 export const Typography = React.memo<TypographyProps>(
-  ({ intent = "primary", color, children, variant = "body1", ...props }) => {
-    // Use intent color if no explicit color provided
-    const finalColor = color || INTENT_TO_COLOR_MAP[intent];
+  ({ intent = "primary", color, children, variant = "body1", sx, ...props }) => {
+    // Use CSS variable for theme-aware colors
+    const cssVariableColor = INTENT_TO_CSS_VAR_MAP[intent];
+    
+    const finalSx = {
+      // Use CSS variable for theme-aware colors
+      color: color || cssVariableColor,
+      // Ensure proper line height and font weights
+      lineHeight: variant?.includes('h') ? 1.2 : variant === 'body1' ? 1.6 : 1.4,
+      // Add theme transition
+      transition: 'color 0.3s ease',
+      ...sx,
+    };
 
     return (
-      <MuiTypography color={finalColor} variant={variant} {...props}>
+      <MuiTypography 
+        variant={variant} 
+        sx={finalSx}
+        {...props}
+      >
         {children}
       </MuiTypography>
     );

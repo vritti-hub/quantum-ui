@@ -62,6 +62,23 @@ export const SEMANTIC_TOKENS = {
         light: palette.pure.white,
         dark: palette.darkNeutral[900],
       } as ColorDefinition,
+      glass: {
+        light: palette.lightNeutral[200], // Light glass surface
+        dark: palette.darkNeutral[800], // Dark glass surface
+      } as ColorDefinition,
+      glassHover: {
+        light: palette.lightNeutral[100], // Slightly lighter on hover
+        dark: palette.darkNeutral[700], // Lighter dark surface on hover
+      } as ColorDefinition,
+      interactive: {
+        light: palette.universalBlue[50], // Very subtle blue tint
+        dark: palette.universalBlue[950], // Deep blue tint for dark mode
+      } as ColorDefinition,
+      overlay: {
+        light: palette.darkNeutral[900], // Dark overlay
+        dark: palette.darkNeutral[950], // Darker overlay for dark mode
+        needsRGB: true,
+      } as ColorDefinition,
     },
 
     // Text colors
@@ -78,14 +95,6 @@ export const SEMANTIC_TOKENS = {
       disabled: {
         light: palette.lightNeutral[500],
         dark: palette.darkNeutral[500],
-      } as ColorDefinition,
-      onPrimary: {
-        light: palette.pure.white, // White text on primary blue
-        dark: palette.pure.white, // White text on primary blue (both modes)
-      } as ColorDefinition,
-      onDestructive: {
-        light: palette.pure.white, // White text on red background
-        dark: palette.pure.white, // White text on red background (both modes)
       } as ColorDefinition,
     },
 
@@ -122,6 +131,14 @@ export const SEMANTIC_TOKENS = {
         light: palette.lightNeutral[200],
         dark: palette.darkNeutral[700],
       } as ColorDefinition,
+      glass: {
+        light: palette.lightNeutral[300], // Light glass border
+        dark: palette.darkNeutral[600], // Dark glass border
+      } as ColorDefinition,
+      glassAccent: {
+        light: palette.universalBlue[300], // Blue accent border
+        dark: palette.universalBlue[400], // Slightly brighter for dark mode
+      } as ColorDefinition,
     },
   },
 
@@ -129,7 +146,7 @@ export const SEMANTIC_TOKENS = {
   effects: {
     shimmer: {
       light: "rgba(255, 255, 255, 0.1)", // White shimmer for light mode
-      dark: "rgba(255, 255, 255, 0.05)",  // Subtle white shimmer for dark mode
+      dark: "rgba(255, 255, 255, 0.05)", // Subtle white shimmer for dark mode
     } as ColorDefinition,
   },
 
@@ -137,7 +154,7 @@ export const SEMANTIC_TOKENS = {
   borderRadius: {
     none: {
       mobile: "0px",
-      tablet: "0px", 
+      tablet: "0px",
       desktop: "0px",
     } as ResponsiveValue<string>,
     small: {
@@ -542,7 +559,10 @@ export const getAllThemeVariables = (): ThemeVariables => {
           variants: {} as Record<string, Record<string, string | number>>,
         },
         spacing: {} as Record<string, string>,
-        textField: {} as Record<string, string | number | Record<string, string>>,
+        textField: {} as Record<
+          string,
+          string | number | Record<string, string>
+        >,
       };
 
       // Process colors with RGB support
@@ -565,9 +585,11 @@ export const getAllThemeVariables = (): ThemeVariables => {
       );
 
       // Add borderRadius (responsive)
-      Object.entries(SEMANTIC_TOKENS.borderRadius).forEach(([name, responsiveValue]) => {
-        tokens.borderRadius[name] = responsiveValue[breakpoint];
-      });
+      Object.entries(SEMANTIC_TOKENS.borderRadius).forEach(
+        ([name, responsiveValue]) => {
+          tokens.borderRadius[name] = responsiveValue[breakpoint];
+        }
+      );
 
       // Add shadows (process theme-aware shadows)
       Object.entries(SEMANTIC_TOKENS.shadows).forEach(([name, shadowValue]) => {
@@ -583,17 +605,19 @@ export const getAllThemeVariables = (): ThemeVariables => {
       });
 
       // Add glassmorphism (theme-aware)
-      Object.entries(SEMANTIC_TOKENS.glassmorphism).forEach(([name, glassValue]) => {
-        if (
-          typeof glassValue === "object" &&
-          "light" in glassValue &&
-          "dark" in glassValue
-        ) {
-          tokens.glassmorphism[name] = glassValue[mode];
-        } else {
-          tokens.glassmorphism[name] = glassValue as string;
+      Object.entries(SEMANTIC_TOKENS.glassmorphism).forEach(
+        ([name, glassValue]) => {
+          if (
+            typeof glassValue === "object" &&
+            "light" in glassValue &&
+            "dark" in glassValue
+          ) {
+            tokens.glassmorphism[name] = glassValue[mode];
+          } else {
+            tokens.glassmorphism[name] = glassValue as string;
+          }
         }
-      });
+      );
 
       // Add effects (theme-aware)
       Object.entries(SEMANTIC_TOKENS.effects).forEach(([name, effectValue]) => {

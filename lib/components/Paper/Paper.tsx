@@ -9,8 +9,12 @@ export interface PaperProps extends Omit<MuiPaperProps, "variant"> {
    * - glass: Glassmorphism effect with backdrop blur
    * - elevated: Higher shadow and prominence
    * - subtle: Minimal styling for backgrounds
+   * - glassCard: Glass card with low opacity background
+   * - glassCardHover: Glass card with slightly higher opacity for hover states
+   * - interactive: Interactive surface for buttons and controls
+   * - overlay: High opacity overlay for modals and popups
    */
-  variant?: "standard" | "glass" | "elevated" | "subtle";
+  variant?: "standard" | "glass" | "elevated" | "subtle" | "glassCard" | "glassCardHover" | "interactive" | "overlay";
 
   /**
    * Content of the paper
