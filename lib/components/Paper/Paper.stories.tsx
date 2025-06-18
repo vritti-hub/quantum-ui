@@ -1,32 +1,31 @@
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import type { Meta, StoryObj } from "@storybook/react-vite";
-import { Button } from "../Button/Button";
-import { TextField } from "../TextField/TextField";
-import { Typography } from "../Typography/Typography";
+import type { Meta, StoryObj } from "@storybook/react";
 import { Paper } from "./Paper";
+import { Typography } from "../Typography";
+import { Button } from "../Button";
+import { TextField } from "../TextField";
 
 const meta: Meta<typeof Paper> = {
   title: "Components/Paper",
   component: Paper,
   parameters: {
-    layout: "padded",
+    layout: "centered",
     docs: {
       description: {
         component:
-          "Semantic paper component with variant-based styling for different surface types and business contexts. Features adaptive theming, glassmorphism effects, and optimized for professional business applications.",
+          "Universal Paper component with 5 semantic variants that work across landing pages, applications, and forms. Each variant supports data attributes for customization without variant explosion.",
       },
     },
   },
+  tags: ["autodocs"],
   argTypes: {
     variant: {
       control: "select",
-      options: ["standard", "glass", "elevated", "subtle"],
-      description: "Visual style variant for different business use cases",
+      options: ["section", "surface", "accent", "minimal", "feature"],
+      description: "Semantic variant for different use cases",
     },
     children: {
       control: false,
-      description: "Content of the paper surface",
+      description: "Content of the paper",
     },
   },
 };
@@ -34,449 +33,376 @@ const meta: Meta<typeof Paper> = {
 export default meta;
 type Story = StoryObj<typeof Paper>;
 
-// CSF3 Simple Stories - Individual variants
-export const Default: Story = {
+// ========================================
+// Universal Variants
+// ========================================
+
+export const Section: Story = {
   args: {
-    variant: "standard",
+    variant: "section",
     children: (
-      <Box p={3}>
-        <Typography variant="h4" gutterBottom>
-          Business Performance Summary
+      <div>
+        <Typography variant="h3" style={{ marginBottom: "1rem" }}>Section Container</Typography>
+        <Typography variant="body1" style={{ marginBottom: "1rem" }}>
+          Universal section container perfect for content areas in both landing pages and applications.
+          Responsive padding and borders included.
         </Typography>
-        <Typography variant="body2" intent="secondary">
-          Your portfolio generated $847,392 in revenue this month.
-        </Typography>
-      </Box>
+        <Button intent="primary">Learn More</Button>
+      </div>
     ),
   },
 };
 
-export const Standard: Story = {
+export const SectionFullWidth: Story = {
+  name: "Section (Full Width)",
   args: {
-    variant: "standard",
+    variant: "section",
+    fullWidth: true,
     children: (
-      <Box p={3}>
-        <Typography variant="h5" gutterBottom>
-          Standard Surface
+      <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+        <Typography variant="h2" style={{ marginBottom: "1rem" }}>Landing Page Section</Typography>
+        <Typography variant="body1" style={{ marginBottom: "2rem" }}>
+          Full-width section perfect for landing page hero areas and content sections.
+          No border radius, optimized spacing for full viewport width.
         </Typography>
-        <Typography variant="body2" intent="secondary">
-          Perfect for main dashboard content and primary information displays.
+        <Button intent="primary" size="large">Get Started</Button>
+      </div>
+    ),
+  },
+  parameters: {
+    layout: "fullscreen",
+  },
+};
+
+export const Surface: Story = {
+  args: {
+    variant: "surface",
+    children: (
+      <div>
+        <Typography variant="h4" style={{ marginBottom: "1rem" }}>Clean Surface</Typography>
+        <Typography variant="body1" style={{ marginBottom: "1rem" }}>
+          Clean background perfect for forms and application panels.
+          Includes hover and focus states for interactive contexts.
         </Typography>
-      </Box>
+        <TextField label="Example Input" placeholder="Type something..." />
+      </div>
     ),
   },
 };
 
-export const Glass: Story = {
+export const Accent: Story = {
   args: {
-    variant: "glass",
+    variant: "accent",
     children: (
-      <Box p={3}>
-        <Typography variant="h5" gutterBottom>
-          Glass Surface
+      <div style={{ textAlign: "center" }}>
+        <Typography variant="h3" style={{ marginBottom: "1rem" }}>Highlighted Content</Typography>
+        <Typography variant="body1" style={{ marginBottom: "1.5rem" }}>
+          Accent variant perfect for CTAs and important announcements.
+          Subtle gradient background with glow effects.
         </Typography>
-        <Typography variant="body2" intent="secondary">
-          Ideal for modal dialogs and overlay interfaces with glassmorphism effect.
-        </Typography>
-      </Box>
+        <Button intent="primary">Take Action</Button>
+      </div>
     ),
   },
 };
 
-export const Elevated: Story = {
+export const AccentEmphasis: Story = {
+  name: "Accent (High Emphasis)",
   args: {
-    variant: "elevated",
+    variant: "accent",
+    highEmphasis: true,
     children: (
-      <Box p={3}>
-        <Typography variant="h5" gutterBottom>
-          Elevated Surface
+      <div style={{ textAlign: "center" }}>
+        <Typography variant="h2" style={{ marginBottom: "1rem" }}>Premium CTA</Typography>
+        <Typography variant="body1" style={{ marginBottom: "1.5rem" }}>
+          High emphasis accent with enhanced glow and stronger gradients.
+          Perfect for main CTAs on landing pages.
         </Typography>
-        <Typography variant="body2" intent="secondary">
-          Draws attention to important notifications and critical business insights.
-        </Typography>
-      </Box>
+        <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+          <Button intent="primary" size="large">Get Started</Button>
+          <Button intent="secondary" size="large">Learn More</Button>
+        </div>
+      </div>
     ),
   },
 };
 
-export const Subtle: Story = {
+export const Minimal: Story = {
   args: {
-    variant: "subtle",
+    variant: "minimal",
     children: (
-      <Box p={3}>
-        <Typography variant="h5" gutterBottom>
-          Subtle Surface
+      <div>
+        <Typography variant="h5" style={{ marginBottom: "0.5rem" }}>Minimal Container</Typography>
+        <Typography variant="body2">
+          Subtle container perfect for backgrounds and grouping elements.
+          Minimal styling that doesn't distract from content.
         </Typography>
-        <Typography variant="body2" intent="secondary">
-          Works well for background sections and supporting information.
-        </Typography>
-      </Box>
+      </div>
     ),
   },
 };
 
-// CSF3 Grouped Stories
+export const MinimalInput: Story = {
+  name: "Minimal (Input Style)",
+  args: {
+    variant: "minimal",
+    input: true,
+    children: (
+      <Typography variant="body1">Input field background styling</Typography>
+    ),
+  },
+};
+
+export const MinimalNavigation: Story = {
+  name: "Minimal (Navigation)",
+  args: {
+    variant: "minimal",
+    nav: true,
+    children: (
+      <div>
+        <Typography variant="body1" style={{ marginBottom: "0.5rem" }}>Navigation Item</Typography>
+        <Typography variant="body2">Glass effect for navigation panels and sidebars</Typography>
+      </div>
+    ),
+  },
+};
+
+export const Feature: Story = {
+  args: {
+    variant: "feature",
+    children: (
+      <div>
+        <Typography variant="h4" style={{ marginBottom: "1rem" }}>Premium Feature</Typography>
+        <Typography variant="body1" style={{ marginBottom: "1rem" }}>
+          Premium container with shine effects and strong shadows.
+          Perfect for showcasing important features and content.
+        </Typography>
+        <Button intent="primary">Explore Feature</Button>
+      </div>
+    ),
+  },
+};
+
+export const FeatureGlass: Story = {
+  name: "Feature (Glass)",
+  args: {
+    variant: "feature",
+    glass: true,
+    children: (
+      <div>
+        <Typography variant="h4" style={{ marginBottom: "1rem" }}>Glass Feature</Typography>
+        <Typography variant="body1" style={{ marginBottom: "1rem" }}>
+          Premium feature with glass effect, perfect for landing page showcases
+          and modern UI designs.
+        </Typography>
+        <Button intent="primary">Learn More</Button>
+      </div>
+    ),
+  },
+};
+
+export const FeatureCompact: Story = {
+  name: "Feature (Compact)",
+  args: {
+    variant: "feature",
+    compact: true,
+    children: (
+      <div>
+        <Typography variant="h5" style={{ marginBottom: "0.5rem" }}>App Feature</Typography>
+        <Typography variant="body2">
+          Compact version perfect for application UI and smaller cards.
+          Maintains premium feel with reduced padding.
+        </Typography>
+      </div>
+    ),
+  },
+};
+
+// ========================================
+// Use Case Examples
+// ========================================
+
+export const LandingPageExamples: Story = {
+  name: "🚀 Landing Page Examples",
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: "2rem", width: "100%", maxWidth: "none" }}>
+      {/* Hero Section */}
+      <Paper variant="section" fullWidth>
+        <div style={{ maxWidth: "800px", margin: "0 auto", textAlign: "center" }}>
+          <Typography variant="h1" style={{ marginBottom: "1rem" }}>Welcome to Our Platform</Typography>
+          <Typography variant="h3" style={{ marginBottom: "2rem", opacity: 0.8 }}>
+            Transform your business with our innovative solutions
+          </Typography>
+          <Button intent="primary" size="large">Get Started</Button>
+        </div>
+      </Paper>
+      
+      {/* Feature Cards */}
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "1.5rem", padding: "0 1rem" }}>
+        <Paper variant="feature" glass>
+          <Typography variant="h4" style={{ marginBottom: "1rem" }}>🚀 Fast Setup</Typography>
+          <Typography variant="body1">Get started in minutes with our intuitive onboarding process.</Typography>
+        </Paper>
+        
+        <Paper variant="feature" glass>
+          <Typography variant="h4" style={{ marginBottom: "1rem" }}>🔒 Secure</Typography>
+          <Typography variant="body1">Enterprise-grade security to keep your data safe and protected.</Typography>
+        </Paper>
+        
+        <Paper variant="feature" glass>
+          <Typography variant="h4" style={{ marginBottom: "1rem" }}>📊 Analytics</Typography>
+          <Typography variant="body1">Powerful insights and analytics to grow your business.</Typography>
+        </Paper>
+      </div>
+      
+      {/* CTA Section */}
+      <Paper variant="accent" highEmphasis style={{ margin: "0 1rem" }}>
+        <div style={{ textAlign: "center" }}>
+          <Typography variant="h2" style={{ marginBottom: "1rem" }}>Ready to Get Started?</Typography>
+          <Typography variant="body1" style={{ marginBottom: "2rem", opacity: 0.9 }}>
+            Join thousands of satisfied customers who trust our platform
+          </Typography>
+          <div style={{ display: "flex", gap: "1rem", justifyContent: "center", flexWrap: "wrap" }}>
+            <Button intent="primary" size="large">Start Free Trial</Button>
+            <Button intent="secondary" size="large">Contact Sales</Button>
+          </div>
+        </div>
+      </Paper>
+    </div>
+  ),
+  parameters: {
+    layout: "fullscreen",
+  },
+};
+
+export const ApplicationExamples: Story = {
+  name: "💻 Application Examples",
+  render: () => (
+    <div style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: "1rem", height: "400px" }}>
+      {/* Navigation Sidebar */}
+      <Paper variant="minimal" nav style={{ height: "100%" }}>
+        <div style={{ padding: "1rem" }}>
+          <Typography variant="h6" style={{ marginBottom: "1rem" }}>Navigation</Typography>
+          <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+            <Typography variant="body2">Dashboard</Typography>
+            <Typography variant="body2">Analytics</Typography>
+            <Typography variant="body2">Settings</Typography>
+          </div>
+        </div>
+      </Paper>
+      
+      {/* Main Content */}
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {/* Header */}
+        <Paper variant="surface">
+          <Typography variant="h4" style={{ marginBottom: "0.5rem" }}>Dashboard</Typography>
+          <Typography variant="body1">Welcome back! Here's what's happening with your account.</Typography>
+        </Paper>
+        
+        {/* Feature Cards */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
+          <Paper variant="feature" compact>
+            <Typography variant="h6" style={{ marginBottom: "0.5rem" }}>Quick Stats</Typography>
+            <Typography variant="h2" style={{ color: "var(--quantum-color-action-primary)" }}>$12,345</Typography>
+          </Paper>
+          
+          <Paper variant="feature" compact>
+            <Typography variant="h6" style={{ marginBottom: "0.5rem" }}>Growth</Typography>
+            <Typography variant="h2" style={{ color: "var(--quantum-color-feedback-success)" }}>+23%</Typography>
+          </Paper>
+        </div>
+      </div>
+    </div>
+  ),
+  parameters: {
+    layout: "centered",
+  },
+};
+
+export const FormExamples: Story = {
+  name: "📝 Form Examples",
+  render: () => (
+    <div style={{ maxWidth: "500px" }}>
+      <Paper variant="section">
+        <Typography variant="h4" style={{ marginBottom: "1.5rem" }}>Contact Form</Typography>
+        
+        <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <TextField label="Full Name" placeholder="Enter your name" />
+          <TextField label="Email" placeholder="Enter your email" type="email" />
+          
+          <Paper variant="minimal" input>
+            <Typography variant="body2" style={{ opacity: 0.7 }}>Message</Typography>
+          </Paper>
+          
+          <Paper variant="accent">
+            <Typography variant="body2" style={{ textAlign: "center", margin: "0.5rem 0" }}>
+              ✓ Form validation passed
+            </Typography>
+          </Paper>
+          
+          <Button intent="primary" fullWidth>Send Message</Button>
+        </div>
+      </Paper>
+    </div>
+  ),
+  parameters: {
+    layout: "centered",
+  },
+};
+
 export const VariantComparison: Story = {
-  render: (args) => (
-    <Stack spacing={3}>
-      <Paper {...args} variant="standard">
-        <Box p={3}>
-          <Typography variant="h5" gutterBottom>Standard Surface</Typography>
-          <Typography variant="body2" intent="secondary">Perfect for main dashboard content</Typography>
-        </Box>
-      </Paper>
-      <Paper {...args} variant="glass">
-        <Box p={3}>
-          <Typography variant="h5" gutterBottom>Glass Surface</Typography>
-          <Typography variant="body2" intent="secondary">Ideal for modal dialogs and overlays</Typography>
-        </Box>
-      </Paper>
-      <Paper {...args} variant="elevated">
-        <Box p={3}>
-          <Typography variant="h5" gutterBottom>Elevated Surface</Typography>
-          <Typography variant="body2" intent="secondary">Draws attention to important content</Typography>
-        </Box>
-      </Paper>
-      <Paper {...args} variant="subtle">
-        <Box p={3}>
-          <Typography variant="h5" gutterBottom>Subtle Surface</Typography>
-          <Typography variant="body2" intent="secondary">Works well for background sections</Typography>
-        </Box>
-      </Paper>
-    </Stack>
-  ),
-  args: {
-    children: "Surface content",
-  },
-};
-
-// CSF3 Complex Examples
-export const DashboardExample: Story = {
+  name: "📋 All Variants",
   render: () => (
-    <Stack spacing={3}>
-      <Paper variant="elevated">
-        <Box p={4}>
-          <Typography variant="h3" gutterBottom>
-            Portfolio Performance
-          </Typography>
-          <Typography variant="body2" intent="secondary" gutterBottom>
-            Real-time analytics across all business locations
-          </Typography>
-
-          <Stack direction="row" spacing={3} mb={3}>
-            <Paper variant="glass" sx={{ flex: 1 }}>
-              <Box p={3} textAlign="center">
-                <Typography variant="h2" gutterBottom>$847K</Typography>
-                <Typography variant="body2" intent="secondary">Total Revenue</Typography>
-              </Box>
-            </Paper>
-            <Paper variant="glass" sx={{ flex: 1 }}>
-              <Box p={3} textAlign="center">
-                <Typography variant="h2" gutterBottom>4.8</Typography>
-                <Typography variant="body2" intent="secondary">Avg Rating</Typography>
-              </Box>
-            </Paper>
-          </Stack>
-
-          <Stack direction="row" spacing={2}>
-            <Button intent="primary">Generate Report</Button>
-            <Button intent="secondary">View Details</Button>
-          </Stack>
-        </Box>
+    <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", maxWidth: "600px" }}>
+      <Typography variant="h3" style={{ textAlign: "center", marginBottom: "1rem" }}>
+        Paper Variant Comparison
+      </Typography>
+      
+      <Paper variant="section">
+        <Typography variant="h5" style={{ marginBottom: "0.5rem" }}>Section</Typography>
+        <Typography variant="body2">Universal container for content areas</Typography>
       </Paper>
-
-      <Stack direction="row" spacing={3}>
-        <Paper variant="standard" sx={{ flex: 1 }}>
-          <Box p={3}>
-            <Typography variant="h4" gutterBottom>Downtown Salon</Typography>
-            <Typography variant="h2" gutterBottom>$28,450</Typography>
-            <Typography variant="body2" intent="secondary">Monthly Revenue (↑ 15%)</Typography>
-            <Button intent="primary" size="small" fullWidth sx={{ mt: 2 }}>Optimize</Button>
-          </Box>
-        </Paper>
-        <Paper variant="standard" sx={{ flex: 1 }}>
-          <Box p={3}>
-            <Typography variant="h4" gutterBottom>Riverside Restaurant</Typography>
-            <Typography variant="h2" gutterBottom>$45,230</Typography>
-            <Typography variant="body2" intent="secondary">Monthly Revenue (↑ 18%)</Typography>
-            <Button intent="primary" size="small" fullWidth sx={{ mt: 2 }}>Analyze</Button>
-          </Box>
-        </Paper>
-      </Stack>
-    </Stack>
+      
+      <Paper variant="surface">
+        <Typography variant="h5" style={{ marginBottom: "0.5rem" }}>Surface</Typography>
+        <Typography variant="body2">Clean background for forms and panels</Typography>
+      </Paper>
+      
+      <Paper variant="accent">
+        <Typography variant="h5" style={{ marginBottom: "0.5rem" }}>Accent</Typography>
+        <Typography variant="body2">Highlighted content with gradient background</Typography>
+      </Paper>
+      
+      <Paper variant="minimal">
+        <Typography variant="h5" style={{ marginBottom: "0.5rem" }}>Minimal</Typography>
+        <Typography variant="body2">Subtle container for backgrounds</Typography>
+      </Paper>
+      
+      <Paper variant="feature">
+        <Typography variant="h5" style={{ marginBottom: "0.5rem" }}>Feature</Typography>
+        <Typography variant="body2">Premium container with shine effects</Typography>
+      </Paper>
+    </div>
   ),
   parameters: {
-    docs: {
-      description: {
-        story: "Business dashboard showing how paper variants work together in realistic layouts.",
-      },
-    },
-  },
-};
-
-export const FormExample: Story = {
-  render: () => (
-    <Stack spacing={3}>
-      <Paper variant="glass">
-        <Box p={4}>
-          <Typography variant="h3" gutterBottom>
-            Add New Business
-          </Typography>
-          <Typography variant="body2" intent="secondary" gutterBottom>
-            Connect a business to your portfolio for analytics.
-          </Typography>
-
-          <Stack spacing={3} maxWidth={400}>
-            <TextField label="Business Name" placeholder="Enter name" fullWidth />
-            <TextField label="Industry Type" placeholder="Salon, Restaurant..." fullWidth />
-            <TextField label="Location" placeholder="City, State" fullWidth />
-
-            <Stack direction="row" spacing={2}>
-              <Button intent="primary" sx={{ flex: 1 }}>Connect</Button>
-              <Button intent="secondary" sx={{ flex: 1 }}>Save Draft</Button>
-            </Stack>
-          </Stack>
-        </Box>
-      </Paper>
-
-      <Paper variant="elevated">
-        <Box p={4}>
-          <Typography variant="h4" gutterBottom>
-            ⚠️ Confirm Removal
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Remove "Downtown Salon" from your portfolio? This cannot be undone.
-          </Typography>
-          <Typography variant="body2" intent="secondary" gutterBottom>
-            This will delete historical data and AI insights.
-          </Typography>
-
-          <Stack direction="row" spacing={2} justifyContent="flex-end">
-            <Button intent="secondary">Keep Connected</Button>
-            <Button intent="destructive">Remove</Button>
-          </Stack>
-        </Box>
-      </Paper>
-    </Stack>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Form interfaces showing paper variants for user interactions.",
-      },
-    },
-  },
-};
-
-export const ThemeVariants: Story = {
-  render: () => (
-    <Stack spacing={3}>
-      <Typography variant="h3" gutterBottom>
-        Theme-Adaptive Surfaces
-      </Typography>
-      <Typography variant="body2" intent="secondary" gutterBottom>
-        Switch themes to see automatic styling adaptation.
-      </Typography>
-
-      <Stack direction="row" spacing={3}>
-        <Stack spacing={2} sx={{ flex: 1 }}>
-          <Paper variant="standard">
-            <Box p={3}>
-              <Typography variant="h5" gutterBottom>Performance Insights</Typography>
-              <Typography variant="body2" intent="secondary">
-                AI identified optimization opportunities across your portfolio.
-              </Typography>
-              <Button intent="primary" size="small" sx={{ mt: 2 }}>View Analysis</Button>
-            </Box>
-          </Paper>
-
-          <Paper variant="elevated">
-            <Box p={3}>
-              <Typography variant="h5" gutterBottom>Revenue Alert</Typography>
-              <Typography variant="body2" intent="secondary">
-                High priority opportunity could increase revenue by $18,400/month.
-              </Typography>
-              <Stack direction="row" spacing={1} mt={2}>
-                <Button intent="primary" size="small">Implement</Button>
-                <Button intent="ghost" size="small">Later</Button>
-              </Stack>
-            </Box>
-          </Paper>
-        </Stack>
-
-        <Stack spacing={2} sx={{ flex: 1 }}>
-          <Paper variant="glass">
-            <Box p={3}>
-              <Typography variant="h5" gutterBottom>Quick Actions</Typography>
-              <Stack spacing={1}>
-                <Button intent="primary" size="small" fullWidth>Add Business</Button>
-                <Button intent="secondary" size="small" fullWidth>Export Report</Button>
-                <Button intent="ghost" size="small" fullWidth>View Insights</Button>
-              </Stack>
-            </Box>
-          </Paper>
-
-          <Paper variant="subtle">
-            <Box p={3}>
-              <Typography variant="h5" gutterBottom>System Status</Typography>
-              <Stack spacing={1}>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="body2">Data Sync:</Typography>
-                  <Typography variant="body2" sx={{ color: "success.main" }}>✓ Active</Typography>
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Typography variant="body2">Businesses:</Typography>
-                  <Typography variant="body2" intent="secondary">12 connected</Typography>
-                </Box>
-              </Stack>
-            </Box>
-          </Paper>
-        </Stack>
-      </Stack>
-    </Stack>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Paper variants adapting across light and dark themes.",
-      },
-    },
-  },
-};
-
-export const InteractiveExample: Story = {
-  render: () => (
-    <Stack spacing={3}>
-      <Typography variant="h3" gutterBottom>
-        Interactive Business Workflows
-      </Typography>
-      <Typography variant="body2" intent="secondary" gutterBottom>
-        Click buttons to experience realistic business workflows.
-      </Typography>
-
-      <Paper variant="elevated">
-        <Box p={4}>
-          <Typography variant="h4" gutterBottom>
-            🚨 Performance Alert
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Customer satisfaction dropped to 3.1/5. Immediate action required.
-          </Typography>
-
-          <Paper variant="glass">
-            <Box p={3} mb={3}>
-              <Typography variant="h6" gutterBottom>AI Analysis</Typography>
-              <Typography variant="body2" gutterBottom>
-                Issues with wait times during peak hours (2-6 PM).
-              </Typography>
-              <Typography variant="body2">
-                • Wait time increased from 8 to 23 minutes
-              </Typography>
-              <Typography variant="body2">
-                • 3 staff members called in sick
-              </Typography>
-            </Box>
-          </Paper>
-
-          <Stack direction="row" spacing={2}>
-            <Button
-              intent="primary"
-              onClick={() => alert("Emergency meeting scheduled for 8 AM tomorrow.")}
-            >
-              Schedule Meeting
-            </Button>
-            <Button
-              intent="secondary"
-              onClick={() => alert("Backup staff will be deployed.")}
-            >
-              Deploy Staff
-            </Button>
-          </Stack>
-        </Box>
-      </Paper>
-
-      <Paper variant="standard">
-        <Box p={4}>
-          <Typography variant="h4" gutterBottom>
-            💡 Revenue Opportunity
-          </Typography>
-          <Typography variant="body1" gutterBottom>
-            Cross-business synergy could increase monthly revenue by $15,600.
-          </Typography>
-
-          <Paper variant="subtle">
-            <Box p={3} mb={3}>
-              <Typography variant="h6" gutterBottom>Strategy Details</Typography>
-              <Typography variant="body2" gutterBottom>
-                27% of salon customers work within 2 blocks of restaurant.
-              </Typography>
-              <Typography variant="body2">
-                Implement "Beauty Break" lunch packages for 40% traffic increase.
-              </Typography>
-            </Box>
-          </Paper>
-
-          <Stack direction="row" spacing={2}>
-            <Button
-              intent="primary"
-              onClick={() => alert("Implementation plan created!")}
-            >
-              Implement
-            </Button>
-            <Button
-              intent="secondary"
-              onClick={() => alert("Financial projections sent to dashboard.")}
-            >
-              View Projections
-            </Button>
-            <Button
-              intent="ghost"
-              onClick={() => alert("Saved for later review.")}
-            >
-              Save Later
-            </Button>
-          </Stack>
-        </Box>
-      </Paper>
-    </Stack>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Interactive workflows showing paper surfaces supporting user interactions.",
-      },
-    },
+    layout: "centered",
   },
 };
 
 export const Playground: Story = {
   args: {
-    variant: "standard",
+    variant: "section",
     children: (
-      <Box p={3}>
-        <Typography variant="h4" gutterBottom>
-          Business Performance Card
+      <div>
+        <Typography variant="h4" style={{ marginBottom: "1rem" }}>
+          Playground Example
         </Typography>
-        <Typography variant="body2" intent="secondary" gutterBottom>
-          Use controls to experiment with different paper variants.
+        <Typography variant="body1" style={{ marginBottom: "1rem" }}>
+          Use the controls to experiment with different paper variants and see how they behave.
+          Each variant is designed for specific use cases.
         </Typography>
-
-        <Box mb={3}>
-          <Typography variant="h2" gutterBottom>$45,230</Typography>
-          <Typography variant="body2" intent="secondary" gutterBottom>
-            Monthly Revenue
-          </Typography>
-          <Typography variant="body2" intent="primary">
-            ↑ 18% increase from last month
-          </Typography>
-        </Box>
-
-        <Stack direction="row" spacing={2}>
-          <Button intent="primary" size="small">Analyze</Button>
-          <Button intent="secondary" size="small">Export</Button>
-          <Button intent="ghost" size="small">Details</Button>
-        </Stack>
-      </Box>
+        <Button intent="primary">Interactive Button</Button>
+      </div>
     ),
   },
   parameters: {
