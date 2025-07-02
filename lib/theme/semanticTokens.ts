@@ -96,6 +96,19 @@ export const SEMANTIC_TOKENS = {
         light: palette.lightNeutral[500],
         dark: palette.darkNeutral[500],
       } as ColorDefinition,
+      // Text colors for use on colored backgrounds
+      onPrimary: {
+        light: palette.pure.white, // White text on primary blue background
+        dark: palette.pure.white, // White text on primary blue background
+      } as ColorDefinition,
+      onSecondary: {
+        light: palette.pure.white, // White text on secondary emerald background
+        dark: palette.pure.white, // White text on secondary emerald background
+      } as ColorDefinition,
+      onDestructive: {
+        light: palette.pure.white, // White text on destructive red background
+        dark: palette.pure.white, // White text on destructive red background
+      } as ColorDefinition,
     },
 
     // Feedback colors
@@ -193,9 +206,13 @@ export const SEMANTIC_TOKENS = {
       light: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
       dark: "0 10px 15px -3px rgba(0, 0, 0, 0.5)",
     } as ColorDefinition,
+    xl: {
+      light: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
+      dark: "0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.2)",
+    } as ColorDefinition,
     glass: {
-      light: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
-      dark: "0 8px 32px 0 rgba(59, 130, 246, 0.25)",
+      light: "0 8px 32px 0 rgba(0, 0, 0, 0.1), 0 2px 8px 0 rgba(0, 0, 0, 0.05)",
+      dark: "0 8px 32px 0 rgba(0, 0, 0, 0.4), 0 2px 8px 0 rgba(255, 255, 255, 0.05)",
     } as ColorDefinition,
     glassInset: {
       light: "inset 0 1px 0 0 rgba(255, 255, 255, 0.1)",

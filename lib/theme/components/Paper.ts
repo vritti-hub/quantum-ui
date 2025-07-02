@@ -161,6 +161,42 @@ export const PaperTheme: Components<Theme>["MuiPaper"] = {
           borderRadius: "var(--quantum-borderRadius-large)",
         }
       },
+
+      // ========================================
+      // Glass effect for all variants
+      // ========================================
+      "&[data-glass='true']": {
+        backgroundColor: "var(--quantum-color-surface-glass)",
+        backdropFilter: "var(--quantum-glassmorphism-backdrop)",
+        border: "1px solid var(--quantum-color-border-glass)",
+        boxShadow: "var(--quantum-shadows-glass)",
+        
+        // Override any variant background when glass is applied
+        "&[data-variant='section']": {
+          backgroundColor: "var(--quantum-color-surface-glass)",
+          border: "1px solid var(--quantum-color-border-glass)",
+          boxShadow: "var(--quantum-shadows-glass)",
+        },
+        
+        "&[data-variant='surface']": {
+          backgroundColor: "var(--quantum-color-surface-glass)",
+          border: "1px solid var(--quantum-color-border-glass)",
+          boxShadow: "var(--quantum-shadows-glass)",
+        },
+        
+        "&[data-variant='accent']": {
+          background: "linear-gradient(135deg, rgba(var(--quantum-color-action-primaryRGB), 0.1) 0%, rgba(var(--quantum-color-action-primaryRGB), 0.15) 100%)",
+          backgroundColor: "var(--quantum-color-surface-glass)",
+          border: "1px solid rgba(var(--quantum-color-action-primaryRGB), 0.25)",
+          boxShadow: "var(--quantum-shadows-glass)",
+        },
+        
+        "&[data-variant='minimal']": {
+          backgroundColor: "var(--quantum-color-surface-glass)",
+          border: "1px solid var(--quantum-color-border-glass)",
+          boxShadow: "var(--quantum-shadows-glass)",
+        },
+      },
     },
   },
 };

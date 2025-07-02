@@ -27,6 +27,7 @@ export default defineConfig({
         'components/TextField': resolve(__dirname, 'lib/components/TextField/index.ts'),
         'components/Paper': resolve(__dirname, 'lib/components/Paper/index.ts'),
         'components/Typography': resolve(__dirname, 'lib/components/Typography/index.ts'),
+        'components/ThemeToggle': resolve(__dirname, 'lib/components/ThemeToggle/index.ts'),
       },
       name: 'QuantumUI',
       formats: ['es'],

@@ -31,6 +31,10 @@
       "types": "./dist/components/Typography/index.d.ts",
       "import": "./dist/components/Typography.js"
     },
+    "./ThemeToggle": {
+      "types": "./dist/components/ThemeToggle/index.d.ts",
+      "import": "./dist/components/ThemeToggle.js"
+    },
     "./next": {
       "types": "./dist/next.d.ts",
       "import": "./dist/next.js"

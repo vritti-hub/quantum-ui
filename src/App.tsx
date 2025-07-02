@@ -4,12 +4,13 @@ import React, { useCallback, useState } from "react";
 import { Button } from "../lib/components/Button/Button";
 import { Paper } from "../lib/components/Paper/Paper";
 import { TextField } from "../lib/components/TextField/TextField";
+import { ThemeToggle } from "../lib/components/ThemeToggle/ThemeToggle";
 import { Typography } from "../lib/components/Typography/Typography";
 import { ThemeProvider, useTheme } from "../lib/theme";
 
 // ✅ Optimized: Memoized content component
 const AppContent = React.memo(() => {
-  const { toggleColorScheme, colorScheme } = useTheme();
+  const { colorScheme } = useTheme();
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
 
@@ -38,30 +39,37 @@ const AppContent = React.memo(() => {
   );
   // Debug logs temporarily removed to test theme persistence
   return (
-    <Box 
-      component="main" 
+    <Box
+      component="main"
       padding={3}
-      sx={{ 
-        minHeight: '100vh',
-        backgroundColor: 'background.default' 
+      sx={{
+        minHeight: "100vh",
+        backgroundColor: "background.default",
       }}
     >
       <Stack spacing={4} maxWidth={600} marginX="auto">
         {/* Header */}
-        <Box textAlign="center">
+        <Box textAlign="center" position="relative">
+          <ThemeToggle
+            style={{
+              position: "absolute",
+              top: "0",
+              right: "0",
+            }}
+          />
           <Typography variant="h3" component="h1" gutterBottom>
             Quantum UI
           </Typography>
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Clean semantic design system
           </Typography>
-          <Button intent="secondary" onClick={toggleColorScheme}>
-            Theme: {colorScheme}
-          </Button>
+          <Typography variant="body2" color="text.secondary">
+            Current theme: {colorScheme}
+          </Typography>
         </Box>
 
         {/* Glass Form Card */}
-        <Paper variant="glass">
+        <Paper variant="surface" glass>
           <Box padding={4}>
             <Typography variant="h5" gutterBottom>
               Contact Form
@@ -98,7 +106,7 @@ const AppContent = React.memo(() => {
         </Paper>
 
         {/* Button Showcase */}
-        <Paper variant="elevated">
+        <Paper variant="surface">
           <Box padding={4}>
             <Typography variant="h5" gutterBottom>
               Button Types
@@ -169,7 +177,7 @@ const AppContent = React.memo(() => {
           </Typography>
           <Stack spacing={3}>
             {/* Standard Paper */}
-            <Paper variant="standard">
+            <Paper variant="section">
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Standard Surface
@@ -182,7 +190,7 @@ const AppContent = React.memo(() => {
             </Paper>
 
             {/* Glass Paper */}
-            <Paper variant="glass">
+            <Paper variant="surface" glass>
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Glass Surface
@@ -195,7 +203,7 @@ const AppContent = React.memo(() => {
             </Paper>
 
             {/* Elevated Paper */}
-            <Paper variant="elevated">
+            <Paper variant="accent">
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Elevated Surface
@@ -208,7 +216,7 @@ const AppContent = React.memo(() => {
             </Paper>
 
             {/* Subtle Paper */}
-            <Paper variant="subtle">
+            <Paper variant="minimal">
               <Box padding={3}>
                 <Typography variant="h6" gutterBottom>
                   Subtle Surface
@@ -223,7 +231,7 @@ const AppContent = React.memo(() => {
         </Box>
 
         {/* Navigation Example */}
-        <Paper variant="glass">
+        <Paper variant="surface" glass>
           <Box
             padding={2}
             display="flex"

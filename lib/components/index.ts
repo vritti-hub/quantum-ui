@@ -6,3 +6,5 @@ export { Paper } from "./Paper";
 export type { PaperProps } from "./Paper";
 export { Typography } from "./Typography";
 export type { TypographyProps } from "./Typography";
+export { ThemeToggle } from "./ThemeToggle";
+export type { ThemeToggleProps } from "./ThemeToggle";
