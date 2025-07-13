@@ -1,17 +1,10 @@
-import { createTheme } from "@mui/material/styles";
-import { ButtonTheme, PaperTheme, TextFieldTheme } from "./components";
-import { getAllThemeVariables, SEMANTIC_TOKENS } from "./semanticTokens";
+import { createTheme } from '@mui/material/styles';
+import { ButtonTheme, PaperTheme, TextFieldTheme } from './components';
+import { getAllThemeVariables, SEMANTIC_TOKENS } from './semanticTokens';
 
-export const createQuantumTheme = (mode: "light" | "dark") => {
+export const createQuantumTheme = (mode: 'light' | 'dark') => {
   // Generate CSS variables for all breakpoints
-  const {
-    lightDesktop,
-    lightMobile,
-    lightTablet,
-    darkDesktop,
-    darkMobile,
-    darkTablet,
-  } = getAllThemeVariables();
+  const { lightDesktop, lightMobile, lightTablet, darkDesktop, darkMobile, darkTablet } = getAllThemeVariables();
 
   // Get current mode colors for MUI palette
   const colors = SEMANTIC_TOKENS.colors;
@@ -74,84 +67,83 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
 
     typography: {
       h1: {
-        fontFamily: "var(--quantum-typography-fontFamily-display)",
-        fontSize: "var(--quantum-typography-variants-display-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-display-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-display-fontWeight)",
-        letterSpacing:
-          "var(--quantum-typography-variants-display-letterSpacing)",
-        color: "var(--quantum-color-text-primary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-display)',
+        fontSize: 'var(--quantum-typography-variants-display-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-display-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-display-fontWeight)',
+        letterSpacing: 'var(--quantum-typography-variants-display-letterSpacing)',
+        color: 'var(--quantum-color-text-primary)',
       },
       h2: {
-        fontFamily: "var(--quantum-typography-fontFamily-display)",
-        fontSize: "var(--quantum-typography-variants-h1-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-h1-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-h1-fontWeight)",
-        color: "var(--quantum-color-text-primary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-display)',
+        fontSize: 'var(--quantum-typography-variants-h1-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-h1-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-h1-fontWeight)',
+        color: 'var(--quantum-color-text-primary)',
       },
       h3: {
-        fontFamily: "var(--quantum-typography-fontFamily-display)",
-        fontSize: "var(--quantum-typography-variants-h2-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-h2-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-h2-fontWeight)",
-        color: "var(--quantum-color-text-primary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-display)',
+        fontSize: 'var(--quantum-typography-variants-h2-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-h2-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-h2-fontWeight)',
+        color: 'var(--quantum-color-text-primary)',
       },
       h4: {
-        fontFamily: "var(--quantum-typography-fontFamily-primary)",
-        fontSize: "var(--quantum-typography-variants-h3-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-h3-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-h3-fontWeight)",
-        color: "var(--quantum-color-text-primary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-primary)',
+        fontSize: 'var(--quantum-typography-variants-h3-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-h3-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-h3-fontWeight)',
+        color: 'var(--quantum-color-text-primary)',
       },
       h5: {
-        fontFamily: "var(--quantum-typography-fontFamily-primary)",
-        fontSize: "var(--quantum-typography-variants-h4-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-h4-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-h4-fontWeight)",
-        color: "var(--quantum-color-text-primary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-primary)',
+        fontSize: 'var(--quantum-typography-variants-h4-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-h4-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-h4-fontWeight)',
+        color: 'var(--quantum-color-text-primary)',
       },
       h6: {
-        fontFamily: "var(--quantum-typography-fontFamily-primary)",
-        fontSize: "var(--quantum-typography-variants-caption-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-caption-lineHeight)",
-        fontWeight: "var(--quantum-typography-fontWeight-medium)",
-        color: "var(--quantum-color-text-secondary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-primary)',
+        fontSize: 'var(--quantum-typography-variants-caption-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-caption-lineHeight)',
+        fontWeight: 'var(--quantum-typography-fontWeight-medium)',
+        color: 'var(--quantum-color-text-secondary)',
       },
       body1: {
-        fontFamily: "var(--quantum-typography-fontFamily-primary)",
-        fontSize: "var(--quantum-typography-variants-body1-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-body1-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-body1-fontWeight)",
-        color: "var(--quantum-color-text-primary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-primary)',
+        fontSize: 'var(--quantum-typography-variants-body1-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-body1-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-body1-fontWeight)',
+        color: 'var(--quantum-color-text-primary)',
       },
       body2: {
-        fontFamily: "var(--quantum-typography-fontFamily-primary)",
-        fontSize: "var(--quantum-typography-variants-body2-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-body2-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-body2-fontWeight)",
-        color: "var(--quantum-color-text-secondary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-primary)',
+        fontSize: 'var(--quantum-typography-variants-body2-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-body2-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-body2-fontWeight)',
+        color: 'var(--quantum-color-text-secondary)',
       },
       button: {
-        fontFamily: "var(--quantum-typography-fontFamily-display)",
-        fontSize: "var(--quantum-typography-variants-button-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-button-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-button-fontWeight)",
-        color: "var(--quantum-color-text-primary)",
-        textTransform: "none",
+        fontFamily: 'var(--quantum-typography-fontFamily-display)',
+        fontSize: 'var(--quantum-typography-variants-button-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-button-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-button-fontWeight)',
+        color: 'var(--quantum-color-text-primary)',
+        textTransform: 'none',
       },
       caption: {
-        fontFamily: "var(--quantum-typography-fontFamily-primary)",
-        fontSize: "var(--quantum-typography-variants-caption-fontSize)",
-        lineHeight: "var(--quantum-typography-variants-caption-lineHeight)",
-        fontWeight: "var(--quantum-typography-variants-caption-fontWeight)",
-        color: "var(--quantum-color-text-secondary)",
+        fontFamily: 'var(--quantum-typography-fontFamily-primary)',
+        fontSize: 'var(--quantum-typography-variants-caption-fontSize)',
+        lineHeight: 'var(--quantum-typography-variants-caption-lineHeight)',
+        fontWeight: 'var(--quantum-typography-variants-caption-fontWeight)',
+        color: 'var(--quantum-color-text-secondary)',
       },
       overline: {
-        fontFamily: "var(--quantum-typography-fontFamily-primary)",
-        fontWeight: "var(--quantum-typography-fontWeight-medium)",
-        color: "var(--quantum-color-text-secondary)",
-        textTransform: "uppercase",
-        letterSpacing: "0.08em",
+        fontFamily: 'var(--quantum-typography-fontFamily-primary)',
+        fontWeight: 'var(--quantum-typography-fontWeight-medium)',
+        color: 'var(--quantum-color-text-secondary)',
+        textTransform: 'uppercase',
+        letterSpacing: '0.08em',
       },
     },
 
@@ -163,45 +155,45 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
       // CSS Variables injection
       MuiCssBaseline: {
         styleOverrides: {
-          "@keyframes quantumConfidenceRotate": {
-            "0%": { transform: "rotate(0deg)" },
-            "100%": { transform: "rotate(360deg)" },
+          '@keyframes quantumConfidenceRotate': {
+            '0%': { transform: 'rotate(0deg)' },
+            '100%': { transform: 'rotate(360deg)' },
           },
 
           // Energy burst animation for button clicks
-          "@keyframes quantumEnergyBurst": {
-            "0%": {
-              transform: "translate(-50%, -50%) scale(0)",
+          '@keyframes quantumEnergyBurst': {
+            '0%': {
+              transform: 'translate(-50%, -50%) scale(0)',
               opacity: 1,
             },
-            "100%": {
-              transform: "translate(-50%, -50%) scale(2)",
+            '100%': {
+              transform: 'translate(-50%, -50%) scale(2)',
               opacity: 0,
             },
           },
 
           // Warning rotate animation for destructive buttons (similar to primary)
-          "@keyframes quantumWarningRotate": {
-            "0%": { transform: "rotate(0deg)" },
-            "100%": { transform: "rotate(360deg)" },
+          '@keyframes quantumWarningRotate': {
+            '0%': { transform: 'rotate(0deg)' },
+            '100%': { transform: 'rotate(360deg)' },
           },
 
           // Respect reduced motion preferences
-          "@media (prefers-reduced-motion: reduce)": {
-            "*": {
-              animationDuration: "0.01ms !important",
-              animationIterationCount: "1 !important",
-              transitionDuration: "0.01ms !important",
+          '@media (prefers-reduced-motion: reduce)': {
+            '*': {
+              animationDuration: '0.01ms !important',
+              animationIterationCount: '1 !important',
+              transitionDuration: '0.01ms !important',
             },
           },
           // Add Space Grotesk font loading
-          "@font-face": {
-            fontFamily: "Space Grotesk",
-            fontDisplay: "swap",
+          '@font-face': {
+            fontFamily: 'Space Grotesk',
+            fontDisplay: 'swap',
           },
 
           // Light mode - mobile first (base styles)
-          ":root": {
+          ':root': {
             ...lightMobile,
             // Ensure font is loaded
             fontFamily: SEMANTIC_TOKENS.typography.fontFamily.primary,
@@ -211,21 +203,21 @@ export const createQuantumTheme = (mode: "light" | "dark") => {
           '[data-theme="dark"]': darkMobile,
 
           // Light mode - tablet and up & Dark mode - tablet and up
-          "@media (min-width: 768px)": {
-            ":root": lightTablet,
+          '@media (min-width: 768px)': {
+            ':root': lightTablet,
             '[data-theme="dark"]': darkTablet,
           },
 
           // Light mode - desktop and up & Dark mode - desktop and up
-          "@media (min-width: 1024px)": {
-            ":root": lightDesktop,
+          '@media (min-width: 1024px)': {
+            ':root': lightDesktop,
             '[data-theme="dark"]': darkDesktop,
           },
 
           // Ensure all text uses Space Grotesk by default
-          "html, body": {
+          'html, body': {
             fontFamily: SEMANTIC_TOKENS.typography.fontFamily.primary,
-            fontDisplay: "swap",
+            fontDisplay: 'swap',
           },
         },
       },

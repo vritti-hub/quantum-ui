@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -13,10 +13,10 @@
     />
     <script>
       // Prevent theme flickering by setting theme before React loads
-      (function() {
+      (function () {
         // Add no-transition class to prevent flickering during initial load
         document.documentElement.classList.add('no-transition');
-        
+
         try {
           const savedScheme = localStorage.getItem('quantum-color-scheme');
           if (savedScheme && (savedScheme === 'light' || savedScheme === 'dark')) {
@@ -28,10 +28,10 @@
           // Fallback to light theme if localStorage is not available
           document.documentElement.setAttribute('data-theme', 'light');
         }
-        
+
         // Remove no-transition class after DOM is ready to enable smooth transitions
-        window.addEventListener('DOMContentLoaded', function() {
-          setTimeout(function() {
+        window.addEventListener('DOMContentLoaded', function () {
+          setTimeout(function () {
             document.documentElement.classList.remove('no-transition');
             document.documentElement.classList.add('loaded');
           }, 100);

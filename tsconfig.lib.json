@@ -20,7 +20,7 @@
     "emitDeclarationOnly": false,
     "outDir": "./dist",
     "rootDir": "./lib",
-    
+
     /* Tree-shaking optimization */
     "removeComments": true,
     "importHelpers": false,
@@ -37,13 +37,6 @@
     "stripInternal": true,
     "isolatedModules": true
   },
-  "include": [
-    "lib/**/*"
-  ],
-  "exclude": [
-    "lib/**/*.stories.tsx",
-    "lib/**/*.test.tsx",
-    "lib/**/*.spec.tsx",
-    "src/**/*"
-  ]
+  "include": ["lib/**/*"],
+  "exclude": ["lib/**/*.stories.tsx", "lib/**/*.test.tsx", "lib/**/*.spec.tsx", "src/**/*"]
 }

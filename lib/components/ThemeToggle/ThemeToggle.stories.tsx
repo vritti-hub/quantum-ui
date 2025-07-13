@@ -8,11 +8,22 @@ const meta: Meta<typeof ThemeToggle> = {
     layout: 'centered',
     docs: {
       description: {
-        component: 'Professional theme toggle with smooth animations. Switches between light and dark themes with a beautiful sun/moon animation.',
+        component:
+          'Professional theme toggle with smooth animations. Switches between light and dark themes with a beautiful sun/moon animation.',
       },
     },
   },
   tags: ['autodocs'],
+  argTypes: {
+    className: {
+      control: 'text',
+      description: 'Additional CSS class name for custom styling',
+    },
+    style: {
+      control: 'object',
+      description: 'Inline styles for custom positioning and appearance',
+    },
+  },
 };
 
 export default meta;
@@ -53,6 +64,20 @@ export const WithCustomClass: Story = {
     docs: {
       description: {
         story: 'Theme toggle with custom CSS class for additional styling.',
+      },
+    },
+  },
+};
+
+export const Playground: Story = {
+  args: {
+    className: '',
+    style: {},
+  },
+  parameters: {
+    docs: {
+      description: {
+        story: 'Experiment with ThemeToggle props using the controls panel.',
       },
     },
   },

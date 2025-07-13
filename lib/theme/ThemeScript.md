@@ -2,10 +2,11 @@
 
 ## Quick Start
 
-### Next.js App Router (_document.tsx)
+### Next.js App Router (\_document.tsx)
+
 ```tsx
-import { Html, Head, Main, NextScript } from 'next/document'
-import { ThemeScript } from 'quantum-ui'
+import { Html, Head, Main, NextScript } from 'next/document';
+import { ThemeScript } from 'quantum-ui';
 
 export default function Document() {
   return (
@@ -18,13 +19,14 @@ export default function Document() {
         <NextScript />
       </body>
     </Html>
-  )
+  );
 }
 ```
 
-### Next.js Pages Router (pages/_app.tsx)
+### Next.js Pages Router (pages/\_app.tsx)
+
 ```tsx
-import { ThemeScript, ThemeProvider } from 'quantum-ui'
+import { ThemeScript, ThemeProvider } from 'quantum-ui';
 
 export default function App({ Component, pageProps }) {
   return (
@@ -34,11 +36,12 @@ export default function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </ThemeProvider>
     </>
-  )
+  );
 }
 ```
 
 ### Vite/CRA (index.html)
+
 ```html
 <!DOCTYPE html>
 <html lang="en" data-theme="light">
@@ -60,17 +63,16 @@ export default function App({ Component, pageProps }) {
 ```
 
 ### Manual HTML Integration
+
 ```html
 <script>
   // Copy the output of getThemeScript() here
-  (function() {
+  (function () {
     document.documentElement.classList.add('no-transition');
     try {
       const savedScheme = localStorage.getItem('quantum-color-scheme');
       const validSchemes = ['light', 'dark'];
-      const themeToApply = savedScheme && validSchemes.includes(savedScheme) 
-        ? savedScheme 
-        : 'light';
+      const themeToApply = savedScheme && validSchemes.includes(savedScheme) ? savedScheme : 'light';
       document.documentElement.setAttribute('data-theme', themeToApply);
     } catch (e) {
       document.documentElement.setAttribute('data-theme', 'light');
@@ -84,10 +86,10 @@ export default function App({ Component, pageProps }) {
 
 ```tsx
 <ThemeScript
-  defaultColorScheme="dark"           // Default: "light"
-  storageKey="my-theme-key"          // Default: "quantum-color-scheme"
-  attribute="data-color-mode"        // Default: "data-theme"
-  preventFlickering={false}          // Default: true
+  defaultColorScheme='dark' // Default: "light"
+  storageKey='my-theme-key' // Default: "quantum-color-scheme"
+  attribute='data-color-mode' // Default: "data-theme"
+  preventFlickering={false} // Default: true
 />
 ```
 

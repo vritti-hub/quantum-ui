@@ -6,12 +6,9 @@ export interface ThemeToggleProps {
   style?: React.CSSProperties;
 }
 
-export const ThemeToggle: React.FC<ThemeToggleProps> = ({ 
-  className = '', 
-  style = {} 
-}) => {
+export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = '', style = {} }) => {
   const { colorScheme, toggleColorScheme, isHydrated } = useTheme();
-  
+
   // Generate unique ID to avoid conflicts
   const clipPathId = useMemo(() => `theme-toggle-clip-${Math.random().toString(36).substr(2, 9)}`, []);
 
@@ -26,7 +23,7 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
           borderRadius: '50%',
           background: 'var(--quantum-color-surface-secondary)',
           border: '1px solid var(--quantum-color-border-subtle)',
-          ...style
+          ...style,
         }}
       />
     );
@@ -133,39 +130,39 @@ export const ThemeToggle: React.FC<ThemeToggleProps> = ({
       `}</style>
       <label
         className={`theme-toggle ${isDark ? 'theme-toggle--toggled' : ''} theme-toggle--force-motion ${className}`}
-        title="Toggle theme"
+        title='Toggle theme'
         style={style}
       >
-        <input 
-          type="checkbox" 
-          checked={isDark} 
+        <input
+          type='checkbox'
+          checked={isDark}
           onChange={toggleColorScheme}
           style={{ display: 'none' }}
           aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
         />
-        <span className="sr-only">Toggle theme</span>
-        
+        <span className='sr-only'>Toggle theme</span>
+
         <svg
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          width="1em"
-          height="1em"
-          fill="var(--quantum-color-text-primary)"
-          className="theme-toggle__around"
-          viewBox="0 0 32 32"
+          xmlns='http://www.w3.org/2000/svg'
+          aria-hidden='true'
+          width='1em'
+          height='1em'
+          fill='var(--quantum-color-text-primary)'
+          className='theme-toggle__around'
+          viewBox='0 0 32 32'
         >
           <clipPath id={clipPathId}>
-            <path d="M0 0h42v30a1 1 0 00-16 13H0Z" />
+            <path d='M0 0h42v30a1 1 0 00-16 13H0Z' />
           </clipPath>
           <g clipPath={`url(#${clipPathId})`}>
-            <circle cx="16" cy="16" r="7.5" fill="var(--quantum-color-text-primary)" />
+            <circle cx='16' cy='16' r='7.5' fill='var(--quantum-color-text-primary)' />
             <g>
-              <circle cx="16" cy="4.5" r="1.8" fill="var(--quantum-color-text-primary)" />
-              <circle cx="25.5" cy="10.5" r="1.8" fill="var(--quantum-color-text-primary)" />
-              <circle cx="25.5" cy="21.5" r="1.8" fill="var(--quantum-color-text-primary)" />
-              <circle cx="16" cy="27.5" r="1.8" fill="var(--quantum-color-text-primary)" />
-              <circle cx="6.5" cy="21.5" r="1.8" fill="var(--quantum-color-text-primary)" />
-              <circle cx="6.5" cy="10.5" r="1.8" fill="var(--quantum-color-text-primary)" />
+              <circle cx='16' cy='4.5' r='1.8' fill='var(--quantum-color-text-primary)' />
+              <circle cx='25.5' cy='10.5' r='1.8' fill='var(--quantum-color-text-primary)' />
+              <circle cx='25.5' cy='21.5' r='1.8' fill='var(--quantum-color-text-primary)' />
+              <circle cx='16' cy='27.5' r='1.8' fill='var(--quantum-color-text-primary)' />
+              <circle cx='6.5' cy='21.5' r='1.8' fill='var(--quantum-color-text-primary)' />
+              <circle cx='6.5' cy='10.5' r='1.8' fill='var(--quantum-color-text-primary)' />
             </g>
           </g>
         </svg>

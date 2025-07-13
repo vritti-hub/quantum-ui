@@ -5,12 +5,14 @@ This file contains essential guidelines and patterns for Claude when working on 
 ## 📋 Current Component Status
 
 ### **Available Components (Production Ready)**
+
 - **Button** (`/lib/components/Button/`) - Intent-based variants with CSS animations
 - **TextField** (`/lib/components/TextField/`) - State-driven inputs with glassmorphism styling
 - **Paper** (`/lib/components/Paper/`) - 5 semantic variants for all surface needs
 - **Typography** (`/lib/components/Typography/`) - Comprehensive text system with dual fonts
 
 ### **Theme System (Complete)**
+
 - **SSR-Safe Implementation** - Zero-flickering theme script + provider pattern
 - **Semantic Tokens** - Complete responsive token system with theme awareness
 - **CSS Variable Generation** - Automatic conversion with RGB variants for alpha blending
@@ -20,6 +22,7 @@ This file contains essential guidelines and patterns for Claude when working on 
 ## 🚀 Performance & Animation Guidelines
 
 ### **1. CSS-First Animation System**
+
 - **CSS animations over JavaScript** - All animations use CSS transitions/transforms for optimal performance
 - **Reduced motion support** - Respect `prefers-reduced-motion` user preference
 - **Hardware acceleration** - Use `transform` and `opacity` for smooth animations
@@ -46,6 +49,7 @@ This file contains essential guidelines and patterns for Claude when working on 
 ```
 
 ### **2. Bundle Size Optimization**
+
 - **Direct component imports only** - Never use barrel imports for components
 - **Tree-shaking enabled** - Individual component builds reduce bundle size by up to 40kB
 - **Semantic tokens** - Complete token system maintained for future flexibility
@@ -61,6 +65,7 @@ import { Button, Paper } from 'quantum-ui';
 ```
 
 ### **3. Paper Component Variants**
+
 The Paper component now includes 5 semantic variants optimized for different use cases:
 
 ```typescript
@@ -93,12 +98,14 @@ The Paper component now includes 5 semantic variants optimized for different use
 ## 🎯 Core Design System Principles
 
 ### **1. Semantic Token Architecture**
+
 - **ALWAYS use semantic tokens** - Never hardcode colors, spacing, or other design values
 - **Follow the hierarchy**: `palette` → `semanticTokens` → `component themes`
 - **Semantic tokens should be theme-aware** with `light` and `dark` variants
 - **Use responsive tokens** with `mobile`, `tablet`, `desktop` breakpoints where appropriate
 
 ### **2. Color System Rules**
+
 ```typescript
 // ✅ CORRECT: Use semantic tokens
 color: "var(--quantum-color-text-primary)"
@@ -106,8 +113,22 @@ color: "var(--quantum-color-text-primary)"
 // ❌ WRONG: Never hardcode colors
 color: "#000000"
 color: "rgba(0, 0, 0, 0.8)"
+color: "#E9ECEF" // Never use hex colors directly
 
-// ✅ CORRECT: Theme-aware definition
+// ✅ CORRECT: Always use palette references in semantic tokens
+glass: {
+  light: palette.lightNeutral[200], // Use palette reference
+  dark: palette.darkNeutral[800], // Use palette reference
+  needsRGB: true, // Enable alpha blending
+} as ColorDefinition,
+
+// ❌ WRONG: Never hardcode hex values in semantic tokens
+glass: {
+  light: "#E9ECEF", // NEVER do this
+  dark: "#1A1D20", // NEVER do this
+} as ColorDefinition,
+
+// ✅ CORRECT: Theme-aware definition with palette
 text: {
   primary: {
     light: palette.lightNeutral[900], // Pure black
@@ -116,7 +137,16 @@ text: {
 }
 ```
 
+### **2.1. CRITICAL: Never Hardcode Colors**
+
+- **ALWAYS use palette references** in semantic tokens
+- **NEVER use hex values directly** (`#000000`, `#E9ECEF`, etc.)
+- **NEVER use hardcoded RGBA values** (`rgba(233, 236, 239, 0.7)`)
+- **Use `needsRGB: true`** when you need alpha blending with CSS `rgba(var(--color-nameRGB), alpha)`
+- **Palette is the single source of truth** for all color values
+
 ### **3. Component-Specific Token Naming**
+
 - **Component-prominent naming**: `textField.height` not `componentHeight.textField`
 - **Logical grouping**: Group related tokens under component namespaces
 - **Clear semantics**: Names should indicate purpose, not implementation
@@ -136,14 +166,15 @@ textField: {
 ## 🛠️ Component Development Rules
 
 ### **1. Theme Component Structure**
+
 ```typescript
-export const ComponentTheme: Components<Theme>["MuiComponent"] = {
+export const ComponentTheme: Components<Theme>['MuiComponent'] = {
   styleOverrides: {
     root: {
       // Use semantic tokens, never hardcoded values
-      backgroundColor: "var(--quantum-color-surface-primary)",
-      borderRadius: "var(--quantum-borderRadius-medium)",
-      boxShadow: "var(--quantum-shadows-small)",
+      backgroundColor: 'var(--quantum-color-surface-primary)',
+      borderRadius: 'var(--quantum-borderRadius-medium)',
+      boxShadow: 'var(--quantum-shadows-small)',
     },
   },
   variants: [
@@ -153,6 +184,7 @@ export const ComponentTheme: Components<Theme>["MuiComponent"] = {
 ```
 
 ### **2. Font Weight and Typography**
+
 - **Use semantic font weights**: `--quantum-typography-fontWeight-normal` (not `400`)
 - **Reduce visual noise**: Prefer lighter font weights for better readability
 - **Use opacity for subtle variations**: `opacity: 0.7` instead of different colors
@@ -166,6 +198,7 @@ export const ComponentTheme: Components<Theme>["MuiComponent"] = {
 ```
 
 ### **3. Shadow and Visual Effects**
+
 - **All shadows must be theme-aware** with different opacity for light/dark modes
 - **Include complete shadow definitions** with inset highlights when needed
 - **Use brand-consistent colors** in glass and shimmer effects
@@ -181,16 +214,18 @@ textField: {
 ## 📱 Responsive Design Patterns
 
 ### **1. Mobile-First Approach**
+
 - **Start with mobile values**, then enhance for larger screens
 - **Consider touch targets**: Smaller border radius on mobile for easier interaction
 - **Optimize for thumb navigation**: Appropriate spacing and sizing
 
 ### **2. Breakpoint Values**
+
 ```typescript
 // Standard responsive pattern
 {
   mobile: "smaller/touch-optimized value",
-  tablet: "balanced value", 
+  tablet: "balanced value",
   desktop: "refined/larger value"
 }
 
@@ -205,6 +240,7 @@ borderRadius: {
 ```
 
 ### **3. Progressive Enhancement**
+
 - **Essential functionality works on mobile**
 - **Enhanced experience on larger screens**
 - **Graceful degradation** when features aren't supported
@@ -212,18 +248,21 @@ borderRadius: {
 ## 🎨 Visual Design Guidelines
 
 ### **1. Blue Brand Theming**
+
 - **Primary color**: `universalBlue[500]` (#0066CC)
 - **Input backgrounds**: Subtle blue tint (`universalBlue[25]`)
 - **Glass effects**: Blue-tinted shadows for brand consistency
 - **Shimmer effects**: Brand-aligned blue tones
 
 ### **2. Contrast and Accessibility**
+
 - **Excellent contrast required** on all Paper variants
 - **Test in both light and dark modes**
 - **Use semantic surface tokens** for proper contrast hierarchy
 - **WCAG AAA compliance** for text and interactive elements
 
 ### **3. Interactive States**
+
 - **Subtle feedback**: Use opacity and slight color shifts
 - **Consistent hierarchy**: Normal → Hover → Focus → Active
 - **Theme-appropriate colors**: Different feedback intensities for light/dark modes
@@ -233,6 +272,7 @@ borderRadius: {
 ### **1. SSR-Safe Theme Implementation**
 
 #### **ThemeScript Usage (Blocking Script)**
+
 ```typescript
 // ✅ CORRECT: Add before React loads to prevent flickering
 // Next.js App Router (app/layout.tsx)
@@ -242,7 +282,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        <ThemeScript 
+        <ThemeScript
           defaultColorScheme="light"
           storageKey="quantum-color-scheme"
           attribute="data-theme"
@@ -279,6 +319,7 @@ export default function Document() {
 ```
 
 #### **ThemeProvider Configuration**
+
 ```typescript
 // ✅ CORRECT: Match ThemeScript configuration exactly
 <ThemeProvider
@@ -293,6 +334,7 @@ export default function Document() {
 ### **2. Framework-Specific Integration Patterns**
 
 #### **Next.js Integration**
+
 ```typescript
 // ✅ App Router Pattern
 // app/layout.tsx
@@ -319,6 +361,7 @@ export function Providers({ children }) {
 ```
 
 #### **Vite Integration**
+
 ```typescript
 // ✅ index.html - Add script before React
 // main.tsx - Add ThemeProvider wrapper
@@ -332,6 +375,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
 ```
 
 #### **Remix Integration**
+
 ```typescript
 // ✅ app/root.tsx
 import { ThemeScript, ThemeProvider } from 'quantum-ui';
@@ -355,13 +399,14 @@ export default function App() {
 ```
 
 ### **3. Theme Hook Usage Patterns**
+
 ```typescript
 // ✅ CORRECT: Basic theme control
 function ThemeToggle() {
   const { colorScheme, toggleColorScheme, isHydrated } = useTheme();
-  
+
   if (!isHydrated) return <div>Loading...</div>;
-  
+
   return (
     <button onClick={toggleColorScheme}>
       Switch to {colorScheme === 'light' ? 'dark' : 'light'}
@@ -372,16 +417,16 @@ function ThemeToggle() {
 // ✅ CORRECT: Theme selection UI
 function ThemeSelector() {
   const { colorScheme, setTheme } = useTheme();
-  
+
   return (
     <div>
-      <button 
+      <button
         onClick={() => setTheme('light')}
         data-active={colorScheme === 'light'}
       >
         Light
       </button>
-      <button 
+      <button
         onClick={() => setTheme('dark')}
         data-active={colorScheme === 'dark'}
       >
@@ -394,9 +439,9 @@ function ThemeSelector() {
 // ✅ CORRECT: Client-only components
 function ClientOnlyFeature() {
   const isClient = useIsClient();
-  
+
   if (!isClient) return null;
-  
+
   return <ComplexInteractiveWidget />;
 }
 ```
@@ -404,6 +449,7 @@ function ClientOnlyFeature() {
 ### **4. Anti-Patterns to Avoid**
 
 #### **❌ WRONG: Script inside ThemeProvider**
+
 ```typescript
 // ❌ This causes flickering!
 export const ThemeProvider = ({ children }) => {
@@ -419,6 +465,7 @@ export const ThemeProvider = ({ children }) => {
 ```
 
 #### **❌ WRONG: Mismatched configurations**
+
 ```typescript
 // ❌ ThemeScript and ThemeProvider must match!
 <ThemeScript defaultColorScheme="light" storageKey="theme" />
@@ -426,6 +473,7 @@ export const ThemeProvider = ({ children }) => {
 ```
 
 #### **❌ WRONG: Reading localStorage in useState**
+
 ```typescript
 // ❌ Causes hydration mismatches
 const [theme, setTheme] = useState(() => {
@@ -439,10 +487,11 @@ const [theme, setTheme] = useState(defaultTheme);
 ## 🔧 File Organization and Naming
 
 ### **1. Semantic Tokens Structure**
+
 ```
 semanticTokens.ts
 ├── colors (theme-aware)
-├── effects (theme-aware) 
+├── effects (theme-aware)
 ├── shadows (theme-aware)
 ├── glassmorphism (theme-aware)
 ├── borderRadius (responsive)
@@ -452,12 +501,14 @@ semanticTokens.ts
 ```
 
 ### **2. Component Theme Files**
+
 - **One file per component**: `Button.ts`, `TextField.ts`, etc.
 - **Export named theme objects**: `ButtonTheme`, `TextFieldTheme`
 - **Use semantic token references exclusively**
 - **Document complex calculations** with inline comments
 
 ### **3. Import Patterns**
+
 ```typescript
 // ✅ CORRECT: Tree-shakeable direct imports (performance)
 import { Button } from 'quantum-ui/Button';
@@ -473,6 +524,7 @@ import { Button, TextField } from 'quantum-ui';
 ```
 
 ### **4. Current Codebase Architecture**
+
 - **Build System**: Vite with multi-entry tree-shakeable exports
 - **Font Strategy**: Space Grotesk (display) + Quicksand/Inter (body)
 - **Performance**: React.memo, constant lookups, zero runtime CSS-in-JS
@@ -482,6 +534,7 @@ import { Button, TextField } from 'quantum-ui';
 ## 🧪 Testing and Validation
 
 ### **1. Visual Testing Checklist**
+
 - [ ] Works in both light and dark themes
 - [ ] Responsive across mobile/tablet/desktop
 - [ ] Proper contrast on all Paper variants
@@ -490,12 +543,14 @@ import { Button, TextField } from 'quantum-ui';
 - [ ] Zero theme flickering on SSR
 
 ### **2. Token Validation**
+
 - [ ] All tokens have proper TypeScript definitions
 - [ ] CSS variables generate correctly
 - [ ] Theme-aware tokens have both light/dark variants
 - [ ] Responsive tokens have all breakpoint values
 
 ### **3. Component Integration**
+
 - [ ] Works with existing component ecosystem
 - [ ] Maintains design system consistency
 - [ ] Follows established interaction patterns
@@ -503,6 +558,7 @@ import { Button, TextField } from 'quantum-ui';
 - [ ] SSR-safe hydration
 
 ### **4. Theme System Testing**
+
 - [ ] ThemeScript prevents flickering in all frameworks
 - [ ] ThemeProvider syncs correctly with DOM
 - [ ] useTheme hook provides all expected functionality
@@ -512,15 +568,17 @@ import { Button, TextField } from 'quantum-ui';
 ## 🚫 Common Anti-Patterns to Avoid
 
 ### **1. Hardcoded Values**
+
 ```typescript
 // ❌ WRONG: Hardcoded colors
-boxShadow: "inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+boxShadow: 'inset 0 1px 0 rgba(255, 255, 255, 0.1)';
 
 // ✅ CORRECT: Semantic token
-boxShadow: "var(--quantum-shadows-textField)"
+boxShadow: 'var(--quantum-shadows-textField)';
 ```
 
 ### **2. Static Theme Values**
+
 ```typescript
 // ❌ WRONG: No theme awareness
 shadows: {
@@ -537,15 +595,21 @@ shadows: {
 ```
 
 ### **3. Poor Component Token Organization**
+
 ```typescript
 // ❌ WRONG: Generic naming
-componentHeight: { textField: "..." }
+componentHeight: {
+  textField: '...';
+}
 
 // ✅ CORRECT: Component-prominent
-textField: { height: "..." }
+textField: {
+  height: '...';
+}
 ```
 
 ### **4. Animation Anti-Patterns**
+
 ```typescript
 // ❌ WRONG: JavaScript-based animations (Framer Motion removed)
 import { motion, AnimatePresence } from 'framer-motion';
@@ -559,6 +623,7 @@ style={{
 ```
 
 ### **5. Inconsistent Responsive Patterns**
+
 ```typescript
 // ❌ WRONG: Missing breakpoints
 fontSize: { mobile: "1rem", desktop: "1.25rem" } // Missing tablet
@@ -568,6 +633,7 @@ fontSize: { mobile: "1rem", tablet: "1.1rem", desktop: "1.25rem" }
 ```
 
 ### **6. Theme Implementation Mistakes**
+
 ```typescript
 // ❌ WRONG: Script placement causes flickering
 function App() {
@@ -587,6 +653,7 @@ function App() {
 ## 📈 Performance Considerations
 
 ### **1. Animation Performance**
+
 - **CSS animations only** - JavaScript animation libraries have been completely removed
 - **Hardware acceleration** - Use `transform` and `opacity` for 60fps animations
 - **Reduced motion support** - All animations respect accessibility preferences
@@ -604,18 +671,21 @@ import { motion } from 'framer-motion'; // This package has been removed
 ```
 
 ### **2. Bundle Size Achievement**
+
 - **40kB reduction** - Achieved in vritti-landing by removing Framer Motion
 - **Individual component imports**: ~0.5-1KB gzipped each
 - **Theme system**: ~9KB gzipped (includes complete MUI theme)
 - **Selective barrel exports**: Import only theme utilities from main package
 
 ### **3. CSS Variable Generation**
+
 - **Complete token system maintained** - All semantic tokens kept for design system flexibility
 - **Efficient processing**: Variables generated at build time, not runtime
 - **Proper TypeScript types**: Ensure type safety without runtime overhead
 - **Minimal DOM impact**: CSS custom properties enable instant theme switching
 
 ### **4. Theme Switching**
+
 - **CSS custom properties**: Enable instant theme switching without re-renders
 - **Zero JavaScript overhead**: Theme changes update CSS variables only
 - **Smooth transitions**: All theme-aware properties transition seamlessly
@@ -623,6 +693,7 @@ import { motion } from 'framer-motion'; // This package has been removed
 ## 🔄 Development Workflow
 
 ### **1. Making Changes**
+
 1. **Update semantic tokens first** (if new tokens needed)
 2. **Update CSS variable generation** (if new token types)
 3. **Update component themes** to use new tokens
@@ -631,6 +702,7 @@ import { motion } from 'framer-motion'; // This package has been removed
 6. **Test SSR behavior in target frameworks**
 
 ### **2. Adding New Components**
+
 1. **Follow established naming patterns**
 2. **Create component-specific tokens** if needed
 3. **Use existing semantic tokens** where possible
@@ -639,6 +711,7 @@ import { motion } from 'framer-motion'; // This package has been removed
 6. **Create individual component export path**
 
 ### **3. Component Migration Guidelines**
+
 - **Replace JavaScript animations with CSS** - All hover, focus, and state animations should use CSS
 - **Use Paper variants instead of custom surfaces** - 5 semantic variants cover most use cases
 - **Maintain semantic token usage** - Never hardcode animation values
@@ -650,7 +723,7 @@ import { motion } from 'framer-motion'; // This package has been removed
 const [isHovered, setIsHovered] = useState(false);
 
 return (
-  <Paper 
+  <Paper
     variant="feature"
     onMouseEnter={() => setIsHovered(true)}
     onMouseLeave={() => setIsHovered(false)}
@@ -673,6 +746,7 @@ return (
 ```
 
 ### **4. Refactoring Guidelines**
+
 - **Prefer editing existing files** over creating new ones
 - **Maintain backward compatibility** when possible
 - **Update related components** that might be affected
@@ -684,28 +758,31 @@ return (
 ## 📚 Quick Reference
 
 ### **Most Used Token Patterns**
+
 ```typescript
 // Colors
-"var(--quantum-color-text-primary)"
-"var(--quantum-color-surface-input)"
-"var(--quantum-color-action-primary)"
+'var(--quantum-color-text-primary)';
+'var(--quantum-color-surface-input)';
+'var(--quantum-color-action-primary)';
 
 // Typography
-"var(--quantum-typography-fontWeight-normal)"
-"var(--quantum-textField-fontSize)"
+'var(--quantum-typography-fontWeight-normal)';
+'var(--quantum-textField-fontSize)';
 
 // Spacing & Layout
-"var(--quantum-textField-height)"
-"var(--quantum-borderRadius-large)"
-"var(--quantum-shadows-textField)"
+'var(--quantum-textField-height)';
+'var(--quantum-borderRadius-large)';
+'var(--quantum-shadows-textField)';
 ```
 
 ### **RGB Variants for Alpha Blending**
+
 When you need alpha transparency, ensure the color definition includes `needsRGB: true`:
+
 ```typescript
 primary: {
   light: palette.universalBlue[500],
-  dark: palette.universalBlue[500], 
+  dark: palette.universalBlue[500],
   needsRGB: true, // Generates --quantum-color-action-primaryRGB
 }
 ```
@@ -713,7 +790,8 @@ primary: {
 This enables usage like: `rgba(var(--quantum-color-action-primaryRGB), 0.15)`
 
 ### **Framework Integration Checklist**
-- [ ] **Next.js**: ThemeScript in _document.tsx or layout.tsx
+
+- [ ] **Next.js**: ThemeScript in \_document.tsx or layout.tsx
 - [ ] **Vite**: ThemeScript via getThemeScript() in index.html
 - [ ] **CRA/Webpack**: Manual script in public/index.html
 - [ ] **Remix**: ThemeScript in root.tsx head
@@ -722,6 +800,7 @@ This enables usage like: `rgba(var(--quantum-color-action-primaryRGB), 0.15)`
 ## 🔧 Development Commands
 
 ### **Build & Development**
+
 ```bash
 # Development server with demo app
 npm run dev
@@ -738,6 +817,7 @@ npm run type-check
 ```
 
 ### **Testing Workflow**
+
 1. **Visual testing**: Use Storybook for component variations
 2. **Theme testing**: Test both light/dark modes across breakpoints
 3. **SSR testing**: Verify zero-flickering in target frameworks
@@ -750,6 +830,7 @@ npm run type-check
 **Last Updated**: June 2025 - Major Performance Optimization Update
 
 ### **✅ Completed Optimizations (June 2025)**
+
 1. **Framer Motion Completely Removed** - All JavaScript animations replaced with CSS
 2. **40kB Bundle Reduction** - Achieved in vritti-landing through animation library removal
 3. **Paper Component Enhanced** - 5 new semantic variants added for all surface needs
@@ -758,9 +839,11 @@ npm run type-check
 6. **Semantic Tokens Maintained** - Complete token system kept for design flexibility
 
 ### **🎯 Current State**
+
 All 4 core components (Button, TextField, Paper, Typography) are production-ready with enhanced performance characteristics. The theme system maintains sophisticated SSR support with zero-flickering implementation while achieving significant bundle size reductions.
 
 **Architecture Highlights**:
+
 - **CSS-first animations** - No JavaScript animation dependencies
 - **Intent-based component APIs** - Semantic variants over style props
 - **Performance optimized** - 40kB smaller bundles, 60fps animations
@@ -769,9 +852,10 @@ All 4 core components (Button, TextField, Paper, Typography) are production-read
 - **SSR-safe theming** - Zero flickering across all supported frameworks
 
 ### **🚀 Performance Achievements**
+
 - **Vritti Landing**: 40kB bundle size reduction (192kB → 152kB)
 - **Component Library**: ~9KB gzipped theme system
 - **Animation Performance**: 60fps CSS animations replace JavaScript motion
 - **Tree Shaking**: Individual component imports reduce bundle size by up to 95%
 
-*This document reflects the optimized codebase state. All patterns prioritize performance, accessibility, and maintainable CSS-first animations.*
+_This document reflects the optimized codebase state. All patterns prioritize performance, accessibility, and maintainable CSS-first animations._

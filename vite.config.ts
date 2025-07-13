@@ -1,8 +1,8 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import { resolve } from 'path'
-import { fileURLToPath, URL } from 'node:url'
-import dts from 'vite-plugin-dts'
+import react from '@vitejs/plugin-react';
+import { fileURLToPath, URL } from 'node:url';
+import { resolve } from 'path';
+import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   plugins: [
@@ -12,8 +12,8 @@ export default defineConfig({
     dts({
       include: ['lib'],
       exclude: ['**/*.stories.*', '**/*.test.*'],
-      tsconfigPath: './tsconfig.lib.json'
-    })
+      tsconfigPath: './tsconfig.lib.json',
+    }),
   ],
   build: {
     lib: {
@@ -31,7 +31,7 @@ export default defineConfig({
       },
       name: 'QuantumUI',
       formats: ['es'],
-      fileName: (_, entryName) => `${entryName}.js`
+      fileName: (_, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
       external: [
@@ -40,7 +40,7 @@ export default defineConfig({
         'react/jsx-runtime',
         '@mui/material',
         '@mui/material/Button',
-        '@mui/material/TextField', 
+        '@mui/material/TextField',
         '@mui/material/Paper',
         '@mui/material/Typography',
         '@mui/material/Box',
@@ -48,21 +48,21 @@ export default defineConfig({
         '@mui/material/CssBaseline',
         '@mui/material/styles',
         '@emotion/react',
-        '@emotion/styled'
+        '@emotion/styled',
       ],
       output: {
         assetFileNames: 'assets/[name][extname]',
-        entryFileNames: '[name].js'
-      }
+        entryFileNames: '[name].js',
+      },
     },
     cssCodeSplit: false,
     sourcemap: true,
     target: 'esnext',
-    minify: false
+    minify: false,
   },
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./lib', import.meta.url))
-    }
-  }
-})
+      '@': fileURLToPath(new URL('./lib', import.meta.url)),
+    },
+  },
+});
