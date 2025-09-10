@@ -1,88 +1,71 @@
-import type { PaperProps as MuiPaperProps } from '@mui/material/Paper';
-import MuiPaper from '@mui/material/Paper';
 import React from 'react';
+import { cn } from '../../utils';
 
-export interface PaperProps extends Omit<MuiPaperProps, 'variant'> {
+export interface PaperProps extends React.ComponentProps<'div'> {
   /**
-   * Visual style variant - Universal variants that work across landing pages, applications, and forms
-   *
-   * - **section**: Universal section containers
-   * - **surface**: Clean backgrounds for forms and applications
-   * - **accent**: Highlight containers for important content
-   * - **minimal**: Subtle containers for backgrounds and inputs
-   * - **feature**: Premium containers for showcasing content
-   * - **container**: Professional application UI containers with subtle borders
+   * The visual variant of the paper
    */
   variant?: 'section' | 'surface' | 'accent' | 'minimal' | 'feature' | 'container';
 
   /**
-   * Content of the paper
-   */
-  children: React.ReactNode;
-
-  /**
-   * Full-width styling for landing page sections (removes border radius and borders)
-   * Available for all variants
-   */
-  fullWidth?: boolean;
-
-  /**
-   * High emphasis styling with enhanced effects (stronger gradients, glow)
-   * Particularly effective with accent variant for CTAs
-   */
-  highEmphasis?: boolean;
-
-  /**
-   * Glass effect with backdrop blur and transparent backgrounds
-   * Great for modern UI and landing page showcases
+   * Whether to apply glass effect
    */
   glass?: boolean;
 
   /**
-   * Compact styling with reduced padding for application UI
-   * Useful for smaller cards and dashboard components
+   * Whether to use compact spacing
    */
   compact?: boolean;
 
   /**
-   * Input field styling for form backgrounds
-   * Optimized for text field containers
+   * Whether to take full width
    */
-  input?: boolean;
-
-  /**
-   * Navigation panel styling with glass effect
-   * Perfect for sidebars and navigation components
-   */
-  nav?: boolean;
-
-  /**
-   * Transparent background with backdrop blur
-   * When true, removes background color and adds transparency effect
-   * Works best with backdrop blur for glassmorphism
-   */
-  transparent?: boolean;
+  fullWidth?: boolean;
 }
 
-export const Paper = React.memo<PaperProps>(
-  ({ variant = 'section', children, fullWidth, highEmphasis, glass, compact, input, nav, transparent, ...props }) => {
-    return (
-      <MuiPaper
-        data-variant={variant}
-        data-fullwidth={fullWidth ? 'true' : undefined}
-        data-emphasis={highEmphasis ? 'high' : undefined}
-        data-glass={glass ? 'true' : undefined}
-        data-compact={compact ? 'true' : undefined}
-        data-input={input ? 'true' : undefined}
-        data-nav={nav ? 'true' : undefined}
-        data-transparent={transparent ? 'true' : undefined}
-        elevation={0}
-        {...props}
-      >
-        {children}
-      </MuiPaper>
-    );
-  }
-);
+export const Paper: React.FC<PaperProps> = ({
+  children,
+  variant = 'surface',
+  glass = false,
+  compact = false,
+  fullWidth = false,
+  className,
+  ...props
+}) => {
+  const getVariantClasses = () => {
+    switch (variant) {
+      case 'section':
+        return 'bg-background border border-border rounded-lg shadow-sm';
+      case 'surface':
+        return 'bg-card text-card-foreground border border-border rounded-lg shadow-sm';
+      case 'accent':
+        return 'bg-accent text-accent-foreground border border-border rounded-lg shadow-sm';
+      case 'minimal':
+        return 'bg-transparent';
+      case 'feature':
+        return 'bg-gradient-to-br from-primary/5 to-secondary/5 border border-border rounded-lg shadow-md';
+      case 'container':
+        return 'bg-muted/50 border border-border rounded-lg';
+      default:
+        return 'bg-card text-card-foreground border border-border rounded-lg shadow-sm';
+    }
+  };
 
-Paper.displayName = 'Paper';
+  return (
+    <div
+      className={cn(
+        getVariantClasses(),
+        {
+          'backdrop-blur-sm bg-opacity-80': glass,
+          'p-3': compact,
+          'p-6': !compact,
+          'w-full': fullWidth,
+        },
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+};

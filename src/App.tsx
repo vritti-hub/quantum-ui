@@ -1,20 +1,11 @@
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
 import React, { useCallback, useState } from 'react';
-import { Button } from '../lib/components/Button/Button';
-import { Paper } from '../lib/components/Paper/Paper';
-import { TextField } from '../lib/components/TextField/TextField';
-import { ThemeToggle } from '../lib/components/ThemeToggle/ThemeToggle';
-import { Typography } from '../lib/components/Typography/Typography';
-import { ThemeProvider, useTheme } from '../lib/theme';
+import { Button, Paper, TextField, ThemeToggle, Typography } from '../lib/components';
 
-// ✅ Optimized: Memoized content component
-const AppContent = React.memo(() => {
-  const { colorScheme } = useTheme();
+function App() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
-  // ✅ Optimized: Memoized callbacks
+  // Memoized callbacks
   const handleSendMessage = useCallback(() => {
     alert(`Email: ${email}\nMessage: ${message}`);
   }, [email, message]);
@@ -31,232 +22,183 @@ const AppContent = React.memo(() => {
   const handleMessageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
   }, []);
-  // Debug logs temporarily removed to test theme persistence
+
   return (
-    <Box
-      component='main'
-      padding={3}
-      sx={{
-        minHeight: '100vh',
-        backgroundColor: 'background.default',
-      }}
-    >
-      <Stack spacing={4} maxWidth={600} marginX='auto'>
+    <main className='min-h-screen bg-background p-6'>
+      <div className='max-w-2xl mx-auto space-y-6'>
         {/* Header */}
-        <Box textAlign='center' position='relative'>
-          <ThemeToggle
-            style={{
-              position: 'absolute',
-              top: '0',
-              right: '0',
-            }}
-          />
-          <Typography variant='h3' component='h1' gutterBottom>
+        <div className='text-center relative'>
+          <ThemeToggle className='absolute top-0 right-0' />
+
+          <Typography variant='h1' className='mb-4'>
             Quantum UI
           </Typography>
-          <Typography variant='body1' color='text.secondary' gutterBottom>
-            Clean semantic design system
+          <Typography variant='body1' intent='secondary' className='mb-4'>
+            Modern component library built with shadcn/ui and Tailwind CSS
           </Typography>
-          <Typography variant='body2' color='text.secondary'>
-            Current theme: {colorScheme}
-          </Typography>
-        </Box>
+        </div>
 
-        {/* Glass Form Card */}
-        <Paper variant='surface' glass>
-          <Box padding={4}>
-            <Typography variant='h5' gutterBottom>
-              Contact Form
+        {/* Component Showcase */}
+        <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+          {/* Buttons Section */}
+          <Paper variant='surface'>
+            <div className='p-4'>
+              <Typography variant='h4' className='mb-4'>
+                Button Components
+              </Typography>
+              <div className='space-y-3'>
+                <div className='flex flex-wrap gap-2'>
+                  <Button intent='primary'>Primary</Button>
+                  <Button intent='secondary'>Secondary</Button>
+                  <Button intent='destructive'>Destructive</Button>
+                </div>
+                <div className='flex flex-wrap gap-2'>
+                  <Button intent='ghost'>Ghost</Button>
+                  <Button intent='outline'>Outline</Button>
+                  <Button disabled>Disabled</Button>
+                </div>
+                <div className='flex flex-wrap gap-2'>
+                  <Button size='sm'>Small</Button>
+                  <Button size='default'>Default</Button>
+                  <Button size='lg'>Large</Button>
+                </div>
+              </div>
+            </div>
+          </Paper>
+
+          {/* Form Section */}
+          <Paper variant='surface'>
+            <div className='p-4'>
+              <Typography variant='h4' className='mb-4'>
+                Form Components
+              </Typography>
+              <div className='space-y-4'>
+                <TextField
+                  label='Email Address'
+                  placeholder='Enter your email'
+                  type='email'
+                  value={email}
+                  onChange={handleEmailChange}
+                  required
+                />
+                <TextField
+                  label='Message'
+                  placeholder='Enter your message'
+                  value={message}
+                  onChange={handleMessageChange}
+                />
+                <div className='flex gap-2'>
+                  <Button intent='primary' onClick={handleSendMessage}>
+                    Send Message
+                  </Button>
+                  <Button intent='secondary' onClick={handleClear}>
+                    Clear
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </Paper>
+        </div>
+
+        {/* Typography Showcase */}
+        <Paper variant='feature'>
+          <div className='p-6'>
+            <Typography variant='h3' className='mb-4'>
+              Typography Hierarchy
             </Typography>
-            <Stack spacing={3}>
-              <TextField
-                label='Email Address'
-                type='email'
-                value={email}
-                onChange={handleEmailChange}
-                placeholder='Enter your email'
-                required
-              />
-
-              <TextField
-                label='Message'
-                multiline
-                rows={4}
-                value={message}
-                onChange={handleMessageChange}
-                placeholder='Enter your message...'
-              />
-
-              <Stack direction='row' spacing={2}>
-                <Button intent='primary' onClick={handleSendMessage}>
-                  Send Message
-                </Button>
-                <Button intent='ghost' onClick={handleClear}>
-                  Clear
-                </Button>
-              </Stack>
-            </Stack>
-          </Box>
+            <div className='space-y-2'>
+              <Typography variant='h4'>H4: Section Header</Typography>
+              <Typography variant='h5'>H5: Subsection Header</Typography>
+              <Typography variant='h6'>H6: Component Header</Typography>
+              <Typography variant='body1'>
+                Body 1: Primary text content with excellent readability and proper line spacing.
+              </Typography>
+              <Typography variant='body2' intent='secondary'>
+                Body 2: Secondary text content for supporting information.
+              </Typography>
+              <Typography variant='caption' intent='secondary'>
+                Caption: Small text for metadata and annotations
+              </Typography>
+            </div>
+          </div>
         </Paper>
 
-        {/* Button Showcase */}
+        {/* State Examples */}
         <Paper variant='surface'>
-          <Box padding={4}>
-            <Typography variant='h5' gutterBottom>
-              Button Types
+          <div className='p-4'>
+            <Typography variant='h4' className='mb-4'>
+              Component States
             </Typography>
-            <Stack spacing={3}>
-              {/* Primary Actions */}
-              <Box>
-                <Typography variant='h6' gutterBottom>
-                  Primary Actions
+            <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
+              <div>
+                <Typography variant='h6' className='mb-4'>
+                  Text Field States
                 </Typography>
-                <Stack direction='row' spacing={2} flexWrap='wrap'>
-                  <Button intent='primary' size='small'>
-                    Small Primary
-                  </Button>
-                  <Button intent='primary' size='medium'>
-                    Medium Primary
-                  </Button>
-                  <Button intent='primary' size='large'>
-                    Large Primary
-                  </Button>
-                </Stack>
-              </Box>
-
-              {/* Secondary Actions */}
-              <Box>
-                <Typography variant='h6' gutterBottom>
-                  Secondary Actions
+                <div className='space-y-3'>
+                  <TextField label='Normal State' placeholder='Normal input' size='sm' />
+                  <TextField
+                    label='Success State'
+                    placeholder='Success input'
+                    state='success'
+                    message='Input validated successfully'
+                    defaultValue='valid@example.com'
+                  />
+                  <TextField
+                    label='Error State'
+                    placeholder='Error input'
+                    state='error'
+                    message='Please enter a valid email'
+                    defaultValue='invalid'
+                  />
+                </div>
+              </div>
+              <div>
+                <Typography variant='h6' className='mb-4'>
+                  Text Intent Colors
                 </Typography>
-                <Stack direction='row' spacing={2} flexWrap='wrap'>
-                  <Button intent='secondary'>Cancel</Button>
-                  <Button intent='secondary'>Learn More</Button>
-                  <Button intent='secondary' disabled>
-                    Disabled
-                  </Button>
-                </Stack>
-              </Box>
-
-              {/* Destructive Actions */}
-              <Box>
-                <Typography variant='h6' gutterBottom>
-                  Destructive Actions
-                </Typography>
-                <Stack direction='row' spacing={2} flexWrap='wrap'>
-                  <Button intent='destructive'>Delete Account</Button>
-                  <Button intent='destructive'>Remove Item</Button>
-                </Stack>
-              </Box>
-
-              {/* Ghost Actions */}
-              <Box>
-                <Typography variant='h6' gutterBottom>
-                  Ghost Actions
-                </Typography>
-                <Stack direction='row' spacing={2} flexWrap='wrap'>
-                  <Button intent='ghost'>Skip for now</Button>
-                  <Button intent='ghost'>View Details</Button>
-                  <Button intent='ghost'>Maybe Later</Button>
-                </Stack>
-              </Box>
-            </Stack>
-          </Box>
+                <div className='space-y-2'>
+                  <Typography intent='primary'>Primary text</Typography>
+                  <Typography intent='secondary'>Secondary text</Typography>
+                  <Typography intent='success'>Success text</Typography>
+                  <Typography intent='warning'>Warning text</Typography>
+                  <Typography intent='primary'>Brand text</Typography>
+                  <Typography intent='muted'>Disabled text</Typography>
+                </div>
+              </div>
+            </div>
+          </div>
         </Paper>
 
-        {/* Surface Types Demo */}
-        <Box>
-          <Typography variant='h5' gutterBottom textAlign='center'>
-            Surface Types
-          </Typography>
-          <Stack spacing={3}>
-            {/* Standard Paper */}
-            <Paper variant='section'>
-              <Box padding={3}>
-                <Typography variant='h6' gutterBottom>
-                  Standard Surface
-                </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  Default paper with subtle border and shadow. Perfect for main content cards.
-                </Typography>
-              </Box>
-            </Paper>
-
-            {/* Glass Paper */}
-            <Paper variant='surface' glass>
-              <Box padding={3}>
-                <Typography variant='h6' gutterBottom>
-                  Glass Surface
-                </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  Glassmorphism effect with backdrop blur. Great for overlays and floating elements.
-                </Typography>
-              </Box>
-            </Paper>
-
-            {/* Elevated Paper */}
-            <Paper variant='accent'>
-              <Box padding={3}>
-                <Typography variant='h6' gutterBottom>
-                  Elevated Surface
-                </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  Higher prominence with larger shadow. Perfect for important highlighted content.
-                </Typography>
-              </Box>
-            </Paper>
-
-            {/* Subtle Paper */}
-            <Paper variant='minimal'>
-              <Box padding={3}>
-                <Typography variant='h6' gutterBottom>
-                  Subtle Surface
-                </Typography>
-                <Typography variant='body2' color='text.secondary'>
-                  Minimal styling for background sections and less important content.
-                </Typography>
-              </Box>
-            </Paper>
-          </Stack>
-        </Box>
-
-        {/* Navigation Example */}
-        <Paper variant='surface' glass>
-          <Box padding={2} display='flex' justifyContent='space-between' alignItems='center'>
-            <Typography variant='h6'>Navigation Bar</Typography>
-            <Stack direction='row' spacing={1}>
-              <Button intent='primary' size='small'>
-                Sign In
-              </Button>
-              <Button intent='ghost' size='small'>
-                Menu
-              </Button>
-            </Stack>
-          </Box>
-        </Paper>
+        {/* Paper Variants */}
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+          <Paper variant='minimal'>
+            <div className='p-4'>
+              <Typography variant='h6'>Minimal</Typography>
+              <Typography variant='body2'>Subtle container</Typography>
+            </div>
+          </Paper>
+          <Paper variant='accent'>
+            <div className='p-4'>
+              <Typography variant='h6'>Accent</Typography>
+              <Typography variant='body2'>Highlighted container</Typography>
+            </div>
+          </Paper>
+          <Paper variant='container'>
+            <div className='p-4'>
+              <Typography variant='h6'>Container</Typography>
+              <Typography variant='body2'>Professional container</Typography>
+            </div>
+          </Paper>
+        </div>
 
         {/* Footer */}
-        <Box textAlign='center' paddingY={3}>
-          <Typography variant='body2' color='text.secondary'>
-            Quantum UI - Clean semantic design system
+        <div className='text-center py-6'>
+          <Typography variant='body2' intent='secondary'>
+            Built with shadcn/ui, Tailwind CSS, and React
           </Typography>
-          <Typography variant='caption' color='text.disabled'>
-            Optimized for performance - No unnecessary re-renders
-          </Typography>
-        </Box>
-      </Stack>
-    </Box>
-  );
-});
-
-AppContent.displayName = 'AppContent';
-
-// ✅ Optimized: Main App component with memoization
-function App() {
-  return (
-    <ThemeProvider>
-      <AppContent />
-    </ThemeProvider>
+        </div>
+      </div>
+    </main>
   );
 }
 

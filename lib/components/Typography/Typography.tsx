@@ -1,56 +1,148 @@
-import type { TypographyProps as MuiTypographyProps } from '@mui/material/Typography';
-import MuiTypography from '@mui/material/Typography';
 import React from 'react';
+import { cn } from '../../utils';
 
-export interface TypographyProps extends MuiTypographyProps {
+export interface TypographyProps {
   /**
-   * Semantic intent for text color
-   * - primary: Primary text color (default)
-   * - secondary: Secondary text color
-   * - disabled: Disabled text color
-   * - success: Success/positive state color
-   * - warning: Warning state color
-   * - brand: Brand blue color for logos and highlights
-   */
-  intent?: 'primary' | 'secondary' | 'disabled' | 'success' | 'warning' | 'brand';
-
-  /**
-   * Typography content
+   * The content to render
    */
   children: React.ReactNode;
+
+  /**
+   * The semantic variant of the typography
+   */
+  variant?:
+    | 'h1'
+    | 'h2'
+    | 'h3'
+    | 'h4'
+    | 'h5'
+    | 'h6'
+    | 'body1'
+    | 'body2'
+    | 'caption'
+    | 'overline'
+    | 'subtitle1'
+    | 'subtitle2'
+    | 'button'
+    | 'code'
+    | 'blockquote';
+
+  /**
+   * The color intent of the text
+   */
+  intent?: 'default' | 'primary' | 'secondary' | 'muted' | 'success' | 'warning' | 'error';
+
+  /**
+   * Whether text should be centered
+   */
+  align?: 'left' | 'center' | 'right' | 'justify';
+
+  /**
+   * Custom className
+   */
+  className?: string;
 }
 
-// ✅ Enhanced: CSS Variables mapping for theme-aware colors
-const INTENT_TO_CSS_VAR_MAP = {
-  primary: 'var(--quantum-color-text-primary)',
-  secondary: 'var(--quantum-color-text-secondary)',
-  disabled: 'var(--quantum-color-text-disabled)',
-  success: 'var(--quantum-color-feedback-success)', // Success green from CSS vars
-  warning: 'var(--quantum-color-feedback-warning)', // Warning from CSS vars
-  brand: 'var(--quantum-color-action-primary)', // Brand blue
+const variantMap = {
+  h1: 'h1',
+  h2: 'h2',
+  h3: 'h3',
+  h4: 'h4',
+  h5: 'h5',
+  h6: 'h6',
+  body1: 'p',
+  body2: 'p',
+  caption: 'span',
+  overline: 'span',
+  subtitle1: 'h6',
+  subtitle2: 'h6',
+  button: 'span',
+  code: 'code',
+  blockquote: 'blockquote',
 } as const;
 
-export const Typography = React.memo<TypographyProps>(
-  ({ intent = 'primary', color, children, variant = 'body1', sx, ...props }) => {
-    // Use CSS variable for theme-aware colors
-    const cssVariableColor = INTENT_TO_CSS_VAR_MAP[intent];
+export const Typography: React.FC<TypographyProps> = ({
+  children,
+  variant = 'body1',
+  intent = 'default',
+  align = 'left',
+  className,
+  ...props
+}) => {
+  const Component = variantMap[variant];
 
-    const finalSx = {
-      // Use CSS variable for theme-aware colors
-      color: color || cssVariableColor,
-      // Ensure proper line height and font weights
-      lineHeight: variant?.includes('h') ? 1.2 : variant === 'body1' ? 1.6 : 1.4,
-      // Add theme transition
-      transition: 'color 0.3s ease',
-      ...sx,
-    };
+  const getVariantClasses = () => {
+    switch (variant) {
+      case 'h1':
+        return 'scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl';
+      case 'h2':
+        return 'scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight first:mt-0';
+      case 'h3':
+        return 'scroll-m-20 text-2xl font-semibold tracking-tight';
+      case 'h4':
+        return 'scroll-m-20 text-xl font-semibold tracking-tight';
+      case 'h5':
+        return 'scroll-m-20 text-lg font-semibold tracking-tight';
+      case 'h6':
+        return 'scroll-m-20 text-base font-semibold tracking-tight';
+      case 'body1':
+        return 'leading-7';
+      case 'body2':
+        return 'text-sm leading-6';
+      case 'caption':
+        return 'text-xs text-muted-foreground';
+      case 'overline':
+        return 'text-xs font-medium uppercase tracking-wide text-muted-foreground';
+      case 'subtitle1':
+        return 'text-lg font-medium';
+      case 'subtitle2':
+        return 'text-sm font-medium';
+      case 'button':
+        return 'text-sm font-medium';
+      case 'code':
+        return 'relative rounded bg-muted px-[0.3rem] py-[0.2rem] font-mono text-sm font-semibold';
+      case 'blockquote':
+        return 'mt-6 border-l-2 pl-6 italic';
+      default:
+        return 'leading-7';
+    }
+  };
 
-    return (
-      <MuiTypography variant={variant} sx={finalSx} {...props}>
-        {children}
-      </MuiTypography>
-    );
-  }
-);
+  const getIntentClasses = () => {
+    switch (intent) {
+      case 'primary':
+        return 'text-primary';
+      case 'secondary':
+        return 'text-secondary-foreground';
+      case 'muted':
+        return 'text-muted-foreground';
+      case 'success':
+        return 'text-green-600 dark:text-green-400';
+      case 'warning':
+        return 'text-yellow-600 dark:text-yellow-400';
+      case 'error':
+        return 'text-destructive';
+      default:
+        return 'text-foreground';
+    }
+  };
 
-Typography.displayName = 'Typography';
+  const getAlignClasses = () => {
+    switch (align) {
+      case 'center':
+        return 'text-center';
+      case 'right':
+        return 'text-right';
+      case 'justify':
+        return 'text-justify';
+      default:
+        return 'text-left';
+    }
+  };
+
+  return (
+    <Component className={cn(getVariantClasses(), getIntentClasses(), getAlignClasses(), className)} {...props}>
+      {children}
+    </Component>
+  );
+};

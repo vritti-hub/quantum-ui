@@ -1,9 +1,7 @@
-// .storybook/preview.tsx - FIXED: Direct MuiThemeProvider approach
-import { CssBaseline } from '@mui/material';
-import { ThemeProvider as MuiThemeProvider } from '@mui/material/styles';
+// .storybook/preview.tsx - Updated for shadcn/ui
 import type { Preview } from '@storybook/react-vite';
 import { useEffect } from 'react';
-import { createQuantumTheme } from '../lib/theme/createTheme';
+import '../src/index.css';
 
 const preview: Preview = {
   parameters: {
@@ -16,17 +14,17 @@ const preview: Preview = {
     docs: {
       toc: true,
     },
-    // ✅ Enable backgrounds with your theme colors
+    // Enable backgrounds with theme colors
     backgrounds: {
       default: 'light',
       values: [
         {
           name: 'light',
-          value: '#FFFFFF',
+          value: 'hsl(0 0% 100%)',
         },
         {
           name: 'dark',
-          value: '#000000',
+          value: 'hsl(240 10% 3.9%)',
         },
       ],
     },
@@ -52,16 +50,19 @@ const preview: Preview = {
     (Story, context) => {
       const themeMode = context.globals.theme || 'light';
 
-      // ✅ Create theme directly using your createQuantumTheme function
-      const theme = createQuantumTheme(themeMode as 'light' | 'dark');
-
-      // ✅ Sync Storybook's background with theme
+      // Apply theme class to document
       useEffect(() => {
-        // Update the background parameter to match theme
+        if (themeMode === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
+
+        // Update Storybook canvas background
         const canvas = document.querySelector('.sb-show-main') as HTMLElement;
         const root = document.getElementById('storybook-root') as HTMLElement;
 
-        const backgroundColor = themeMode === 'dark' ? '#000000' : '#FFFFFF';
+        const backgroundColor = themeMode === 'dark' ? 'hsl(240 10% 3.9%)' : 'hsl(0 0% 100%)';
 
         if (canvas) {
           canvas.style.backgroundColor = backgroundColor;
@@ -69,26 +70,15 @@ const preview: Preview = {
         if (root) {
           root.style.backgroundColor = backgroundColor;
         }
-
-        // ✅ Update document data-theme for CSS variables
-        document.documentElement.setAttribute('data-theme', themeMode);
       }, [themeMode]);
 
-      // ✅ Update Storybook's background tool to match current theme
+      // Update Storybook's background tool to match current theme
       context.parameters.backgrounds = {
         ...context.parameters.backgrounds,
         default: themeMode,
       };
 
-      // ✅ Use MuiThemeProvider directly - much cleaner!
-      return (
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <Story />
-        </MuiThemeProvider>
-      );
+      return <Story />;
     },
   ],
 };
-
-export default preview;

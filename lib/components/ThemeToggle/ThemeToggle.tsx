@@ -1,174 +1,86 @@
-import React, { useMemo } from 'react';
-import { useTheme } from '../..';
+import React, { useEffect, useState } from 'react';
+import { Button } from '../Button/Button';
 
 export interface ThemeToggleProps {
+  /**
+   * Custom className for the toggle button
+   */
   className?: string;
-  style?: React.CSSProperties;
+
+  /**
+   * Size of the toggle button
+   */
+  size?: 'sm' | 'md' | 'lg';
 }
 
-export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className = '', style = {} }) => {
-  const { colorScheme, toggleColorScheme, isHydrated } = useTheme();
+export const ThemeToggle: React.FC<ThemeToggleProps> = ({ className, size = 'md' }) => {
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
 
-  // Generate unique ID to avoid conflicts
-  const clipPathId = useMemo(() => `theme-toggle-clip-${Math.random().toString(36).substr(2, 9)}`, []);
+  // Initialize theme from localStorage or system preference
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | null;
+    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    const initialTheme = savedTheme || systemTheme;
 
-  // Don't render until hydrated to avoid SSR mismatch
-  if (!isHydrated) {
-    return (
-      <div
-        className={className}
-        style={{
-          width: '3em',
-          height: '3em',
-          borderRadius: '50%',
-          background: 'var(--quantum-color-surface-secondary)',
-          border: '1px solid var(--quantum-color-border-subtle)',
-          ...style,
-        }}
-      />
-    );
-  }
+    setTheme(initialTheme);
+    updateDocumentTheme(initialTheme);
+  }, []);
 
-  const isDark = colorScheme === 'dark';
+  const updateDocumentTheme = (newTheme: 'light' | 'dark') => {
+    const root = document.documentElement;
+    if (newTheme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+  };
+
+  const toggleTheme = () => {
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+    updateDocumentTheme(newTheme);
+  };
 
   return (
-    <>
-      <style>{`
-        .theme-toggle {
-          --theme-toggle__around--duration: 500ms;
-          background: none;
-          border: none;
-          color: inherit;
-          cursor: pointer;
-          font: inherit;
-          outline: inherit;
-          padding: 0.25em;
-          background: var(--quantum-color-surface-secondary);
-          border: 1px solid var(--quantum-color-border-subtle);
-          border-radius: 50%;
-          color: var(--quantum-color-text-primary);
-          display: inline-flex;
-          font-size: 2em;
-          height: 1.5em;
-          justify-content: center;
-          align-items: center;
-          position: relative;
-          width: 1.5em;
-          transition: background 0.3s ease, border-color 0.3s ease;
-        }
-        .theme-toggle:hover {
-          background: var(--quantum-color-surface-elevated);
-          border-color: var(--quantum-color-border-default);
-        }
-        .theme-toggle:focus-visible {
-          outline: 2px solid var(--quantum-color-action-primary);
-          outline-offset: 2px;
-        }
-        .theme-toggle .theme-toggle__around * {
-          transform-origin: center;
-          transition: transform calc(var(--theme-toggle__around--duration) * .6) ease;
-        }
-        .theme-toggle .theme-toggle__around > g g circle {
-          transition-duration: calc(var(--theme-toggle__around--duration) * .2);
-        }
-        .theme-toggle .theme-toggle__around > g g :nth-child(1) { 
-          transition-delay: calc(var(--theme-toggle__around--duration) * 0.253); 
-        }
-        .theme-toggle .theme-toggle__around > g g :nth-child(2) { 
-          transition-delay: calc(var(--theme-toggle__around--duration) * 0.348); 
-        }
-        .theme-toggle .theme-toggle__around > g g :nth-child(3) { 
-          transition-delay: calc(var(--theme-toggle__around--duration) * 0.443); 
-        }
-        .theme-toggle .theme-toggle__around > g g :nth-child(4) { 
-          transition-delay: calc(var(--theme-toggle__around--duration) * 0.538); 
-        }
-        .theme-toggle .theme-toggle__around > g g :nth-child(5) { 
-          transition-delay: calc(var(--theme-toggle__around--duration) * 0.633); 
-        }
-        .theme-toggle .theme-toggle__around > g g :nth-child(6) { 
-          transition-delay: calc(var(--theme-toggle__around--duration) * 0.728); 
-        }
-        .theme-toggle .theme-toggle__around > :first-child path {
-          transition-property: transform, d;
-          transition-duration: calc(var(--theme-toggle__around--duration) * .6);
-          transition-timing-function: cubic-bezier(0,0,0.5,1);
-        }
-        .theme-toggle.theme-toggle--toggled .theme-toggle__around > g g circle,
-        .theme-toggle input[type=checkbox]:checked ~ .theme-toggle__around > g g circle {
-          transform: scale(0);
-          opacity: 0;
-          transition-delay: 0s;
-        }
-        .theme-toggle.theme-toggle--toggled .theme-toggle__around > g g path,
-        .theme-toggle input[type=checkbox]:checked ~ .theme-toggle__around > g g path {
-          transform: scale(.75);
-          transition-delay: 0s;
-        }
-        .theme-toggle.theme-toggle--toggled .theme-toggle__around > :first-child path,
-        .theme-toggle input[type=checkbox]:checked ~ .theme-toggle__around > :first-child path {
-          d: path("M-9 3h25a1 1 0 0017 13v30H0Z");
-          transition-delay: calc(var(--theme-toggle__around--duration) * 0.4);
-          transition-timing-function: cubic-bezier(0,0,0,1.25);
-        }
-        .sr-only {
-          position: absolute;
-          width: 1px;
-          height: 1px;
-          padding: 0;
-          margin: -1px;
-          overflow: hidden;
-          clip: rect(0, 0, 0, 0);
-          white-space: nowrap;
-          border: 0;
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .theme-toggle .theme-toggle__around * {
-            transition: none !important;
-          }
-        }
-      `}</style>
-      <label
-        className={`theme-toggle ${isDark ? 'theme-toggle--toggled' : ''} theme-toggle--force-motion ${className}`}
-        title='Toggle theme'
-        style={style}
-      >
-        <input
-          type='checkbox'
-          checked={isDark}
-          onChange={toggleColorScheme}
-          style={{ display: 'none' }}
-          aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
-        />
-        <span className='sr-only'>Toggle theme</span>
-
+    <Button
+      variant='ghost'
+      size={size === 'md' ? 'default' : size}
+      onClick={toggleTheme}
+      className={className}
+      aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} theme`}
+    >
+      {theme === 'light' ? (
         <svg
+          className='h-4 w-4'
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
           xmlns='http://www.w3.org/2000/svg'
-          aria-hidden='true'
-          width='1em'
-          height='1em'
-          fill='var(--quantum-color-text-primary)'
-          className='theme-toggle__around'
-          viewBox='0 0 32 32'
         >
-          <clipPath id={clipPathId}>
-            <path d='M0 0h42v30a1 1 0 00-16 13H0Z' />
-          </clipPath>
-          <g clipPath={`url(#${clipPathId})`}>
-            <circle cx='16' cy='16' r='7.5' fill='var(--quantum-color-text-primary)' />
-            <g>
-              <circle cx='16' cy='4.5' r='1.8' fill='var(--quantum-color-text-primary)' />
-              <circle cx='25.5' cy='10.5' r='1.8' fill='var(--quantum-color-text-primary)' />
-              <circle cx='25.5' cy='21.5' r='1.8' fill='var(--quantum-color-text-primary)' />
-              <circle cx='16' cy='27.5' r='1.8' fill='var(--quantum-color-text-primary)' />
-              <circle cx='6.5' cy='21.5' r='1.8' fill='var(--quantum-color-text-primary)' />
-              <circle cx='6.5' cy='10.5' r='1.8' fill='var(--quantum-color-text-primary)' />
-            </g>
-          </g>
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z'
+          />
         </svg>
-      </label>
-    </>
+      ) : (
+        <svg
+          className='h-4 w-4'
+          fill='none'
+          stroke='currentColor'
+          viewBox='0 0 24 24'
+          xmlns='http://www.w3.org/2000/svg'
+        >
+          <path
+            strokeLinecap='round'
+            strokeLinejoin='round'
+            strokeWidth={2}
+            d='M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'
+          />
+        </svg>
+      )}
+    </Button>
   );
 };
-
-export default ThemeToggle;

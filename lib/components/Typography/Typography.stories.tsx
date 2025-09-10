@@ -1,8 +1,4 @@
-import Box from '@mui/material/Box';
-import Stack from '@mui/material/Stack';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button } from '../Button/Button';
-import { Paper } from '../Paper/Paper';
+import type { Meta, StoryObj } from '@storybook/react';
 import { Typography } from './Typography';
 
 const meta: Meta<typeof Typography> = {
@@ -10,445 +6,224 @@ const meta: Meta<typeof Typography> = {
   component: Typography,
   parameters: {
     layout: 'padded',
-    docs: {
-      description: {
-        component:
-          'Enhanced Typography component using Inter for body text and Space Grotesk for display elements. Features responsive scaling, semantic intents, and optimized readability for business applications.',
-      },
-    },
   },
+  tags: ['autodocs'],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'body1', 'body2', 'button', 'caption', 'overline'],
-      description: 'Typography variant (uses MUI variants with Quantum styling)',
+      control: { type: 'select' },
+      options: [
+        'h1',
+        'h2',
+        'h3',
+        'h4',
+        'h5',
+        'h6',
+        'body1',
+        'body2',
+        'caption',
+        'overline',
+        'subtitle1',
+        'subtitle2',
+        'button',
+        'code',
+        'blockquote',
+      ],
+      description: 'The semantic variant of the typography',
     },
     intent: {
-      control: 'select',
-      options: ['primary', 'secondary', 'disabled', 'success', 'warning', 'brand'],
-      description: 'Semantic intent for text color',
+      control: { type: 'select' },
+      options: ['default', 'primary', 'secondary', 'muted', 'success', 'warning', 'error'],
+      description: 'The color intent of the text',
     },
-    children: {
-      control: 'text',
-      description: 'Text content',
+    align: {
+      control: { type: 'select' },
+      options: ['left', 'center', 'right', 'justify'],
+      description: 'Text alignment',
     },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Typography>;
+type Story = StoryObj<typeof meta>;
 
-// CSF3 Simple Stories - Individual variants
+// Default Typography
 export const Default: Story = {
   args: {
+    children: 'This is default typography text.',
     variant: 'body1',
-    children: 'Vritti AI helps entrepreneurs manage multiple businesses with intelligent insights.',
   },
 };
 
-export const H1: Story = {
-  args: {
-    variant: 'h1',
-    children: 'Business Portfolio Analytics',
-  },
-};
-
-export const H2: Story = {
-  args: {
-    variant: 'h2',
-    children: 'Revenue Optimization Insights',
-  },
-};
-
-export const H3: Story = {
-  args: {
-    variant: 'h3',
-    children: 'Customer Satisfaction Metrics',
-  },
-};
-
-export const H4: Story = {
-  args: {
-    variant: 'h4',
-    children: 'Downtown Salon Performance',
-  },
-};
-
-export const Body1: Story = {
-  args: {
-    variant: 'body1',
-    children:
-      'Vritti AI analyzes data across all your businesses to identify opportunities that traditional single-business tools miss.',
-  },
-};
-
-export const Body2: Story = {
-  args: {
-    variant: 'body2',
-    children:
-      'Join over 2,500 serial entrepreneurs who have increased their portfolio revenue by an average of 34% within the first six months.',
-  },
-};
-
-export const Caption: Story = {
-  args: {
-    variant: 'caption',
-    children: 'Last updated: 2 minutes ago • Data synced across 12 businesses',
-  },
-};
-
-export const Overline: Story = {
-  args: {
-    variant: 'overline',
-    children: 'SPACE GROTESK - DISPLAY & UI',
-  },
-};
-
-export const ButtonText: Story = {
-  args: {
-    variant: 'button',
-    children: 'Analyze Business',
-  },
-};
-
-// CSF3 Intent Variants
-export const Primary: Story = {
-  args: {
-    intent: 'primary',
-    children: 'Primary text color for main content',
-  },
-};
-
-export const Secondary: Story = {
-  args: {
-    intent: 'secondary',
-    children: 'Secondary text color for supporting content',
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    intent: 'disabled',
-    children: 'Disabled text color for inactive content',
-  },
-};
-
-// CSF3 Grouped Stories
-export const HeadingVariants: Story = {
-  render: (args) => (
-    <Stack spacing={2}>
-      <Typography {...args} variant='h1'>
-        Heading 1 - Page Title
-      </Typography>
-      <Typography {...args} variant='h2'>
-        Heading 2 - Section Title
-      </Typography>
-      <Typography {...args} variant='h3'>
-        Heading 3 - Subsection
-      </Typography>
-      <Typography {...args} variant='h4'>
-        Heading 4 - Component Header
-      </Typography>
-      <Typography {...args} variant='h5'>
-        Heading 5 - Small Header
-      </Typography>
-      <Typography {...args} variant='h6'>
-        Heading 6 - Smallest Header
-      </Typography>
-    </Stack>
-  ),
-  args: {
-    children: 'Sample heading text',
-  },
-};
-
-export const BodyVariants: Story = {
-  render: (args) => (
-    <Stack spacing={2}>
-      <Typography {...args} variant='body1'>
-        Body 1 - Main content text with optimal readability for business applications.
-      </Typography>
-      <Typography {...args} variant='body2'>
-        Body 2 - Secondary content text for supporting information and details.
-      </Typography>
-      <Typography {...args} variant='caption'>
-        Caption - Small text for metadata and additional context.
-      </Typography>
-    </Stack>
-  ),
-  args: {
-    children: 'Sample body text',
-  },
-};
-
-export const IntentVariants: Story = {
-  render: (args) => (
-    <Stack spacing={2}>
-      <Typography {...args} intent='primary'>
-        Primary intent - Main content
-      </Typography>
-      <Typography {...args} intent='secondary'>
-        Secondary intent - Supporting content
-      </Typography>
-      <Typography {...args} intent='disabled'>
-        Disabled intent - Inactive content
-      </Typography>
-    </Stack>
-  ),
-  args: {
-    variant: 'body1',
-    children: 'Sample text showing intent variations',
-  },
-};
-
-export const FontVariants: Story = {
+// Heading Variants
+export const Headings: Story = {
   render: () => (
-    <Stack spacing={4}>
-      <Paper variant='surface' glass>
-        <Box p={3}>
-          <Typography variant='overline' intent='secondary' gutterBottom>
-            SPACE GROTESK - DISPLAY & UI
-          </Typography>
-          <Stack spacing={2}>
-            <Typography variant='h1'>Vritti AI Dashboard</Typography>
-            <Typography variant='h2'>Business Portfolio Analytics</Typography>
-            <Typography variant='h3'>Revenue Optimization Insights</Typography>
-            <Typography variant='button'>Analyze Business</Typography>
-          </Stack>
-        </Box>
-      </Paper>
-
-      <Paper variant='surface'>
-        <Box p={3}>
-          <Typography variant='overline' intent='secondary' gutterBottom>
-            INTER - BODY TEXT & CONTENT
-          </Typography>
-          <Stack spacing={2}>
-            <Typography variant='body1'>
-              Vritti AI is an AI-powered business orchestration platform designed for serial entrepreneurs.
-            </Typography>
-            <Typography variant='body2' intent='secondary'>
-              The platform integrates data from salons, restaurants, clinics, and design studios.
-            </Typography>
-            <Typography variant='caption' intent='secondary'>
-              Last updated: 2 minutes ago • Data synced across 12 businesses
-            </Typography>
-          </Stack>
-        </Box>
-      </Paper>
-    </Stack>
+    <div className='space-y-4'>
+      <Typography variant='h1'>H1: The quick brown fox</Typography>
+      <Typography variant='h2'>H2: The quick brown fox</Typography>
+      <Typography variant='h3'>H3: The quick brown fox</Typography>
+      <Typography variant='h4'>H4: The quick brown fox</Typography>
+      <Typography variant='h5'>H5: The quick brown fox</Typography>
+      <Typography variant='h6'>H6: The quick brown fox</Typography>
+    </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Demonstrates the dual font system: Space Grotesk for display elements, Inter for body text.',
-      },
-    },
-  },
 };
 
-// CSF3 Complex Examples
-export const DashboardExample: Story = {
+// Body Text Variants
+export const BodyText: Story = {
   render: () => (
-    <Paper variant='surface'>
-      <Box p={4}>
-        <Typography variant='h1' gutterBottom color='primary'>
-          $847,392
-        </Typography>
-        <Typography variant='h4' gutterBottom>
-          Total Portfolio Revenue
-        </Typography>
-        <Typography variant='body1'>
-          Your business portfolio generated $847,392 in revenue this month, representing a 23% increase.
-        </Typography>
-
-        <Stack direction='row' spacing={4} mt={3}>
-          <Box>
-            <Typography variant='h3' color='success.main'>
-              ↑ 23%
-            </Typography>
-            <Typography variant='caption'>Month over Month</Typography>
-          </Box>
-          <Box>
-            <Typography variant='h3' color='primary'>
-              12
-            </Typography>
-            <Typography variant='caption'>Active Businesses</Typography>
-          </Box>
-          <Box>
-            <Typography variant='h3' color='warning.main'>
-              5
-            </Typography>
-            <Typography variant='caption'>Optimization Alerts</Typography>
-          </Box>
-        </Stack>
-      </Box>
-    </Paper>
+    <div className='space-y-4'>
+      <Typography variant='body1'>
+        Body 1: This is the primary body text with excellent readability and proper line spacing. It's perfect for main
+        content areas and paragraphs.
+      </Typography>
+      <Typography variant='body2'>
+        Body 2: This is smaller body text, ideal for secondary content or captions. It maintains readability while
+        taking up less space.
+      </Typography>
+      <Typography variant='caption'>
+        Caption: This is caption text used for small details, timestamps, or metadata.
+      </Typography>
+      <Typography variant='overline'>OVERLINE: THIS IS OVERLINE TEXT FOR CATEGORIES OR SECTIONS</Typography>
+    </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Real-world business dashboard showing typography hierarchy in context.',
-      },
-    },
-  },
 };
 
-export const ChatInterface: Story = {
+// Subtitle Variants
+export const Subtitles: Story = {
   render: () => (
-    <Paper variant='surface' glass>
-      <Box p={3}>
-        <Typography variant='h5' gutterBottom>
-          Vritti AI Assistant
-        </Typography>
-        <Typography variant='body2' color='success.main' gutterBottom>
-          Online • Analyzing 12 businesses
-        </Typography>
-
-        <Stack spacing={2} mt={3}>
-          <Paper variant='minimal'>
-            <Box p={2}>
-              <Typography variant='body1'>How is my salon performing compared to last month?</Typography>
-              <Typography variant='caption' intent='secondary'>
-                2:34 PM
-              </Typography>
-            </Box>
-          </Paper>
-
-          <Paper variant='surface'>
-            <Box p={2}>
-              <Typography variant='h6' gutterBottom color='primary'>
-                Downtown Salon Performance Analysis
-              </Typography>
-              <Typography variant='body1'>
-                Your salon is performing exceptionally well this month with 15% revenue increase.
-              </Typography>
-              <Typography variant='caption' intent='secondary'>
-                2:34 PM • Analysis based on last 30 days
-              </Typography>
-            </Box>
-          </Paper>
-        </Stack>
-      </Box>
-    </Paper>
+    <div className='space-y-4'>
+      <Typography variant='subtitle1'>Subtitle 1: This is a larger subtitle</Typography>
+      <Typography variant='subtitle2'>Subtitle 2: This is a smaller subtitle</Typography>
+    </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Chat interface showing typography in conversational AI context.',
-      },
-    },
-  },
 };
 
-export const ResponsiveDemo: Story = {
+// Special Variants
+export const SpecialVariants: Story = {
   render: () => (
-    <Paper variant='surface'>
-      <Box p={4}>
-        <Typography variant='h1' gutterBottom>
-          Vritti AI Business Intelligence
-        </Typography>
-        <Typography variant='h3' gutterBottom>
-          Transform your multi-business portfolio with AI-powered insights
-        </Typography>
-        <Typography variant='body1'>
-          Vritti AI analyzes data across all your businesses to identify opportunities that traditional single-business
-          tools miss.
-        </Typography>
-        <Typography variant='body2' color='text.secondary' mt={2}>
-          Join over 2,500 serial entrepreneurs who have increased their portfolio revenue by an average of 34% within
-          the first six months.
-        </Typography>
-
-        <Stack direction='row' spacing={2} mt={3}>
-          <Button intent='primary'>Start Free Trial</Button>
-          <Button intent='secondary'>Schedule Demo</Button>
-        </Stack>
-      </Box>
-    </Paper>
+    <div className='space-y-4'>
+      <Typography variant='button'>BUTTON TEXT</Typography>
+      <Typography variant='code'>const message = "Hello, world!";</Typography>
+      <Typography variant='blockquote'>"The only way to do great work is to love what you do." - Steve Jobs</Typography>
+    </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Demonstrates responsive typography scaling across different viewport sizes.',
-      },
-    },
-  },
 };
 
-export const HierarchyShowcase: Story = {
+// Intent Colors
+export const IntentColors: Story = {
   render: () => (
-    <Paper variant='surface'>
-      <Box p={4}>
-        <Typography variant='overline' intent='primary' gutterBottom>
-          BUSINESS INSIGHTS
-        </Typography>
-        <Typography variant='h1' gutterBottom>
-          The Future of Multi-Business Management
-        </Typography>
-        <Typography variant='h4' intent='secondary' gutterBottom>
-          How AI is revolutionizing the way serial entrepreneurs scale their ventures
-        </Typography>
-
-        <Stack direction='row' spacing={2} mb={3}>
-          <Typography variant='caption' intent='secondary'>
-            By Vritti AI Research Team
-          </Typography>
-          <Typography variant='caption' intent='secondary'>
-            •
-          </Typography>
-          <Typography variant='caption' intent='secondary'>
-            8 min read
-          </Typography>
-          <Typography variant='caption' intent='secondary'>
-            •
-          </Typography>
-          <Typography variant='caption' intent='secondary'>
-            Published Dec 15, 2024
-          </Typography>
-        </Stack>
-
-        <Typography variant='h2' gutterBottom mt={4}>
-          The Challenge of Portfolio Management
-        </Typography>
-        <Typography variant='body1'>
-          Serial entrepreneurs face a unique challenge that traditional business tools weren't designed to solve.
-        </Typography>
-
-        <Typography variant='h3' gutterBottom mt={3}>
-          The Power of Cross-Business Intelligence
-        </Typography>
-        <Typography variant='body1'>
-          Vritti AI's breakthrough comes from analyzing data patterns across entire business portfolios.
-        </Typography>
-        <Typography variant='body2' color='text.secondary'>
-          For instance, the platform might discover that 40% of salon customers also frequent the owner's restaurant
-          during lunch hours.
-        </Typography>
-      </Box>
-    </Paper>
+    <div className='space-y-4'>
+      <Typography intent='default'>Default: This is the default text color</Typography>
+      <Typography intent='primary'>Primary: This is primary colored text</Typography>
+      <Typography intent='secondary'>Secondary: This is secondary colored text</Typography>
+      <Typography intent='muted'>Muted: This is muted/subdued text</Typography>
+      <Typography intent='success'>Success: This indicates successful operations</Typography>
+      <Typography intent='warning'>Warning: This indicates caution or warnings</Typography>
+      <Typography intent='error'>Error: This indicates errors or destructive actions</Typography>
+    </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: 'Comprehensive content hierarchy example showing clear information structure.',
-      },
-    },
-  },
 };
 
-export const Playground: Story = {
-  args: {
-    variant: 'body1',
-    intent: 'primary',
-    children:
-      'Vritti AI empowers serial entrepreneurs with intelligent business insights across their entire portfolio.',
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: 'Experiment with different typography variants and intents using the controls panel.',
-      },
-    },
-  },
+// Text Alignment
+export const TextAlignment: Story = {
+  render: () => (
+    <div className='space-y-4 w-full'>
+      <Typography align='left'>Left aligned: This text is aligned to the left</Typography>
+      <Typography align='center'>Center aligned: This text is centered</Typography>
+      <Typography align='right'>Right aligned: This text is aligned to the right</Typography>
+      <Typography align='justify'>
+        Justified: This text is justified, which means it's aligned to both the left and right margins. The spacing
+        between words is adjusted to achieve this alignment. This creates clean, even edges on both sides.
+      </Typography>
+    </div>
+  ),
+};
+
+// Typography Hierarchy Demo (inspired by shadcn typography-demo)
+export const TypographyDemo: Story = {
+  render: () => (
+    <div className='max-w-4xl space-y-6'>
+      <Typography variant='h1'>Taxing Laughter: The Joke Tax Chronicles</Typography>
+
+      <Typography variant='body1' intent='muted' className='text-xl'>
+        Once upon a time, in a far-off land, there was a very lazy king who spent all day lounging on his throne. One
+        day, his advisors came to him with a problem: the kingdom was running out of money.
+      </Typography>
+
+      <Typography variant='h2'>The King's Plan</Typography>
+
+      <Typography variant='body1'>
+        The king thought long and hard, and finally came up with{' '}
+        <span className='text-primary font-medium underline underline-offset-4'>a brilliant plan</span>: he would tax
+        the jokes in the kingdom.
+      </Typography>
+
+      <Typography variant='blockquote'>
+        "After all," he said, "everyone enjoys a good joke, so it's only fair that they should pay for the privilege."
+      </Typography>
+
+      <Typography variant='h3'>The Joke Tax</Typography>
+
+      <Typography variant='body1'>
+        The king's subjects were not amused. They grumbled and complained, but the king was firm:
+      </Typography>
+
+      <ul className='my-6 ml-6 list-disc [&>li]:mt-2'>
+        <li>1st level of puns: 5 gold coins</li>
+        <li>2nd level of jokes: 10 gold coins</li>
+        <li>3rd level of one-liners: 20 gold coins</li>
+      </ul>
+
+      <Typography variant='body1'>
+        As a result, people stopped telling jokes, and the kingdom fell into a gloom. But there was one person who
+        refused to let the king's foolishness get him down: a court jester named Jokester.
+      </Typography>
+
+      <Typography variant='h3'>The People's Rebellion</Typography>
+
+      <Typography variant='body1'>
+        The people of the kingdom, feeling uplifted by the laughter, started to tell jokes and puns again, and soon the
+        entire kingdom was in on the joke.
+      </Typography>
+
+      <Typography variant='body1'>
+        The moral of the story is: never underestimate the power of a good laugh and always be careful of bad ideas.
+      </Typography>
+    </div>
+  ),
+};
+
+// Typography in Real Content
+export const RealContentExample: Story = {
+  render: () => (
+    <article className='max-w-2xl space-y-4'>
+      <Typography variant='h1'>Getting Started with Quantum UI</Typography>
+
+      <Typography variant='subtitle1' intent='muted'>
+        A comprehensive guide to using our component library
+      </Typography>
+
+      <Typography variant='body1'>
+        Quantum UI is a modern component library built with shadcn/ui and Tailwind CSS. It provides a set of accessible,
+        customizable components that follow design best practices.
+      </Typography>
+
+      <Typography variant='h2'>Installation</Typography>
+
+      <Typography variant='body1'>To get started, install the package using your preferred package manager:</Typography>
+
+      <Typography variant='code'>npm install @vritti/quantum-ui</Typography>
+
+      <Typography variant='h3'>Basic Usage</Typography>
+
+      <Typography variant='body1'>
+        Import the components you need and start building amazing interfaces. Each component is fully typed and includes
+        comprehensive documentation.
+      </Typography>
+
+      <Typography variant='caption' intent='muted'>
+        Last updated: September 2025
+      </Typography>
+    </article>
+  ),
 };
