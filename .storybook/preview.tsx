@@ -1,4 +1,4 @@
-// .storybook/preview.tsx - Updated for shadcn/ui
+// .storybook/preview.tsx - Enhanced with quantum-ui theme integration
 import type { Preview } from '@storybook/react-vite';
 import { useEffect } from 'react';
 import '../src/index.css';
@@ -20,11 +20,11 @@ const preview: Preview = {
       values: [
         {
           name: 'light',
-          value: 'hsl(0 0% 100%)',
+          value: 'oklch(1 0 0)',
         },
         {
           name: 'dark',
-          value: 'hsl(240 10% 3.9%)',
+          value: 'oklch(0.2046 0 0)',
         },
       ],
     },
@@ -62,7 +62,7 @@ const preview: Preview = {
         const canvas = document.querySelector('.sb-show-main') as HTMLElement;
         const root = document.getElementById('storybook-root') as HTMLElement;
 
-        const backgroundColor = themeMode === 'dark' ? 'hsl(240 10% 3.9%)' : 'hsl(0 0% 100%)';
+        const backgroundColor = themeMode === 'dark' ? 'oklch(0.2046 0 0)' : 'oklch(1 0 0)';
 
         if (canvas) {
           canvas.style.backgroundColor = backgroundColor;

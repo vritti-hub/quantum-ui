@@ -1,8 +1,9 @@
 import tailwindcss from '@tailwindcss/vite';
 import react from '@vitejs/plugin-react';
-import path, { resolve } from 'path';
+import { resolve } from 'path';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
+import tsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
   plugins: [
@@ -15,6 +16,7 @@ export default defineConfig({
       tsconfigPath: './tsconfig.lib.json',
     }),
     tailwindcss(),
+    tsconfigPaths(),
   ],
   build: {
     lib: {
@@ -25,7 +27,6 @@ export default defineConfig({
         'components/Button': resolve(__dirname, 'lib/components/Button/index.ts'),
         'components/Card': resolve(__dirname, 'lib/components/Card/index.ts'),
         'components/TextField': resolve(__dirname, 'lib/components/TextField/index.ts'),
-        'components/Paper': resolve(__dirname, 'lib/components/Paper/index.ts'),
         'components/Typography': resolve(__dirname, 'lib/components/Typography/index.ts'),
         'components/ThemeToggle': resolve(__dirname, 'lib/components/ThemeToggle/index.ts'),
       },
@@ -44,10 +45,5 @@ export default defineConfig({
     sourcemap: true,
     target: 'esnext',
     minify: false,
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-    },
   },
 });
