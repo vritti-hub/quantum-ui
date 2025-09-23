@@ -9,16 +9,6 @@ const meta: Meta<typeof TextField> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    state: {
-      control: { type: 'select' },
-      options: ['normal', 'error', 'success', 'warning'],
-      description: 'The current state of the field for validation feedback',
-    },
-    size: {
-      control: { type: 'select' },
-      options: ['sm', 'md', 'lg'],
-      description: 'Size of the field',
-    },
     label: {
       control: 'text',
       description: 'Label for the field',
@@ -38,6 +28,15 @@ const meta: Meta<typeof TextField> = {
     disabled: {
       control: 'boolean',
       description: 'Whether the field is disabled',
+    },
+    type: {
+      control: { type: 'select' },
+      options: ['text', 'email', 'password', 'number', 'search', 'tel', 'url'],
+      description: 'Input type',
+    },
+    error: {
+      control: 'boolean',
+      description: 'Whether the message represents an error state',
     },
   },
 };
@@ -78,13 +77,13 @@ export const WithMessage: Story = {
   },
 };
 
-// State variants
+// State variants (using error prop)
 export const ErrorState: Story = {
   args: {
     label: 'Email Address',
     placeholder: 'Enter your email',
     defaultValue: 'invalid-email',
-    state: 'error',
+    error: true,
     message: 'Please enter a valid email address',
   },
 };
@@ -94,7 +93,7 @@ export const SuccessState: Story = {
     label: 'Email Address',
     placeholder: 'Enter your email',
     defaultValue: 'john.doe@example.com',
-    state: 'success',
+    className: 'border-green-500 focus-visible:ring-green-200',
     message: 'Email address is valid',
   },
 };
@@ -105,17 +104,17 @@ export const WarningState: Story = {
     placeholder: 'Enter your password',
     type: 'password',
     defaultValue: 'weak',
-    state: 'warning',
+    className: 'border-yellow-500 focus-visible:ring-yellow-200',
     message: 'Consider using a stronger password',
   },
 };
 
-// Size variants
+// Size variants (using className for styling)
 export const Small: Story = {
   args: {
     label: 'Small Input',
     placeholder: 'Small size',
-    size: 'sm',
+    className: 'h-8 text-sm',
   },
 };
 
@@ -123,7 +122,6 @@ export const Medium: Story = {
   args: {
     label: 'Medium Input',
     placeholder: 'Medium size (default)',
-    size: 'md',
   },
 };
 
@@ -131,7 +129,7 @@ export const Large: Story = {
   args: {
     label: 'Large Input',
     placeholder: 'Large size',
-    size: 'lg',
+    className: 'h-12 text-lg',
   },
 };
 
@@ -216,7 +214,7 @@ export const LoginForm: Story = {
         label='Confirm Password'
         placeholder='Confirm your password'
         type='password'
-        state='error'
+        error={true}
         message='Passwords do not match'
       />
     </div>
@@ -252,9 +250,9 @@ export const ContactForm: Story = {
 export const AllSizes: Story = {
   render: () => (
     <div className='w-80 space-y-4'>
-      <TextField label='Small Size' placeholder='Small input field' size='sm' />
-      <TextField label='Medium Size (Default)' placeholder='Medium input field' size='md' />
-      <TextField label='Large Size' placeholder='Large input field' size='lg' />
+      <TextField label='Small Size' placeholder='Small input field' className='h-8 text-sm' />
+      <TextField label='Medium Size (Default)' placeholder='Medium input field' />
+      <TextField label='Large Size' placeholder='Large input field' className='h-12 text-lg' />
     </div>
   ),
   parameters: {
@@ -265,26 +263,26 @@ export const AllSizes: Story = {
 export const AllStates: Story = {
   render: () => (
     <div className='w-80 space-y-4'>
-      <TextField label='Normal State' placeholder='Normal input' state='normal' />
+      <TextField label='Normal State' placeholder='Normal input' />
       <TextField
         label='Success State'
         placeholder='Success input'
         defaultValue='Valid input'
-        state='success'
+        className='border-green-500 focus-visible:ring-green-200'
         message='This input is valid'
       />
       <TextField
         label='Warning State'
         placeholder='Warning input'
         defaultValue='Potentially problematic input'
-        state='warning'
+        className='border-yellow-500 focus-visible:ring-yellow-200'
         message='Please double-check this input'
       />
       <TextField
         label='Error State'
         placeholder='Error input'
         defaultValue='Invalid input'
-        state='error'
+        error={true}
         message='This input contains errors'
       />
     </div>

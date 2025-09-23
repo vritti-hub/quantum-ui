@@ -1,13 +1,19 @@
 import React, { useCallback, useState } from 'react';
-import { Button, Paper, TextField, ThemeToggle, Typography } from '../lib/components';
+import { Button, Card, CardContent, CardHeader, CardTitle, TextField, ThemeToggle, Typography } from '../lib/components';
 
 function App() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [count, setCount] = useState(0);
 
   // Memoized callbacks
   const handleSendMessage = useCallback(() => {
-    alert(`Email: ${email}\nMessage: ${message}`);
+    setLoading(true);
+    setTimeout(() => {
+      alert(`Email: ${email}\nMessage: ${message}`);
+      setLoading(false);
+    }, 1000);
   }, [email, message]);
 
   const handleClear = useCallback(() => {
@@ -21,6 +27,18 @@ function App() {
 
   const handleMessageChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
+  }, []);
+
+  const handleIncrement = useCallback(() => {
+    setCount(prev => prev + 1);
+  }, []);
+
+  const handleDecrement = useCallback(() => {
+    setCount(prev => prev - 1);
+  }, []);
+
+  const handleReset = useCallback(() => {
+    setCount(0);
   }, []);
 
   return (
@@ -41,20 +59,20 @@ function App() {
         {/* Component Showcase */}
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
           {/* Buttons Section */}
-          <Paper variant='surface'>
-            <div className='p-4'>
-              <Typography variant='h4' className='mb-4'>
-                Button Components
-              </Typography>
+          <Card>
+            <CardHeader>
+              <CardTitle>Button Components</CardTitle>
+            </CardHeader>
+            <CardContent>
               <div className='space-y-3'>
                 <div className='flex flex-wrap gap-2'>
-                  <Button intent='primary'>Primary</Button>
-                  <Button intent='secondary'>Secondary</Button>
-                  <Button intent='destructive'>Destructive</Button>
+                  <Button variant='default'>Primary</Button>
+                  <Button variant='secondary'>Secondary</Button>
+                  <Button variant='destructive'>Destructive</Button>
                 </div>
                 <div className='flex flex-wrap gap-2'>
-                  <Button intent='ghost'>Ghost</Button>
-                  <Button intent='outline'>Outline</Button>
+                  <Button variant='ghost'>Ghost</Button>
+                  <Button variant='outline'>Outline</Button>
                   <Button disabled>Disabled</Button>
                 </div>
                 <div className='flex flex-wrap gap-2'>
@@ -63,15 +81,15 @@ function App() {
                   <Button size='lg'>Large</Button>
                 </div>
               </div>
-            </div>
-          </Paper>
+            </CardContent>
+          </Card>
 
           {/* Form Section */}
-          <Paper variant='surface'>
-            <div className='p-4'>
-              <Typography variant='h4' className='mb-4'>
-                Form Components
-              </Typography>
+          <Card>
+            <CardHeader>
+              <CardTitle>Form Components</CardTitle>
+            </CardHeader>
+            <CardContent>
               <div className='space-y-4'>
                 <TextField
                   label='Email Address'
@@ -88,24 +106,24 @@ function App() {
                   onChange={handleMessageChange}
                 />
                 <div className='flex gap-2'>
-                  <Button intent='primary' onClick={handleSendMessage}>
-                    Send Message
+                  <Button variant='default' onClick={handleSendMessage} disabled={loading}>
+                    {loading ? 'Sending...' : 'Send Message'}
                   </Button>
-                  <Button intent='secondary' onClick={handleClear}>
+                  <Button variant='secondary' onClick={handleClear} disabled={loading}>
                     Clear
                   </Button>
                 </div>
               </div>
-            </div>
-          </Paper>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Typography Showcase */}
-        <Paper variant='feature'>
-          <div className='p-6'>
-            <Typography variant='h3' className='mb-4'>
-              Typography Hierarchy
-            </Typography>
+        <Card>
+          <CardHeader>
+            <CardTitle>Typography Hierarchy</CardTitle>
+          </CardHeader>
+          <CardContent>
             <div className='space-y-2'>
               <Typography variant='h4'>H4: Section Header</Typography>
               <Typography variant='h5'>H5: Subsection Header</Typography>
@@ -120,35 +138,35 @@ function App() {
                 Caption: Small text for metadata and annotations
               </Typography>
             </div>
-          </div>
-        </Paper>
+          </CardContent>
+        </Card>
 
         {/* State Examples */}
-        <Paper variant='surface'>
-          <div className='p-4'>
-            <Typography variant='h4' className='mb-4'>
-              Component States
-            </Typography>
+        <Card>
+          <CardHeader>
+            <CardTitle>Component States</CardTitle>
+          </CardHeader>
+          <CardContent>
             <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
               <div>
                 <Typography variant='h6' className='mb-4'>
                   Text Field States
                 </Typography>
                 <div className='space-y-3'>
-                  <TextField label='Normal State' placeholder='Normal input' size='sm' />
+                  <TextField label='Normal State' placeholder='Normal input' />
                   <TextField
                     label='Success State'
                     placeholder='Success input'
-                    state='success'
                     message='Input validated successfully'
                     defaultValue='valid@example.com'
+                    className='border-green-500 focus-visible:ring-green-200'
                   />
                   <TextField
                     label='Error State'
                     placeholder='Error input'
-                    state='error'
                     message='Please enter a valid email'
                     defaultValue='invalid'
+                    className='border-red-500 focus-visible:ring-red-200'
                   />
                 </div>
               </div>
@@ -166,29 +184,59 @@ function App() {
                 </div>
               </div>
             </div>
-          </div>
-        </Paper>
+          </CardContent>
+        </Card>
 
-        {/* Paper Variants */}
+        {/* Interactive Counter */}
+        <Card>
+          <CardHeader>
+            <CardTitle>Interactive Components</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className='flex items-center justify-center space-x-4'>
+              <Button variant='outline' onClick={handleDecrement} size='sm'>
+                -
+              </Button>
+              <div className='text-center min-w-[100px]'>
+                <Typography variant='h4' className='font-mono'>
+                  {count}
+                </Typography>
+                <Typography variant='caption' intent='secondary'>
+                  Counter Value
+                </Typography>
+              </div>
+              <Button variant='outline' onClick={handleIncrement} size='sm'>
+                +
+              </Button>
+            </div>
+            <div className='flex justify-center mt-4'>
+              <Button variant='secondary' onClick={handleReset} size='sm'>
+                Reset
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Card Variants */}
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-          <Paper variant='minimal'>
-            <div className='p-4'>
-              <Typography variant='h6'>Minimal</Typography>
-              <Typography variant='body2'>Subtle container</Typography>
-            </div>
-          </Paper>
-          <Paper variant='accent'>
-            <div className='p-4'>
-              <Typography variant='h6'>Accent</Typography>
-              <Typography variant='body2'>Highlighted container</Typography>
-            </div>
-          </Paper>
-          <Paper variant='container'>
-            <div className='p-4'>
-              <Typography variant='h6'>Container</Typography>
-              <Typography variant='body2'>Professional container</Typography>
-            </div>
-          </Paper>
+          <Card>
+            <CardContent className='p-4'>
+              <Typography variant='h6'>Standard Card</Typography>
+              <Typography variant='body2'>Default shadcn card styling</Typography>
+            </CardContent>
+          </Card>
+          <Card className='border-primary/20 bg-primary/5'>
+            <CardContent className='p-4'>
+              <Typography variant='h6'>Accent Card</Typography>
+              <Typography variant='body2'>Highlighted with primary colors</Typography>
+            </CardContent>
+          </Card>
+          <Card className='shadow-lg'>
+            <CardContent className='p-4'>
+              <Typography variant='h6'>Elevated Card</Typography>
+              <Typography variant='body2'>Enhanced shadow styling</Typography>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Footer */}

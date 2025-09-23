@@ -58,8 +58,8 @@ export const WithFooter: Story = {
         <p>Choose your preferred settings and click continue to proceed with the setup.</p>
       </CardContent>
       <CardFooter className='flex justify-between'>
-        <Button intent='outline'>Cancel</Button>
-        <Button intent='primary'>Continue</Button>
+        <Button variant='outline'>Cancel</Button>
+        <Button variant='default'>Continue</Button>
       </CardFooter>
     </Card>
   ),
@@ -104,7 +104,7 @@ export const Complete: Story = {
         </div>
       </CardContent>
       <CardFooter>
-        <Button intent='primary' fullWidth>
+        <Button variant='default' className='w-full'>
           Add Payment Method
         </Button>
       </CardFooter>
@@ -151,7 +151,7 @@ export const ProfileCard: Story = {
         </div>
       </CardContent>
       <CardFooter>
-        <Button intent='outline' fullWidth>
+        <Button variant='outline' className='w-full'>
           View Profile
         </Button>
       </CardFooter>
@@ -239,7 +239,7 @@ export const MultipleCards: Story = {
           </ul>
         </CardContent>
         <CardFooter>
-          <Button intent='outline' fullWidth>
+          <Button variant='outline' className='w-full'>
             Get Started
           </Button>
         </CardFooter>
@@ -290,7 +290,7 @@ export const MultipleCards: Story = {
           </ul>
         </CardContent>
         <CardFooter>
-          <Button intent='primary' fullWidth>
+          <Button variant='default' className='w-full'>
             Choose Pro
           </Button>
         </CardFooter>
@@ -338,7 +338,7 @@ export const MultipleCards: Story = {
           </ul>
         </CardContent>
         <CardFooter>
-          <Button intent='outline' fullWidth>
+          <Button variant='outline' className='w-full'>
             Contact Sales
           </Button>
         </CardFooter>

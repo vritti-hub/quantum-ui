@@ -18,6 +18,11 @@ export interface TextFieldProps extends React.ComponentProps<'input'> {
    * Whether the field is required
    */
   required?: boolean;
+
+  /**
+   * Whether the message represents an error state
+   */
+  error?: boolean;
 }
 
 // TextField molecule - Input + Label composition
@@ -25,30 +30,48 @@ export const TextField: React.FC<TextFieldProps> = ({
   label,
   message,
   required = false,
+  error = false,
   className,
   id,
   ...props
 }) => {
-  const inputId = id || `textfield-${Math.random().toString(36).substr(2, 9)}`;
+  const inputId = React.useId();
+  const finalId = id || inputId;
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-2" data-slot="field">
       {label && (
-        <Label htmlFor={inputId}>
+        <Label htmlFor={finalId} data-slot="label">
           {label}
-          {required && <span className="text-destructive ml-1">*</span>}
+          {required && (
+            <span className="text-destructive ml-1" aria-hidden="true">
+              *
+            </span>
+          )}
         </Label>
       )}
 
       <Input
-        id={inputId}
-        className={cn(className)}
-        aria-describedby={message ? `${inputId}-message` : undefined}
+        id={finalId}
+        className={className}
+        aria-describedby={message ? `${finalId}-message` : undefined}
+        aria-required={required}
+        aria-invalid={error}
+        required={required}
+        data-slot="input"
         {...props}
       />
 
       {message && (
-        <p id={`${inputId}-message`} className="text-xs text-muted-foreground">
+        <p
+          id={`${finalId}-message`}
+          className={cn(
+            "text-xs",
+            error ? "text-destructive" : "text-muted-foreground"
+          )}
+          role={error ? "alert" : undefined}
+          data-slot="message"
+        >
           {message}
         </p>
       )}

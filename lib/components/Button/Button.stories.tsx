@@ -9,19 +9,19 @@ const meta: Meta<typeof Button> = {
   },
   tags: ['autodocs'],
   argTypes: {
-    intent: {
+    variant: {
       control: { type: 'select' },
-      options: ['primary', 'secondary', 'destructive', 'ghost', 'outline'],
-      description: 'The intent/purpose of the button',
+      options: ['default', 'destructive', 'outline', 'secondary', 'ghost', 'link'],
+      description: 'The visual variant of the button',
     },
     size: {
       control: { type: 'select' },
-      options: ['sm', 'default', 'lg', 'icon'],
+      options: ['default', 'sm', 'lg', 'icon'],
       description: 'Size of the button',
     },
-    fullWidth: {
+    asChild: {
       control: 'boolean',
-      description: 'Whether the button should take full width',
+      description: 'Change the default rendered element for the one passed as a child',
     },
     disabled: {
       control: 'boolean',
@@ -38,38 +38,45 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 // Basic stories
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-    intent: 'primary',
-    children: 'Primary Button',
+    variant: 'default',
+    children: 'Default Button',
   },
 };
 
 export const Secondary: Story = {
   args: {
-    intent: 'secondary',
+    variant: 'secondary',
     children: 'Secondary Button',
   },
 };
 
 export const Destructive: Story = {
   args: {
-    intent: 'destructive',
+    variant: 'destructive',
     children: 'Delete Account',
   },
 };
 
 export const Ghost: Story = {
   args: {
-    intent: 'ghost',
+    variant: 'ghost',
     children: 'Ghost Button',
   },
 };
 
 export const Outline: Story = {
   args: {
-    intent: 'outline',
+    variant: 'outline',
     children: 'Outline Button',
+  },
+};
+
+export const Link: Story = {
+  args: {
+    variant: 'link',
+    children: 'Link Button',
   },
 };
 
@@ -81,10 +88,10 @@ export const Small: Story = {
   },
 };
 
-export const Medium: Story = {
+export const DefaultSize: Story = {
   args: {
     size: 'default',
-    children: 'Medium Button',
+    children: 'Default Size',
   },
 };
 
@@ -92,6 +99,19 @@ export const Large: Story = {
   args: {
     size: 'lg',
     children: 'Large Button',
+  },
+};
+
+export const Icon: Story = {
+  args: {
+    size: 'icon',
+    variant: 'outline',
+    children: (
+      <svg className='h-4 w-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
+        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
+      </svg>
+    ),
+    'aria-label': 'Close',
   },
 };
 
@@ -105,7 +125,7 @@ export const Disabled: Story = {
 
 export const FullWidth: Story = {
   args: {
-    fullWidth: true,
+    className: 'w-full',
     children: 'Full Width Button',
   },
   parameters: {
@@ -116,7 +136,7 @@ export const FullWidth: Story = {
 // With icons
 export const WithIcon: Story = {
   args: {
-    intent: 'primary',
+    variant: 'default',
     children: (
       <>
         <svg className='w-4 h-4 mr-2' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
@@ -128,28 +148,16 @@ export const WithIcon: Story = {
   },
 };
 
-export const IconOnly: Story = {
-  args: {
-    intent: 'ghost',
-    size: 'sm',
-    children: (
-      <svg className='w-4 h-4' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
-        <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M6 18L18 6M6 6l12 12' />
-      </svg>
-    ),
-    'aria-label': 'Close',
-  },
-};
-
 // Interactive examples
-export const AllIntents: Story = {
+export const AllVariants: Story = {
   render: () => (
     <div className='flex flex-wrap gap-2'>
-      <Button intent='primary'>Primary</Button>
-      <Button intent='secondary'>Secondary</Button>
-      <Button intent='destructive'>Destructive</Button>
-      <Button intent='ghost'>Ghost</Button>
-      <Button intent='outline'>Outline</Button>
+      <Button variant='default'>Default</Button>
+      <Button variant='secondary'>Secondary</Button>
+      <Button variant='destructive'>Destructive</Button>
+      <Button variant='ghost'>Ghost</Button>
+      <Button variant='outline'>Outline</Button>
+      <Button variant='link'>Link</Button>
     </div>
   ),
   parameters: {
@@ -173,9 +181,9 @@ export const AllSizes: Story = {
 export const LoadingExample: Story = {
   render: () => (
     <div className='flex gap-2'>
-      <Button intent='primary'>
+      <Button variant='default'>
         <svg
-          className='animate-spin -ml-1 mr-3 h-4 w-4 text-white'
+          className='animate-spin -ml-1 mr-3 h-4 w-4'
           xmlns='http://www.w3.org/2000/svg'
           fill='none'
           viewBox='0 0 24 24'
@@ -189,7 +197,7 @@ export const LoadingExample: Story = {
         </svg>
         Loading...
       </Button>
-      <Button intent='outline' disabled>
+      <Button variant='outline' disabled>
         <svg
           className='animate-spin -ml-1 mr-3 h-4 w-4'
           xmlns='http://www.w3.org/2000/svg'
