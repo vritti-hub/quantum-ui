@@ -35,16 +35,13 @@ export const TextField: React.FC<TextFieldProps> = ({
   id,
   ...props
 }) => {
-  const inputId = React.useId();
-  const finalId = id || inputId;
-
   return (
-    <div className="space-y-2" data-slot="field">
+    <div className='space-y-2' data-slot='field'>
       {label && (
-        <Label htmlFor={finalId} data-slot="label">
+        <Label data-slot='label'>
           {label}
           {required && (
-            <span className="text-destructive ml-1" aria-hidden="true">
+            <span className='text-destructive ml-1' aria-hidden='true'>
               *
             </span>
           )}
@@ -52,25 +49,20 @@ export const TextField: React.FC<TextFieldProps> = ({
       )}
 
       <Input
-        id={finalId}
         className={className}
-        aria-describedby={message ? `${finalId}-message` : undefined}
+        aria-describedby={message}
         aria-required={required}
         aria-invalid={error}
         required={required}
-        data-slot="input"
+        data-slot='input'
         {...props}
       />
 
       {message && (
         <p
-          id={`${finalId}-message`}
-          className={cn(
-            "text-xs",
-            error ? "text-destructive" : "text-muted-foreground"
-          )}
-          role={error ? "alert" : undefined}
-          data-slot="message"
+          className={cn('text-xs', error ? 'text-destructive' : 'text-muted-foreground')}
+          role={error ? 'alert' : undefined}
+          data-slot='message'
         >
           {message}
         </p>

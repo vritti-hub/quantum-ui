@@ -23,6 +23,7 @@
     "declarationMap": true,
     "emitDeclarationOnly": false,
     "outDir": "./dist",
+    "declarationDir": "./dist",
 
     /* Tree-shaking optimization */
     "removeComments": true,
