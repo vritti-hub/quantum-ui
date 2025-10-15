@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -16,31 +16,31 @@
       "import": "./dist/index.js"
     },
     "./Button": {
-      "types": "./dist/components/Button.d.ts",
+      "types": "./dist/Button.d.ts",
       "import": "./dist/components/Button.js"
     },
     "./Card": {
-      "types": "./dist/components/Card.d.ts",
+      "types": "./dist/Card.d.ts",
       "import": "./dist/components/Card.js"
     },
     "./TextField": {
-      "types": "./dist/components/TextField.d.ts",
+      "types": "./dist/TextField.d.ts",
       "import": "./dist/components/TextField.js"
     },
     "./Typography": {
-      "types": "./dist/components/Typography.d.ts",
+      "types": "./dist/Typography.d.ts",
       "import": "./dist/components/Typography.js"
     },
     "./ThemeToggle": {
-      "types": "./dist/components/ThemeToggle.d.ts",
+      "types": "./dist/ThemeToggle.d.ts",
       "import": "./dist/components/ThemeToggle.js"
     },
     "./Checkbox": {
-      "types": "./dist/components/Checkbox.d.ts",
+      "types": "./dist/Checkbox.d.ts",
       "import": "./dist/components/Checkbox.js"
     },
     "./PasswordField": {
-      "types": "./dist/components/PasswordField.d.ts",
+      "types": "./dist/PasswordField.d.ts",
       "import": "./dist/components/PasswordField.js"
     }
   },
