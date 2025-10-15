@@ -29,6 +29,8 @@ export default defineConfig({
         // Component entries
         'components/Button': resolve(__dirname, 'lib/components/Button/index.ts'),
         'components/Card': resolve(__dirname, 'lib/components/Card/index.ts'),
+        'components/Checkbox': resolve(__dirname, 'lib/components/Checkbox/index.ts'),
+        'components/PasswordField': resolve(__dirname, 'lib/components/PasswordField/index.ts'),
         'components/TextField': resolve(__dirname, 'lib/components/TextField/index.ts'),
         'components/Typography': resolve(__dirname, 'lib/components/Typography/index.ts'),
         'components/ThemeToggle': resolve(__dirname, 'lib/components/ThemeToggle/index.ts'),

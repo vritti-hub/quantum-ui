@@ -4,7 +4,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "sideEffects": false,
   "main": "./dist/index.js",
@@ -34,6 +34,14 @@
     "./ThemeToggle": {
       "types": "./dist/components/ThemeToggle.d.ts",
       "import": "./dist/components/ThemeToggle.js"
+    },
+    "./Checkbox": {
+      "types": "./dist/components/Checkbox.d.ts",
+      "import": "./dist/components/Checkbox.js"
+    },
+    "./PasswordField": {
+      "types": "./dist/components/PasswordField.d.ts",
+      "import": "./dist/components/PasswordField.js"
     }
   },
   "files": [
