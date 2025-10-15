@@ -15,14 +15,14 @@ export interface TextFieldProps extends React.ComponentProps<'input'> {
   message?: React.ReactNode;
 
   /**
-   * Whether the field is required
-   */
-  required?: boolean;
-
-  /**
    * Whether the message represents an error state
    */
   error?: boolean;
+
+  /**
+   * Element to display at the start of the input (e.g., icon)
+   */
+  startAdornment?: React.ReactNode;
 
   /**
    * Element to display at the end of the input (e.g., icon button)
@@ -34,10 +34,10 @@ export interface TextFieldProps extends React.ComponentProps<'input'> {
 export const TextField: React.FC<TextFieldProps> = ({
   label,
   message,
-  required = false,
   error = false,
   className,
   id,
+  startAdornment,
   endAdornment,
   ...props
 }) => {
@@ -46,24 +46,23 @@ export const TextField: React.FC<TextFieldProps> = ({
       {label && (
         <Label data-slot='label'>
           {label}
-          {required && (
-            <span className='text-destructive ml-1' aria-hidden='true'>
-              *
-            </span>
-          )}
         </Label>
       )}
 
       <div className="relative">
+        {startAdornment && (
+          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            {startAdornment}
+          </div>
+        )}
         <Input
           className={cn(
             className,
+            startAdornment && 'pl-10',
             endAdornment && 'pr-10'
           )}
           aria-describedby={message ? `${id || 'field'}-message` : undefined}
-          aria-required={required}
           aria-invalid={error}
-          required={required}
           data-slot='input'
           {...props}
         />

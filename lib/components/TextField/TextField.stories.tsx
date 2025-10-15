@@ -1,4 +1,20 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import {
+  AlertCircle,
+  Calendar,
+  CheckCircle,
+  DollarSign,
+  Eye,
+  EyeOff,
+  Loader2,
+  Lock,
+  Mail,
+  Phone,
+  Search,
+  User,
+  X,
+} from 'lucide-react';
+import React from 'react';
 import { TextField } from './TextField';
 
 const meta: Meta<typeof TextField> = {
@@ -20,10 +36,6 @@ const meta: Meta<typeof TextField> = {
     placeholder: {
       control: 'text',
       description: 'Placeholder text',
-    },
-    required: {
-      control: 'boolean',
-      description: 'Whether the field is required',
     },
     disabled: {
       control: 'boolean',
@@ -60,12 +72,11 @@ export const WithValue: Story = {
   },
 };
 
-export const Required: Story = {
+export const PasswordInput: Story = {
   args: {
     label: 'Password',
     placeholder: 'Enter your password',
     type: 'password',
-    required: true,
   },
 };
 
@@ -139,7 +150,6 @@ export const Password: Story = {
     label: 'Password',
     placeholder: 'Enter your password',
     type: 'password',
-    required: true,
   },
 };
 
@@ -148,7 +158,6 @@ export const Email: Story = {
     label: 'Email Address',
     placeholder: 'Enter your email',
     type: 'email',
-    required: true,
   },
 };
 
@@ -162,7 +171,7 @@ export const Number: Story = {
   },
 };
 
-export const Search: Story = {
+export const SearchField: Story = {
   args: {
     label: 'Search',
     placeholder: 'Search for anything...',
@@ -208,8 +217,8 @@ export const ReadOnly: Story = {
 export const LoginForm: Story = {
   render: () => (
     <div className='w-80 space-y-4'>
-      <TextField label='Email Address' placeholder='Enter your email' type='email' required />
-      <TextField label='Password' placeholder='Enter your password' type='password' required />
+      <TextField label='Email Address' placeholder='Enter your email' type='email' />
+      <TextField label='Password' placeholder='Enter your password' type='password' />
       <TextField
         label='Confirm Password'
         placeholder='Confirm your password'
@@ -228,10 +237,10 @@ export const ContactForm: Story = {
   render: () => (
     <div className='w-96 space-y-4'>
       <div className='grid grid-cols-2 gap-4'>
-        <TextField label='First Name' placeholder='John' required />
-        <TextField label='Last Name' placeholder='Doe' required />
+        <TextField label='First Name' placeholder='John' />
+        <TextField label='Last Name' placeholder='Doe' />
       </div>
-      <TextField label='Email Address' placeholder='john.doe@example.com' type='email' required />
+      <TextField label='Email Address' placeholder='john.doe@example.com' type='email' />
       <TextField label='Phone Number' placeholder='+1 (555) 000-0000' type='tel' />
       <TextField label='Company' placeholder='Acme Corp' />
       <TextField
@@ -287,6 +296,169 @@ export const AllStates: Story = {
       />
     </div>
   ),
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+// Adornment examples
+export const WithStartAdornment: Story = {
+  args: {
+    label: 'Email Address',
+    placeholder: 'Enter your email',
+    type: 'email',
+    startAdornment: <Mail className='h-4 w-4 text-muted-foreground' />,
+  },
+};
+
+export const WithEndAdornment: Story = {
+  args: {
+    label: 'Email Address',
+    placeholder: 'Enter your email',
+    type: 'email',
+    defaultValue: 'john.doe@example.com',
+    endAdornment: <CheckCircle className='h-4 w-4 text-green-500' />,
+  },
+};
+
+export const WithBothAdornments: Story = {
+  args: {
+    label: 'Search Users',
+    placeholder: 'Search...',
+    type: 'search',
+    startAdornment: <Search className='h-4 w-4 text-muted-foreground' />,
+    endAdornment: <X className='h-4 w-4 text-muted-foreground cursor-pointer hover:text-foreground' />,
+  },
+};
+
+export const AdornmentExamples: Story = {
+  render: () => (
+    <div className='w-96 space-y-4'>
+      <TextField
+        label='Email Address'
+        placeholder='Enter your email'
+        type='email'
+        startAdornment={<Mail className='h-4 w-4 text-muted-foreground' />}
+      />
+      <TextField
+        label='Password'
+        placeholder='Enter your password'
+        type='password'
+        startAdornment={<Lock className='h-4 w-4 text-muted-foreground' />}
+      />
+      <TextField
+        label='Search'
+        placeholder='Search...'
+        type='search'
+        startAdornment={<Search className='h-4 w-4 text-muted-foreground' />}
+      />
+      <TextField
+        label='Username'
+        placeholder='Enter username'
+        startAdornment={<User className='h-4 w-4 text-muted-foreground' />}
+      />
+      <TextField
+        label='Phone Number'
+        placeholder='+1 (555) 000-0000'
+        type='tel'
+        startAdornment={<Phone className='h-4 w-4 text-muted-foreground' />}
+      />
+      <TextField
+        label='Date'
+        placeholder='Select date'
+        type='date'
+        startAdornment={<Calendar className='h-4 w-4 text-muted-foreground' />}
+      />
+      <TextField
+        label='Amount'
+        placeholder='0.00'
+        type='number'
+        startAdornment={<DollarSign className='h-4 w-4 text-muted-foreground' />}
+      />
+    </div>
+  ),
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const ValidationWithAdornments: Story = {
+  render: () => (
+    <div className='w-96 space-y-4'>
+      <TextField
+        label='Valid Email'
+        placeholder='Enter your email'
+        type='email'
+        defaultValue='john.doe@example.com'
+        startAdornment={<Mail className='h-4 w-4 text-muted-foreground' />}
+        endAdornment={<CheckCircle className='h-4 w-4 text-green-500' />}
+        message='Email is valid'
+      />
+      <TextField
+        label='Invalid Email'
+        placeholder='Enter your email'
+        type='email'
+        defaultValue='invalid-email'
+        error={true}
+        startAdornment={<Mail className='h-4 w-4 text-muted-foreground' />}
+        endAdornment={<AlertCircle className='h-4 w-4 text-destructive' />}
+        message='Please enter a valid email address'
+      />
+      <TextField
+        label='Loading State'
+        placeholder='Processing...'
+        startAdornment={<User className='h-4 w-4 text-muted-foreground' />}
+        endAdornment={<Loader2 className='h-4 w-4 text-muted-foreground animate-spin' />}
+        message='Checking username availability...'
+      />
+    </div>
+  ),
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const InteractiveAdornments: Story = {
+  render: () => {
+    const [showPassword, setShowPassword] = React.useState(false);
+    const [searchValue, setSearchValue] = React.useState('');
+
+    return (
+      <div className='w-96 space-y-4'>
+        <TextField
+          label='Password'
+          placeholder='Enter your password'
+          type={showPassword ? 'text' : 'password'}
+          defaultValue='mySecretPassword'
+          startAdornment={<Lock className='h-4 w-4 text-muted-foreground' />}
+          endAdornment={
+            <button type='button' onClick={() => setShowPassword(!showPassword)} className='focus:outline-none'>
+              {showPassword ? (
+                <EyeOff className='h-4 w-4 text-muted-foreground hover:text-foreground' />
+              ) : (
+                <Eye className='h-4 w-4 text-muted-foreground hover:text-foreground' />
+              )}
+            </button>
+          }
+        />
+        <TextField
+          label='Search'
+          placeholder='Type to search...'
+          type='search'
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+          startAdornment={<Search className='h-4 w-4 text-muted-foreground' />}
+          endAdornment={
+            searchValue && (
+              <button type='button' onClick={() => setSearchValue('')} className='focus:outline-none'>
+                <X className='h-4 w-4 text-muted-foreground hover:text-foreground' />
+              </button>
+            )
+          }
+        />
+      </div>
+    );
+  },
   parameters: {
     layout: 'centered',
   },
