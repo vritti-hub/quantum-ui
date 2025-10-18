@@ -8,6 +8,26 @@
   "version": "0.1.8",
   "type": "module",
   "sideEffects": false,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vritti-hub/quantum-ui.git"
+  },
+  "homepage": "https://vritti-hub.github.io/quantum-ui",
+  "bugs": {
+    "url": "https://github.com/vritti-hub/quantum-ui/issues"
+  },
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "tailwind",
+    "tailwindcss",
+    "radix-ui",
+    "typescript",
+    "accessible",
+    "tree-shakeable",
+    "component-library"
+  ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
