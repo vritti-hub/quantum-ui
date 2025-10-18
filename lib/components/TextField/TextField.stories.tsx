@@ -58,159 +58,119 @@ type Story = StoryObj<typeof meta>;
 
 // Basic stories
 export const Default: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-  },
+  render: () => <TextField label='Email Address' placeholder='Enter your email' />,
 };
 
 export const WithValue: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-    defaultValue: 'john.doe@example.com',
-  },
+  render: () => (
+    <TextField label='Email Address' placeholder='Enter your email' defaultValue='john.doe@example.com' />
+  ),
 };
 
 export const PasswordInput: Story = {
-  args: {
-    label: 'Password',
-    placeholder: 'Enter your password',
-    type: 'password',
-  },
+  render: () => <TextField label='Password' placeholder='Enter your password' type='password' />,
 };
 
 export const WithMessage: Story = {
-  args: {
-    label: 'Username',
-    placeholder: 'Choose a username',
-    message: 'Username must be at least 3 characters long',
-  },
+  render: () => (
+    <TextField
+      label='Username'
+      placeholder='Choose a username'
+      message='Username must be at least 3 characters long'
+    />
+  ),
 };
 
 // State variants (using error prop)
 export const ErrorState: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-    defaultValue: 'invalid-email',
-    error: true,
-    message: 'Please enter a valid email address',
-  },
+  render: () => (
+    <TextField
+      label='Email Address'
+      placeholder='Enter your email'
+      defaultValue='invalid-email'
+      error={true}
+      message='Please enter a valid email address'
+    />
+  ),
 };
 
 export const SuccessState: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-    defaultValue: 'john.doe@example.com',
-    className: 'border-green-500 focus-visible:ring-green-200',
-    message: 'Email address is valid',
-  },
+  render: () => (
+    <TextField
+      label='Email Address'
+      placeholder='Enter your email'
+      defaultValue='john.doe@example.com'
+      className='border-green-500 focus-visible:ring-green-200'
+      message='Email address is valid'
+    />
+  ),
 };
 
 export const WarningState: Story = {
-  args: {
-    label: 'Password',
-    placeholder: 'Enter your password',
-    type: 'password',
-    defaultValue: 'weak',
-    className: 'border-yellow-500 focus-visible:ring-yellow-200',
-    message: 'Consider using a stronger password',
-  },
+  render: () => (
+    <TextField
+      label='Password'
+      placeholder='Enter your password'
+      type='password'
+      defaultValue='weak'
+      className='border-yellow-500 focus-visible:ring-yellow-200'
+      message='Consider using a stronger password'
+    />
+  ),
 };
 
 // Size variants (using className for styling)
 export const Small: Story = {
-  args: {
-    label: 'Small Input',
-    placeholder: 'Small size',
-    className: 'h-8 text-sm',
-  },
+  render: () => <TextField label='Small Input' placeholder='Small size' className='h-8 text-sm' />,
 };
 
 export const Medium: Story = {
-  args: {
-    label: 'Medium Input',
-    placeholder: 'Medium size (default)',
-  },
+  render: () => <TextField label='Medium Input' placeholder='Medium size (default)' />,
 };
 
 export const Large: Story = {
-  args: {
-    label: 'Large Input',
-    placeholder: 'Large size',
-    className: 'h-12 text-lg',
-  },
+  render: () => <TextField label='Large Input' placeholder='Large size' className='h-12 text-lg' />,
 };
 
 // Different input types
 export const Password: Story = {
-  args: {
-    label: 'Password',
-    placeholder: 'Enter your password',
-    type: 'password',
-  },
+  render: () => <TextField label='Password' placeholder='Enter your password' type='password' />,
 };
 
 export const Email: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-    type: 'email',
-  },
+  render: () => <TextField label='Email Address' placeholder='Enter your email' type='email' />,
 };
 
 export const Number: Story = {
-  args: {
-    label: 'Age',
-    placeholder: 'Enter your age',
-    type: 'number',
-    min: 0,
-    max: 120,
-  },
+  render: () => <TextField label='Age' placeholder='Enter your age' type='number' min={0} max={120} />,
 };
 
 export const SearchField: Story = {
-  args: {
-    label: 'Search',
-    placeholder: 'Search for anything...',
-    type: 'search',
-  },
+  render: () => <TextField label='Search' placeholder='Search for anything...' type='search' />,
 };
 
 export const Tel: Story = {
-  args: {
-    label: 'Phone Number',
-    placeholder: '+1 (555) 000-0000',
-    type: 'tel',
-  },
+  render: () => <TextField label='Phone Number' placeholder='+1 (555) 000-0000' type='tel' />,
 };
 
 export const URL: Story = {
-  args: {
-    label: 'Website',
-    placeholder: 'https://example.com',
-    type: 'url',
-  },
+  render: () => <TextField label='Website' placeholder='https://example.com' type='url' />,
 };
 
 // State examples
 export const Disabled: Story = {
-  args: {
-    label: 'Disabled Field',
-    placeholder: 'This field is disabled',
-    defaultValue: 'Cannot edit this',
-    disabled: true,
-  },
+  render: () => (
+    <TextField
+      label='Disabled Field'
+      placeholder='This field is disabled'
+      defaultValue='Cannot edit this'
+      disabled={true}
+    />
+  ),
 };
 
 export const ReadOnly: Story = {
-  args: {
-    label: 'Read Only Field',
-    defaultValue: 'This is read only',
-    readOnly: true,
-  },
+  render: () => <TextField label='Read Only Field' defaultValue='This is read only' readOnly={true} />,
 };
 
 // Form example
@@ -303,32 +263,38 @@ export const AllStates: Story = {
 
 // Adornment examples
 export const WithStartAdornment: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-    type: 'email',
-    startAdornment: <Mail className='h-4 w-4 text-muted-foreground' />,
-  },
+  render: () => (
+    <TextField
+      label='Email Address'
+      placeholder='Enter your email'
+      type='email'
+      startAdornment={<Mail className='h-4 w-4 text-muted-foreground' />}
+    />
+  ),
 };
 
 export const WithEndAdornment: Story = {
-  args: {
-    label: 'Email Address',
-    placeholder: 'Enter your email',
-    type: 'email',
-    defaultValue: 'john.doe@example.com',
-    endAdornment: <CheckCircle className='h-4 w-4 text-green-500' />,
-  },
+  render: () => (
+    <TextField
+      label='Email Address'
+      placeholder='Enter your email'
+      type='email'
+      defaultValue='john.doe@example.com'
+      endAdornment={<CheckCircle className='h-4 w-4 text-green-500' />}
+    />
+  ),
 };
 
 export const WithBothAdornments: Story = {
-  args: {
-    label: 'Search Users',
-    placeholder: 'Search...',
-    type: 'search',
-    startAdornment: <Search className='h-4 w-4 text-muted-foreground' />,
-    endAdornment: <X className='h-4 w-4 text-muted-foreground cursor-pointer hover:text-foreground' />,
-  },
+  render: () => (
+    <TextField
+      label='Search Users'
+      placeholder='Search...'
+      type='search'
+      startAdornment={<Search className='h-4 w-4 text-muted-foreground' />}
+      endAdornment={<X className='h-4 w-4 text-muted-foreground cursor-pointer hover:text-foreground' />}
+    />
+  ),
 };
 
 export const AdornmentExamples: Story = {
