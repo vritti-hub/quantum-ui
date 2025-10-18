@@ -68,15 +68,15 @@ export const PasswordField: React.FC<PasswordFieldProps> = ({
 
   const eyeIcon = (
     <button
-      type="button"
+      type='button'
       onClick={togglePasswordVisibility}
       aria-label={toggleAriaLabel || (showPassword ? 'Hide password' : 'Show password')}
-      className="cursor-pointer"
+      className='cursor-pointer'
     >
       {showPassword ? (
-        <EyeOff className="h-3.5 w-3.5 text-muted-foreground" />
+        <EyeOff className='h-3.5 w-3.5 text-muted-foreground' />
       ) : (
-        <Eye className="h-3.5 w-3.5 text-muted-foreground" />
+        <Eye className='h-3.5 w-3.5 text-muted-foreground' />
       )}
     </button>
   );

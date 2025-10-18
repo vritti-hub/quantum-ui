@@ -43,34 +43,20 @@ export const TextField: React.FC<TextFieldProps> = ({
 }) => {
   return (
     <div className='space-y-2' data-slot='field'>
-      {label && (
-        <Label data-slot='label'>
-          {label}
-        </Label>
-      )}
+      {label && <Label data-slot='label'>{label}</Label>}
 
-      <div className="relative">
+      <div className='relative'>
         {startAdornment && (
-          <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-            {startAdornment}
-          </div>
+          <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>{startAdornment}</div>
         )}
         <Input
-          className={cn(
-            className,
-            startAdornment && 'pl-10',
-            endAdornment && 'pr-10'
-          )}
+          className={cn(className, startAdornment && 'pl-10', endAdornment && 'pr-10')}
           aria-describedby={message ? `${id || 'field'}-message` : undefined}
           aria-invalid={error}
           data-slot='input'
           {...props}
         />
-        {endAdornment && (
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3">
-            {endAdornment}
-          </div>
-        )}
+        {endAdornment && <div className='absolute inset-y-0 right-0 flex items-center pr-3'>{endAdornment}</div>}
       </div>
 
       {message && (
