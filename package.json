@@ -1,5 +1,6 @@
 {
   "name": "@vritti/quantum-ui",
+  "description": "A modern, TypeScript-first React component library built on Radix UI primitives and styled with Tailwind CSS v4. Fully typed, accessible, and tree-shakeable components including Button, Card, TextField, Typography, ThemeToggle, Checkbox, and PasswordField.",
   "private": false,
   "publishConfig": {
     "access": "public"
