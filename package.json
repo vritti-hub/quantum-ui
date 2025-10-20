@@ -63,7 +63,16 @@
     "./PasswordField": {
       "types": "./dist/PasswordField.d.ts",
       "import": "./dist/components/PasswordField.js"
-    }
+    },
+    "./PhoneField": {
+      "types": "./dist/PhoneField.d.ts",
+      "import": "./dist/components/PhoneField.js"
+    },
+    "./OTPField": {
+      "types": "./dist/OTPField.d.ts",
+      "import": "./dist/components/OTPField.js"
+    },
+    "./dist/assets/quantum-ui.css": "./dist/assets/quantum-ui.css"
   },
   "files": [
     "dist"
@@ -118,7 +127,9 @@
     "@tailwindcss/vite": "^4.1.13",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "input-otp": "^1.4.2",
     "lucide-react": "^0.544.0",
+    "react-phone-number-input": "^3.4.12",
     "tailwind-merge": "^3.3.1"
   }
 }
