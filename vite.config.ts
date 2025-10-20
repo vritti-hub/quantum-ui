@@ -33,16 +33,28 @@ export default defineConfig({
         'components/OTPField': resolve(__dirname, 'lib/components/OTPField/index.ts'),
         'components/PasswordField': resolve(__dirname, 'lib/components/PasswordField/index.ts'),
         'components/PhoneField': resolve(__dirname, 'lib/components/PhoneField/index.ts'),
+        'components/Progress': resolve(__dirname, 'lib/components/Progress/index.ts'),
         'components/TextField': resolve(__dirname, 'lib/components/TextField/index.ts'),
         'components/Typography': resolve(__dirname, 'lib/components/Typography/index.ts'),
         'components/ThemeToggle': resolve(__dirname, 'lib/components/ThemeToggle/index.ts'),
+        // Utils entries
+        'utils/axios': resolve(__dirname, 'lib/utils/axios.ts'),
+        // Context entries
+        'context/AuthProvider': resolve(__dirname, 'lib/context/index.ts'),
       },
       name: 'QuantumUI',
       formats: ['es'],
       fileName: (_, entryName) => `${entryName}.js`,
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime'],
+      external: (id, parentId) => {
+        // Don't externalize axios when building utils/axios entry
+        if (parentId?.includes('lib/utils/axios')) {
+          return ['react', 'react-dom', 'react/jsx-runtime', 'react-router-dom'].includes(id);
+        }
+        // Externalize all peer dependencies for other entries
+        return ['react', 'react-dom', 'react/jsx-runtime', 'axios', 'react-router-dom'].includes(id);
+      },
       output: {
         assetFileNames: 'assets/[name][extname]',
         entryFileNames: '[name].js',
