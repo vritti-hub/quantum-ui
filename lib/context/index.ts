@@ -1,2 +1,2 @@
-export { AuthContext, useAuth, type AuthContextType } from './AuthContext';
-export { AuthProvider } from './AuthProvider';
+export { OnboardingContext, useOnboarding, type OnboardingContextType, type OnboardingData } from './OnboardingContext';
+export { OnboardingProvider } from './OnboardingProvider';
