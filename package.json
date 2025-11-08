@@ -84,7 +84,7 @@
       "types": "./dist/AuthProvider.d.ts",
       "import": "./dist/context/AuthProvider.js"
     },
-    "./dist/assets/quantum-ui.css": "./dist/assets/quantum-ui.css"
+    "./index.css": "./dist/assets/quantum-ui.css"
   },
   "files": [
     "dist"
