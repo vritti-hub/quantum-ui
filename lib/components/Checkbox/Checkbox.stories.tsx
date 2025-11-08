@@ -1,7 +1,12 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import { Checkbox } from './Checkbox';
 import { Label } from '../../../shadcn/shadcnLabel';
+import { Form } from '../Form';
+import { Button } from '../Button';
 
 const meta: Meta<typeof Checkbox> = {
   title: 'Components/Checkbox',
@@ -370,6 +375,288 @@ export const CustomStyling: Story = {
       </div>
     </div>
   ),
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+// Error States - Using Built-in Field System
+export const WithError: Story = {
+  render: () => (
+    <div className='w-96'>
+      <Checkbox
+        label='I accept the terms and conditions'
+        description='Please review our terms before proceeding'
+        error='You must accept the terms and conditions'
+      />
+    </div>
+  ),
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const WithErrorChecked: Story = {
+  render: () => {
+    const [checked, setChecked] = React.useState(false);
+
+    return (
+      <div className='w-96'>
+        <Checkbox
+          checked={checked}
+          onCheckedChange={(value) => setChecked(value as boolean)}
+          label='I accept the terms and conditions'
+          description='Please review our terms before proceeding'
+          error={!checked ? 'You must accept the terms and conditions' : undefined}
+        />
+      </div>
+    );
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+export const MultipleErrorStates: Story = {
+  render: () => (
+    <div className='w-96 space-y-6'>
+      <Checkbox
+        label='Required field unchecked'
+        error='This field is required'
+      />
+      <Checkbox
+        defaultChecked
+        label='Required field checked (no error)'
+        description='This is valid'
+      />
+      <Checkbox
+        label='Email notifications'
+        description='Receive updates about your account'
+        error='Please enable notifications to continue'
+      />
+    </div>
+  ),
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+// Form Integration with Error States
+const termsSchema = z.object({
+  terms: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the terms and conditions',
+  }),
+  marketing: z.boolean().refine((val) => val === true, {
+    message: 'Marketing consent is required',
+  }),
+  privacy: z.boolean(),
+});
+
+type TermsFormValues = z.infer<typeof termsSchema>;
+
+export const FormWithValidation: Story = {
+  render: () => {
+    const form = useForm<TermsFormValues>({
+      resolver: zodResolver(termsSchema),
+      defaultValues: {
+        terms: false,
+        marketing: false,
+        privacy: false,
+      },
+    });
+
+    const onSubmit = (data: TermsFormValues) => {
+      console.log('Form data:', data);
+      alert('Form submitted successfully!');
+    };
+
+    return (
+      <div className='w-96'>
+        <div className='mb-6'>
+          <h2 className='text-xl font-bold'>Terms and Conditions</h2>
+          <p className='text-sm text-muted-foreground mt-1'>
+            Please accept all required terms to continue
+          </p>
+        </div>
+        <Form form={form} onSubmit={onSubmit} className='space-y-4'>
+          <Checkbox
+            name='terms'
+            label='I accept the terms and conditions'
+            description='Required - You must accept to proceed'
+          />
+          <Checkbox
+            name='marketing'
+            label='I consent to marketing communications'
+            description='Required - We need your consent for updates'
+          />
+          <Checkbox
+            name='privacy'
+            label='I have read the privacy policy'
+            description='Optional - Recommended for your information'
+          />
+          <div className='pt-4'>
+            <Button type='submit' className='w-full'>
+              Submit
+            </Button>
+          </div>
+        </Form>
+        <div className='mt-4 p-3 bg-muted/50 rounded-md text-xs text-muted-foreground'>
+          <p className='font-medium mb-1'>Try it:</p>
+          <p>Click submit without checking the boxes to see error states</p>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+// Interactive Error State Demo
+export const InteractiveErrorDemo: Story = {
+  render: () => {
+    const [checked, setChecked] = React.useState(false);
+    const [showError, setShowError] = React.useState(false);
+
+    const handleSubmit = () => {
+      if (!checked) {
+        setShowError(true);
+      } else {
+        setShowError(false);
+        alert('Success! Terms accepted.');
+      }
+    };
+
+    return (
+      <div className='w-96'>
+        <div className='space-y-4'>
+          <Checkbox
+            checked={checked}
+            onCheckedChange={(value) => {
+              setChecked(value as boolean);
+              if (value) setShowError(false);
+            }}
+            label='I accept the terms and conditions'
+            description='You must accept to proceed'
+            error={showError ? 'You must accept the terms and conditions' : undefined}
+          />
+          <Button onClick={handleSubmit} className='w-full'>
+            Submit
+          </Button>
+        </div>
+        <div className='mt-4 p-3 bg-muted/50 rounded-md text-xs text-muted-foreground'>
+          <p className='font-medium mb-1'>Interactive demo:</p>
+          <p>Try clicking Submit without checking the box to see the error state</p>
+        </div>
+      </div>
+    );
+  },
+  parameters: {
+    layout: 'centered',
+  },
+};
+
+// Complex Form with Multiple Checkboxes and Errors
+const preferencesSchema = z.object({
+  emailNotifications: z.boolean(),
+  smsNotifications: z.boolean(),
+  pushNotifications: z.boolean(),
+  terms: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the terms',
+  }),
+  privacy: z.boolean().refine((val) => val === true, {
+    message: 'You must accept the privacy policy',
+  }),
+});
+
+type PreferencesFormValues = z.infer<typeof preferencesSchema>;
+
+export const ComplexFormWithErrors: Story = {
+  render: () => {
+    const form = useForm<PreferencesFormValues>({
+      resolver: zodResolver(preferencesSchema),
+      defaultValues: {
+        emailNotifications: true,
+        smsNotifications: false,
+        pushNotifications: true,
+        terms: false,
+        privacy: false,
+      },
+    });
+
+    const onSubmit = (data: PreferencesFormValues) => {
+      console.log('Preferences:', data);
+      alert('Preferences saved successfully!');
+    };
+
+    return (
+      <div className='w-96'>
+        <div className='mb-6'>
+          <h2 className='text-xl font-bold'>Notification Preferences</h2>
+          <p className='text-sm text-muted-foreground mt-1'>
+            Customize your notification settings
+          </p>
+        </div>
+        <Form form={form} onSubmit={onSubmit} className='space-y-6'>
+          <div>
+            <h3 className='text-sm font-semibold mb-3'>Notification Channels</h3>
+            <div className='space-y-3'>
+              <Checkbox
+                name='emailNotifications'
+                label='Email notifications'
+                description='Receive updates via email'
+              />
+              <Checkbox
+                name='smsNotifications'
+                label='SMS notifications'
+                description='Receive updates via text message'
+              />
+              <Checkbox
+                name='pushNotifications'
+                label='Push notifications'
+                description='Receive updates on your device'
+              />
+            </div>
+          </div>
+
+          <div className='border-t pt-4'>
+            <h3 className='text-sm font-semibold mb-3 text-destructive'>
+              Required Agreements
+            </h3>
+            <div className='space-y-3'>
+              <Checkbox
+                name='terms'
+                label='I accept the terms of service'
+                description='Required to use our service'
+              />
+              <Checkbox
+                name='privacy'
+                label='I accept the privacy policy'
+                description='Required for data processing'
+              />
+            </div>
+          </div>
+
+          <div className='pt-4 flex gap-2'>
+            <Button type='submit' className='flex-1'>
+              Save Preferences
+            </Button>
+            <Button
+              type='button'
+              variant='outline'
+              onClick={() => form.reset()}
+            >
+              Reset
+            </Button>
+          </div>
+        </Form>
+        <div className='mt-4 p-3 bg-muted/50 rounded-md text-xs text-muted-foreground'>
+          <p className='font-medium mb-1'>Note:</p>
+          <p>Submit without accepting required agreements to see errors</p>
+        </div>
+      </div>
+    );
+  },
   parameters: {
     layout: 'centered',
   },

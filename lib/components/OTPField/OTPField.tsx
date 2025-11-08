@@ -1,7 +1,13 @@
 import React from 'react';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '../../../shadcn/shadcnInputOTP';
-import { Label } from '../../../shadcn/shadcnLabel';
 import { cn } from '../../../shadcn/utils';
+import {
+  Field,
+  FieldLabel,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+} from '../../../shadcn/shadcnField';
 
 export interface OTPFieldProps {
   /**
@@ -26,14 +32,14 @@ export interface OTPFieldProps {
   label?: string;
 
   /**
-   * Helper or error message to display below the field
+   * Helper text or description to display below the field
    */
-  message?: string;
+  description?: React.ReactNode;
 
   /**
-   * Whether the message represents an error state
+   * Error message to display below the field
    */
-  error?: boolean;
+  error?: string;
 
   /**
    * Whether the field is disabled
@@ -51,59 +57,76 @@ export interface OTPFieldProps {
   className?: string;
 }
 
-// OTPField component - specialized input for one-time passwords
-export const OTPField: React.FC<OTPFieldProps> = ({
-  value,
-  onChange,
-  length = 6,
-  label,
-  message,
-  error,
-  disabled,
-  required,
-  className,
-}) => {
-  const fieldId = React.useId();
+// OTPField component - specialized input for one-time passwords with Field system
+export const OTPField = React.forwardRef<HTMLInputElement, OTPFieldProps>(
+  (
+    {
+      value,
+      onChange,
+      length = 6,
+      label,
+      description,
+      error,
+      disabled,
+      required,
+      className,
+    },
+    ref
+  ) => {
+    const fieldId = React.useId();
+    const hasError = !!error;
 
-  return (
-    <div className='space-y-2' data-slot='field'>
-      {label && (
-        <Label data-slot='label'>
-          {label}
-          {required && <span className='text-destructive ml-1'>*</span>}
-        </Label>
-      )}
+    return (
+      <Field data-disabled={disabled}>
+        {label && (
+          <FieldLabel htmlFor={fieldId}>
+            {label}
+            {required && <span className='text-destructive ml-1'>*</span>}
+          </FieldLabel>
+        )}
 
-      <InputOTP
-        maxLength={length}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        containerClassName={cn('justify-center', className)}
-      >
-        <InputOTPGroup>
-          {Array.from({ length }, (_, index) => (
-            <InputOTPSlot
-              key={index}
-              index={index}
-              className={cn(
-                error && 'border-destructive focus-within:ring-destructive/20 dark:focus-within:ring-destructive/40'
-              )}
-            />
-          ))}
-        </InputOTPGroup>
-      </InputOTP>
+        <FieldContent>
+          <InputOTP
+            maxLength={length}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+            containerClassName={cn('justify-center', className)}
+            aria-describedby={
+              description || error
+                ? `${fieldId}-description ${fieldId}-error`
+                : undefined
+            }
+            aria-invalid={hasError}
+          >
+            <InputOTPGroup>
+              {Array.from({ length }, (_, index) => (
+                <InputOTPSlot
+                  key={index}
+                  index={index}
+                  className={cn(
+                    hasError && 'border-destructive focus-within:ring-destructive/20 dark:focus-within:ring-destructive/40'
+                  )}
+                />
+              ))}
+            </InputOTPGroup>
+          </InputOTP>
 
-      {message && (
-        <div
-          id={`${fieldId}-message`}
-          className={cn('text-xs text-center', error ? 'text-destructive' : 'text-muted-foreground')}
-          role={error ? 'alert' : undefined}
-          data-slot='message'
-        >
-          {message}
-        </div>
-      )}
-    </div>
-  );
-};
+          {description && (
+            <FieldDescription id={`${fieldId}-description`} className='text-center'>
+              {description}
+            </FieldDescription>
+          )}
+
+          {error && (
+            <FieldError id={`${fieldId}-error`} className='text-center'>
+              {error}
+            </FieldError>
+          )}
+        </FieldContent>
+      </Field>
+    );
+  }
+);
+
+OTPField.displayName = 'OTPField';

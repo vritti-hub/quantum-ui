@@ -1,8 +1,14 @@
 import React from 'react';
 import PhoneInputBase, { type Country, type Value } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { Label } from '../../../shadcn/shadcnLabel';
 import { cn } from '../../../shadcn/utils';
+import {
+  Field,
+  FieldLabel,
+  FieldContent,
+  FieldDescription,
+  FieldError,
+} from '../../../shadcn/shadcnField';
 
 export interface PhoneFieldProps {
   /**
@@ -13,7 +19,6 @@ export interface PhoneFieldProps {
   /**
    * Callback when phone number changes
    */
-
   onChange: (value: Value | undefined) => void;
 
   /**
@@ -27,14 +32,14 @@ export interface PhoneFieldProps {
   label?: string;
 
   /**
-   * Helper or error message to display below the field
+   * Helper text or description to display below the field
    */
-  message?: string;
+  description?: React.ReactNode;
 
   /**
-   * Whether the message represents an error state
+   * Error message to display below the field
    */
-  error?: boolean;
+  error?: string;
 
   /**
    * Whether the field is disabled
@@ -52,64 +57,76 @@ export interface PhoneFieldProps {
   placeholder?: string;
 }
 
-// PhoneField component - specialized input for international phone numbers
-export const PhoneField: React.FC<PhoneFieldProps> = ({
-  value,
-  onChange,
-  defaultCountry = 'IN',
-  label,
-  message,
-  error,
-  disabled,
-  className,
-  placeholder,
-}) => {
-  const fieldId = React.useId();
+// PhoneField component - specialized input for international phone numbers with Field system
+export const PhoneField = React.forwardRef<HTMLInputElement, PhoneFieldProps>(
+  (
+    {
+      value,
+      onChange,
+      defaultCountry = 'IN',
+      label,
+      description,
+      error,
+      disabled,
+      className,
+      placeholder,
+    },
+    ref
+  ) => {
+    const fieldId = React.useId();
+    const hasError = !!error;
 
-  return (
-    <div className='space-y-2' data-slot='field'>
-      {label && <Label data-slot='label'>{label}</Label>}
+    return (
+      <Field data-disabled={disabled}>
+        {label && <FieldLabel>{label}</FieldLabel>}
 
-      <PhoneInputBase
-        international
-        defaultCountry={defaultCountry}
-        value={value}
-        onChange={onChange}
-        disabled={disabled}
-        placeholder={placeholder}
-        aria-describedby={message ? `${fieldId}-message` : undefined}
-        aria-invalid={error}
-        data-slot='input'
-        className={cn(
-          'flex h-9 w-full rounded-md border border-input bg-transparent dark:bg-input/30 px-3 py-1 text-sm shadow-xs transition-[color,box-shadow]',
-          'placeholder:text-muted-foreground',
-          'focus-within:outline-none focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]',
-          'disabled:cursor-not-allowed disabled:opacity-50',
-          error && 'border-destructive focus-within:ring-destructive/20 dark:focus-within:ring-destructive/40',
-          className
-        )}
-        numberInputProps={{
-          className: cn(
-            'flex-1 bg-transparent outline-none',
-            'placeholder:text-muted-foreground',
-            'disabled:cursor-not-allowed'
-          ),
-        }}
-        countrySelectProps={{
-          className: cn('mr-2 bg-transparent border-none outline-none', 'focus:ring-0', 'disabled:cursor-not-allowed'),
-        }}
-      />
+        <FieldContent>
+          <PhoneInputBase
+            international
+            defaultCountry={defaultCountry}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
+            placeholder={placeholder}
+            aria-describedby={
+              description || error
+                ? `${fieldId}-description ${fieldId}-error`
+                : undefined
+            }
+            aria-invalid={hasError}
+            className={cn(
+              'flex h-9 w-full rounded-md border border-input bg-transparent dark:bg-input/30 px-3 py-1 text-sm shadow-xs transition-[color,box-shadow]',
+              'placeholder:text-muted-foreground',
+              'focus-within:outline-none focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]',
+              'disabled:cursor-not-allowed disabled:opacity-50',
+              hasError && 'border-destructive focus-within:ring-destructive/20 dark:focus-within:ring-destructive/40',
+              className
+            )}
+            numberInputProps={{
+              className: cn(
+                'flex-1 bg-transparent outline-none',
+                'placeholder:text-muted-foreground',
+                'disabled:cursor-not-allowed'
+              ),
+            }}
+            countrySelectProps={{
+              className: cn('mr-2 bg-transparent border-none outline-none', 'focus:ring-0', 'disabled:cursor-not-allowed'),
+            }}
+          />
 
-      {message && (
-        <div
-          id={`${fieldId}-message`}
-          className={cn('text-xs', error ? 'text-destructive' : 'text-muted-foreground')}
-          role={error ? 'alert' : undefined}
-          data-slot='message'
-        >
-          {message}
-        </div>
-      )}
-    </div>
-  );
-};
+          {description && (
+            <FieldDescription id={`${fieldId}-description`}>
+              {description}
+            </FieldDescription>
+          )}
+
+          {error && (
+            <FieldError id={`${fieldId}-error`}>{error}</FieldError>
+          )}
+        </FieldContent>
+      </Field>
+    );
+  }
+);
+
+PhoneField.displayName = 'PhoneField';

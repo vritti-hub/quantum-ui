@@ -1,11 +1,11 @@
 {
   "name": "@vritti/quantum-ui",
-  "description": "A modern, TypeScript-first React component library built on Radix UI primitives and styled with Tailwind CSS v4. Fully typed, accessible, and tree-shakeable components including Button, Card, TextField, Typography, ThemeToggle, Checkbox, and PasswordField.",
+  "description": "A modern, TypeScript-first React component library built on Radix UI primitives and styled with Tailwind CSS v4. Features a powerful Field system and smart Form component with react-hook-form integration. Fully typed, accessible, and tree-shakeable components including TextField, TextArea, PhoneField, PasswordField, OTPField, Checkbox, Form, and more.",
   "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.1.11",
+  "version": "0.1.12",
   "type": "module",
   "sideEffects": false,
   "repository": {
@@ -76,6 +76,18 @@
       "types": "./dist/OTPField.d.ts",
       "import": "./dist/components/OTPField.js"
     },
+    "./TextArea": {
+      "types": "./dist/TextArea.d.ts",
+      "import": "./dist/components/TextArea.js"
+    },
+    "./Form": {
+      "types": "./dist/Form.d.ts",
+      "import": "./dist/components/Form.js"
+    },
+    "./Field": {
+      "types": "./dist/Field.d.ts",
+      "import": "./dist/shadcn/shadcnField.js"
+    },
     "./axios": {
       "types": "./dist/axios.d.ts",
       "import": "./dist/utils/axios.js"
@@ -135,9 +147,12 @@
     "vite-plugin-dts": "^4.5.4"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@radix-ui/react-checkbox": "^1.3.3",
     "@radix-ui/react-label": "^2.1.7",
     "@radix-ui/react-progress": "^1.1.7",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-separator": "^1.1.8",
     "@radix-ui/react-slot": "^1.2.3",
     "@tailwindcss/vite": "^4.1.13",
     "axios": "^1.12.2",
@@ -145,7 +160,9 @@
     "clsx": "^2.1.1",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.544.0",
+    "react-hook-form": "^7.66.0",
     "react-phone-number-input": "^3.4.12",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "zod": "^4.1.12"
   }
 }

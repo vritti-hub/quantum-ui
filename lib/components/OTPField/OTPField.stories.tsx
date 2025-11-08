@@ -21,13 +21,13 @@ const meta: Meta<typeof OTPField> = {
       control: 'text',
       description: 'Label for the field',
     },
-    message: {
+    description: {
       control: 'text',
-      description: 'Helper or error message',
+      description: 'Helper text to display below the field',
     },
     error: {
-      control: 'boolean',
-      description: 'Whether the message represents an error',
+      control: 'text',
+      description: 'Error message to display below the field',
     },
     disabled: {
       control: 'boolean',
@@ -57,7 +57,7 @@ export const WithLabel: Story = {
   },
 };
 
-export const WithHelperMessage: Story = {
+export const WithDescription: Story = {
   render: () => {
     const [otp, setOtp] = React.useState('');
     return (
@@ -65,7 +65,7 @@ export const WithHelperMessage: Story = {
         label="Enter OTP"
         value={otp}
         onChange={setOtp}
-        message="Enter the 6-digit code sent to your phone"
+        description="Enter the 6-digit code sent to your phone"
       />
     );
   },
@@ -79,8 +79,7 @@ export const WithError: Story = {
         label="Verification Code"
         value={otp}
         onChange={setOtp}
-        error
-        message="Invalid code. Please try again."
+        error="Invalid code. Please try again."
       />
     );
   },
@@ -109,7 +108,7 @@ export const FourDigits: Story = {
         value={otp}
         onChange={setOtp}
         length={4}
-        message="Enter your 4-digit PIN"
+        description="Enter your 4-digit PIN"
       />
     );
   },
@@ -124,7 +123,7 @@ export const EightDigits: Story = {
         value={otp}
         onChange={setOtp}
         length={8}
-        message="Enter the 8-digit security code"
+        description="Enter the 8-digit security code"
       />
     );
   },
@@ -147,10 +146,10 @@ export const WithValidation: Story = {
             setOtp(value);
             if (!touched && value.length > 0) setTouched(true);
           }}
-          error={showError}
-          message={
+          error={showError ? 'Please enter the complete 6-digit code' : undefined}
+          description={
             showError
-              ? 'Please enter the complete 6-digit code'
+              ? undefined
               : isComplete
                 ? '✓ Code entered'
                 : 'Enter the code sent to your device'
@@ -210,10 +209,15 @@ export const VerificationFlow: Story = {
             setError('');
             setIsVerified(false);
           }}
-          error={!!error}
-          message={
-            error ||
-            (isVerifying ? 'Verifying...' : isVerified ? '✓ Code verified!' : 'Enter the 6-digit code (try: 123456)')
+          error={error || undefined}
+          description={
+            error
+              ? undefined
+              : isVerifying
+                ? 'Verifying...'
+                : isVerified
+                  ? '✓ Code verified!'
+                  : 'Enter the 6-digit code (try: 123456)'
           }
           disabled={isVerifying || isVerified}
           required
@@ -242,21 +246,20 @@ export const AllStates: Story = {
 
     return (
       <div className="space-y-8 w-96">
-        <OTPField label="Default" value={otp1} onChange={setOtp1} message="Enter your verification code" />
+        <OTPField label="Default" value={otp1} onChange={setOtp1} description="Enter your verification code" />
 
         <OTPField
           label="Filled"
           value={otp2}
           onChange={setOtp2}
-          message="✓ Code entered successfully"
+          description="✓ Code entered successfully"
         />
 
         <OTPField
           label="Error"
           value={otp3}
           onChange={setOtp3}
-          error
-          message="Invalid code. Please try again."
+          error="Invalid code. Please try again."
         />
 
         <OTPField
@@ -264,7 +267,7 @@ export const AllStates: Story = {
           value={otp4}
           onChange={setOtp4}
           disabled
-          message="Field is disabled"
+          description="Field is disabled"
         />
       </div>
     );

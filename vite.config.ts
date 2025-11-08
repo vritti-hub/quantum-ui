@@ -35,8 +35,12 @@ export default defineConfig({
         'components/PhoneField': resolve(__dirname, 'lib/components/PhoneField/index.ts'),
         'components/Progress': resolve(__dirname, 'lib/components/Progress/index.ts'),
         'components/TextField': resolve(__dirname, 'lib/components/TextField/index.ts'),
+        'components/TextArea': resolve(__dirname, 'lib/components/TextArea/index.ts'),
         'components/Typography': resolve(__dirname, 'lib/components/Typography/index.ts'),
         'components/ThemeToggle': resolve(__dirname, 'lib/components/ThemeToggle/index.ts'),
+        'components/Form': resolve(__dirname, 'lib/components/Form/index.ts'),
+        // shadcn entries
+        'shadcn/shadcnField': resolve(__dirname, 'shadcn/shadcnField/index.ts'),
         // Utils entries
         'utils/axios': resolve(__dirname, 'lib/utils/axios.ts'),
         // Context entries

@@ -14,17 +14,17 @@ const meta: Meta<typeof PhoneField> = {
       control: 'text',
       description: 'Label for the field',
     },
-    message: {
+    description: {
       control: 'text',
-      description: 'Helper or error message to display below the field',
+      description: 'Helper text to display below the field',
+    },
+    error: {
+      control: 'text',
+      description: 'Error message to display below the field',
     },
     disabled: {
       control: 'boolean',
       description: 'Whether the field is disabled',
-    },
-    error: {
-      control: 'boolean',
-      description: 'Whether the message represents an error state',
     },
     defaultCountry: {
       control: { type: 'select' },
@@ -52,7 +52,7 @@ export const WithValue: Story = {
   },
 };
 
-export const WithHelperMessage: Story = {
+export const WithHelperText: Story = {
   render: () => {
     const [phone, setPhone] = React.useState<PhoneValue>();
     return (
@@ -60,7 +60,7 @@ export const WithHelperMessage: Story = {
         label='Phone Number'
         value={phone}
         onChange={(value) => setPhone(value)}
-        message='Enter your phone number with country code'
+        description='Enter your phone number with country code'
       />
     );
   },
@@ -76,7 +76,7 @@ export const DefaultCountryUS: Story = {
         value={phone}
         onChange={(value) => setPhone(value)}
         defaultCountry='US'
-        message='Default: United States'
+        description='Default: United States'
       />
     );
   },
@@ -91,7 +91,7 @@ export const DefaultCountryIndia: Story = {
         value={phone}
         onChange={(value) => setPhone(value)}
         defaultCountry='IN'
-        message='Default: India'
+        description='Default: India'
       />
     );
   },
@@ -106,7 +106,7 @@ export const DefaultCountryUK: Story = {
         value={phone}
         onChange={(value) => setPhone(value)}
         defaultCountry='GB'
-        message='Default: United Kingdom'
+        description='Default: United Kingdom'
       />
     );
   },
@@ -121,7 +121,7 @@ export const DefaultCountryGermany: Story = {
         value={phone}
         onChange={(value) => setPhone(value)}
         defaultCountry='DE'
-        message='Default: Germany'
+        description='Default: Germany'
       />
     );
   },
@@ -136,8 +136,7 @@ export const ErrorState: Story = {
         label='Phone Number'
         value={phone}
         onChange={(value) => setPhone(value)}
-        error={true}
-        message='Please enter a valid phone number'
+        error='Please enter a valid phone number'
       />
     );
   },
@@ -152,7 +151,7 @@ export const Disabled: Story = {
         value={phone}
         onChange={(value) => setPhone(value)}
         disabled={true}
-        message='This field is disabled'
+        description='This field is disabled'
       />
     );
   },
@@ -177,10 +176,10 @@ export const WithValidation: Story = {
             setPhone(value);
             if (!touched) setTouched(true);
           }}
-          error={showError}
-          message={
+          error={showError ? 'Invalid phone number' : undefined}
+          description={
             showError
-              ? 'Invalid phone number'
+              ? undefined
               : showSuccess
               ? '✓ Valid phone number'
               : 'Enter a valid international phone number'
@@ -278,7 +277,7 @@ export const ContactForm: Story = {
           label='Phone Number'
           value={phone}
           onChange={(value) => setPhone(value)}
-          message="We'll never share your phone number"
+          description="We'll never share your phone number"
         />
 
         <button className='w-full h-9 bg-primary text-primary-foreground rounded-lg text-sm font-medium'>Submit</button>
@@ -306,15 +305,14 @@ export const AllStates: Story = {
           label='Valid Phone'
           value={phoneValid}
           onChange={(value) => setPhoneValid(value)}
-          message='✓ This phone number is valid'
+          description='✓ This phone number is valid'
         />
 
         <PhoneField
           label='Invalid Phone'
           value={phoneInvalid}
           onChange={(value) => setPhoneInvalid(value)}
-          error={true}
-          message='Please enter a valid phone number'
+          error='Please enter a valid phone number'
         />
 
         <PhoneField
@@ -322,7 +320,7 @@ export const AllStates: Story = {
           value={phoneDisabled}
           onChange={(value) => setPhoneDisabled(value)}
           disabled={true}
-          message='This field is disabled'
+          description='This field is disabled'
         />
       </div>
     );

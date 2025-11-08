@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from '../../../shadcn/shadcnInput';
-import { Label } from '../../../shadcn/shadcnLabel';
 import { cn } from '../../../shadcn/utils';
+import { Field, FieldDescription, FieldError, FieldLabel } from '../Field';
 
 export interface TextFieldProps extends React.ComponentProps<'input'> {
   /**
@@ -10,14 +10,14 @@ export interface TextFieldProps extends React.ComponentProps<'input'> {
   label?: string;
 
   /**
-   * Helper or error message to display below the field
+   * Helper text to display below the field
    */
-  message?: React.ReactNode;
+  description?: React.ReactNode;
 
   /**
-   * Whether the message represents an error state
+   * Error message to display
    */
-  error?: boolean;
+  error?: string;
 
   /**
    * Element to display at the start of the input (e.g., icon)
@@ -30,45 +30,36 @@ export interface TextFieldProps extends React.ComponentProps<'input'> {
   endAdornment?: React.ReactNode;
 }
 
-// TextField molecule - Input + Label composition
-export const TextField: React.FC<TextFieldProps> = ({
-  label,
-  message,
-  error = false,
-  className,
-  id,
-  startAdornment,
-  endAdornment,
-  ...props
-}) => {
-  return (
-    <div className='space-y-2' data-slot='field'>
-      {label && <Label data-slot='label'>{label}</Label>}
+// TextField molecule - Input + Label composition using Field system
+export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+  ({ label, description, error, className, id, startAdornment, endAdornment, ...props }, ref) => {
+    return (
+      <Field >
+        {label && <FieldLabel>{label}</FieldLabel>}
 
-      <div className='relative'>
-        {startAdornment && (
-          <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>{startAdornment}</div>
-        )}
-        <Input
-          className={cn(className, startAdornment && 'pl-10', endAdornment && 'pr-10')}
-          aria-describedby={message ? `${id || 'field'}-message` : undefined}
-          aria-invalid={error}
-          data-slot='input'
-          {...props}
-        />
-        {endAdornment && <div className='absolute inset-y-0 right-0 flex items-center pr-3'>{endAdornment}</div>}
-      </div>
-
-      {message && (
-        <div
-          id={`${id || 'field'}-message`}
-          className={cn('text-xs', error ? 'text-destructive' : 'text-muted-foreground')}
-          role={error ? 'alert' : undefined}
-          data-slot='message'
-        >
-          {message}
+        <div className='relative'>
+          {startAdornment && (
+            <div className='absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none'>
+              {startAdornment}
+            </div>
+          )}
+          <Input
+            aria-invalid={!!error}
+            ref={ref}
+            className={cn(className, startAdornment && 'pl-10', endAdornment && 'pr-10')}
+            id={id}
+            {...props}
+          />
+          {endAdornment && (
+            <div className='absolute inset-y-0 right-0 flex items-center pr-3'>{endAdornment}</div>
+          )}
         </div>
-      )}
-    </div>
-  );
-};
+
+        {description && !error && <FieldDescription>{description}</FieldDescription>}
+        {error && <FieldError>{error}</FieldError>}
+      </Field>
+    );
+  }
+);
+
+TextField.displayName = 'TextField';

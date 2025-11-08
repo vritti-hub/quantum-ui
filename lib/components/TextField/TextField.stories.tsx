@@ -29,9 +29,13 @@ const meta: Meta<typeof TextField> = {
       control: 'text',
       description: 'Label for the field',
     },
-    message: {
+    description: {
       control: 'text',
-      description: 'Helper or error message to display below the field',
+      description: 'Helper text to display below the field',
+    },
+    error: {
+      control: 'text',
+      description: 'Error message to display below the field',
     },
     placeholder: {
       control: 'text',
@@ -45,10 +49,6 @@ const meta: Meta<typeof TextField> = {
       control: { type: 'select' },
       options: ['text', 'email', 'password', 'number', 'search', 'tel', 'url'],
       description: 'Input type',
-    },
-    error: {
-      control: 'boolean',
-      description: 'Whether the message represents an error state',
     },
   },
 };
@@ -71,25 +71,24 @@ export const PasswordInput: Story = {
   render: () => <TextField label='Password' placeholder='Enter your password' type='password' />,
 };
 
-export const WithMessage: Story = {
+export const WithDescription: Story = {
   render: () => (
     <TextField
       label='Username'
       placeholder='Choose a username'
-      message='Username must be at least 3 characters long'
+      description='Username must be at least 3 characters long'
     />
   ),
 };
 
-// State variants (using error prop)
+// State variants
 export const ErrorState: Story = {
   render: () => (
     <TextField
       label='Email Address'
       placeholder='Enter your email'
       defaultValue='invalid-email'
-      error={true}
-      message='Please enter a valid email address'
+      error='Please enter a valid email address'
     />
   ),
 };
@@ -101,7 +100,7 @@ export const SuccessState: Story = {
       placeholder='Enter your email'
       defaultValue='john.doe@example.com'
       className='border-green-500 focus-visible:ring-green-200'
-      message='Email address is valid'
+      description='Email address is valid'
     />
   ),
 };
@@ -114,7 +113,7 @@ export const WarningState: Story = {
       type='password'
       defaultValue='weak'
       className='border-yellow-500 focus-visible:ring-yellow-200'
-      message='Consider using a stronger password'
+      description='Consider using a stronger password'
     />
   ),
 };
@@ -183,8 +182,7 @@ export const LoginForm: Story = {
         label='Confirm Password'
         placeholder='Confirm your password'
         type='password'
-        error={true}
-        message='Passwords do not match'
+        error='Passwords do not match'
       />
     </div>
   ),
@@ -207,7 +205,7 @@ export const ContactForm: Story = {
         label='Website'
         placeholder='https://example.com'
         type='url'
-        message='Optional: Include your company website'
+        description='Optional: Include your company website'
       />
     </div>
   ),
@@ -238,21 +236,20 @@ export const AllStates: Story = {
         placeholder='Success input'
         defaultValue='Valid input'
         className='border-green-500 focus-visible:ring-green-200'
-        message='This input is valid'
+        description='This input is valid'
       />
       <TextField
         label='Warning State'
         placeholder='Warning input'
         defaultValue='Potentially problematic input'
         className='border-yellow-500 focus-visible:ring-yellow-200'
-        message='Please double-check this input'
+        description='Please double-check this input'
       />
       <TextField
         label='Error State'
         placeholder='Error input'
         defaultValue='Invalid input'
-        error={true}
-        message='This input contains errors'
+        error='This input contains errors'
       />
     </div>
   ),
@@ -358,24 +355,23 @@ export const ValidationWithAdornments: Story = {
         defaultValue='john.doe@example.com'
         startAdornment={<Mail className='h-4 w-4 text-muted-foreground' />}
         endAdornment={<CheckCircle className='h-4 w-4 text-green-500' />}
-        message='Email is valid'
+        description='Email is valid'
       />
       <TextField
         label='Invalid Email'
         placeholder='Enter your email'
         type='email'
         defaultValue='invalid-email'
-        error={true}
+        error='Please enter a valid email address'
         startAdornment={<Mail className='h-4 w-4 text-muted-foreground' />}
         endAdornment={<AlertCircle className='h-4 w-4 text-destructive' />}
-        message='Please enter a valid email address'
       />
       <TextField
         label='Loading State'
         placeholder='Processing...'
         startAdornment={<User className='h-4 w-4 text-muted-foreground' />}
         endAdornment={<Loader2 className='h-4 w-4 text-muted-foreground animate-spin' />}
-        message='Checking username availability...'
+        description='Checking username availability...'
       />
     </div>
   ),

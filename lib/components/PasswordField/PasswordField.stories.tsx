@@ -14,9 +14,13 @@ const meta: Meta<typeof PasswordField> = {
       control: 'text',
       description: 'Label for the password field',
     },
-    message: {
+    description: {
       control: 'text',
-      description: 'Helper or error message to display below the field',
+      description: 'Helper text to display below the field',
+    },
+    error: {
+      control: 'text',
+      description: 'Error message to display below the field',
     },
     placeholder: {
       control: 'text',
@@ -25,10 +29,6 @@ const meta: Meta<typeof PasswordField> = {
     disabled: {
       control: 'boolean',
       description: 'Whether the field is disabled',
-    },
-    error: {
-      control: 'boolean',
-      description: 'Whether the message represents an error state',
     },
     showStrengthIndicator: {
       control: 'boolean',
@@ -60,11 +60,11 @@ export const WithValue: Story = {
   },
 };
 
-export const WithMessage: Story = {
+export const WithDescription: Story = {
   args: {
     label: 'Password',
     placeholder: 'Enter your password',
-    message: 'Password must be at least 8 characters long',
+    description: 'Password must be at least 8 characters long',
   },
 };
 
@@ -112,8 +112,7 @@ export const ErrorState: Story = {
       label='Password'
       placeholder='Enter your password'
       defaultValue='weak'
-      error={true}
-      message='Password is too weak'
+      error='Password is too weak'
     />
   ),
 };
@@ -125,7 +124,7 @@ export const SuccessState: Story = {
       placeholder='Enter your password'
       defaultValue='MyStr0ng!Pass'
       className='border-green-500 focus-visible:ring-green-200'
-      message='Password is strong'
+      description='Password is strong'
     />
   ),
 };
@@ -137,7 +136,7 @@ export const WarningState: Story = {
       placeholder='Enter your password'
       defaultValue='weak'
       className='border-yellow-500 focus-visible:ring-yellow-200'
-      message='Consider using a stronger password'
+      description='Consider using a stronger password'
     />
   ),
 };
@@ -201,7 +200,7 @@ export const SignupForm: Story = {
         value='MyStr0ng!Pass'
         onChange={() => {}}
         className='border-green-500 focus-visible:ring-green-200'
-        message='Passwords match'
+        description='Passwords match'
       />
     </div>
   ),
@@ -225,8 +224,7 @@ export const SignupFormWithError: Story = {
         placeholder='Confirm your password'
         value='MyStr0ngPass'
         onChange={() => {}}
-        error={true}
-        message='Passwords do not match'
+        error='Passwords do not match'
       />
     </div>
   ),
@@ -252,7 +250,7 @@ export const PasswordChangeForm: Story = {
         value='NewStr0ng!Pass'
         onChange={() => {}}
         className='border-green-500 focus-visible:ring-green-200'
-        message='Passwords match'
+        description='Passwords match'
       />
     </div>
   ),
@@ -283,21 +281,20 @@ export const AllStates: Story = {
         placeholder='Success password'
         defaultValue='MyStr0ng!Pass'
         className='border-green-500 focus-visible:ring-green-200'
-        message='Password is strong'
+        description='Password is strong'
       />
       <PasswordField
         label='Warning State'
         placeholder='Warning password'
         defaultValue='weak'
         className='border-yellow-500 focus-visible:ring-yellow-200'
-        message='Consider using a stronger password'
+        description='Consider using a stronger password'
       />
       <PasswordField
         label='Error State'
         placeholder='Error password'
         defaultValue='123'
-        error={true}
-        message='Password must be at least 8 characters'
+        error='Password must be at least 8 characters'
       />
     </div>
   ),
@@ -325,7 +322,7 @@ export const StrengthIndicatorExamples: Story = {
         showStrengthIndicator={true}
         value='weak'
         onChange={() => {}}
-        message='Add uppercase, numbers, and special characters'
+        description='Add uppercase, numbers, and special characters'
       />
       <PasswordField
         label='Fair Password'
@@ -333,7 +330,7 @@ export const StrengthIndicatorExamples: Story = {
         showStrengthIndicator={true}
         value='Password123'
         onChange={() => {}}
-        message='Add special characters for better security'
+        description='Add special characters for better security'
       />
       <PasswordField
         label='Strong Password'
