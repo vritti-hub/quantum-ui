@@ -3,9 +3,11 @@
 import React from 'react';
 import {
   Controller,
+  ControllerProps,
   FieldPath,
   FieldValues,
   FormProvider,
+  SubmitHandler,
   UseFormReturn,
 } from 'react-hook-form';
 import { Checkbox } from '../Checkbox';
@@ -18,9 +20,13 @@ export { Controller } from 'react-hook-form';
 /**
  * Recursively process children to wrap form fields with Controller
  */
-function processChildren<TFieldValues extends FieldValues>(
+function processChildren<
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any,
+  TTransformedValues extends FieldValues | undefined = TFieldValues
+>(
   children: React.ReactNode,
-  control: UseFormReturn<TFieldValues>['control']
+  control: ControllerProps<TFieldValues, FieldPath<TFieldValues>, TTransformedValues>['control']
 ): React.ReactNode {
   return React.Children.map(children, (child) => {
     // Handle non-element children (strings, numbers, null, etc.)
@@ -82,17 +88,20 @@ function processChildren<TFieldValues extends FieldValues>(
   });
 }
 
-export interface FormProps<TFieldValues extends FieldValues = FieldValues>
-  extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
+export interface FormProps<
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any,
+  TTransformedValues extends FieldValues | undefined = TFieldValues
+> extends Omit<React.FormHTMLAttributes<HTMLFormElement>, 'onSubmit'> {
   /**
    * The react-hook-form form instance
    */
-  form: UseFormReturn<TFieldValues>;
+  form: UseFormReturn<TFieldValues, TContext, TTransformedValues>;
 
   /**
-   * Form submit handler
+   * Form submit handler - receives the transformed values if transformation is applied
    */
-  onSubmit: (data: TFieldValues) => void | Promise<void>;
+  onSubmit: Parameters<UseFormReturn<TFieldValues, TContext, TTransformedValues>['handleSubmit']>[0];
 
   /**
    * Children elements - automatically wrapped with Controller if they have a name prop
@@ -129,7 +138,11 @@ export interface FormProps<TFieldValues extends FieldValues = FieldValues>
  * </Form>
  * ```
  */
-export function Form<TFieldValues extends FieldValues = FieldValues>({
+export function Form<
+  TFieldValues extends FieldValues = FieldValues,
+  TContext = any,
+  TTransformedValues extends FieldValues | undefined = TFieldValues
+>({
   form,
   onSubmit,
   children,
@@ -137,7 +150,7 @@ export function Form<TFieldValues extends FieldValues = FieldValues>({
   rootErrorPosition = 'bottom',
   rootErrorClassName,
   ...props
-}: FormProps<TFieldValues>) {
+}: FormProps<TFieldValues, TContext, TTransformedValues>) {
   const handleSubmit = form.handleSubmit(onSubmit);
 
   // Process children recursively to automatically wrap with Controller
