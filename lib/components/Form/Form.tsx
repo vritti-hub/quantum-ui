@@ -9,6 +9,8 @@ import {
   UseFormReturn,
 } from 'react-hook-form';
 import { Checkbox } from '../Checkbox';
+import { FieldError } from '../../../shadcn/shadcnField';
+import { cn } from '../../../shadcn/utils';
 
 // Re-export Controller for explicit usage
 export { Controller } from 'react-hook-form';
@@ -96,6 +98,23 @@ export interface FormProps<TFieldValues extends FieldValues = FieldValues>
    * Children elements - automatically wrapped with Controller if they have a name prop
    */
   children: React.ReactNode;
+
+  /**
+   * Whether to automatically display root errors
+   * @default true
+   */
+  showRootError?: boolean;
+
+  /**
+   * Position of the root error display
+   * @default 'bottom'
+   */
+  rootErrorPosition?: 'top' | 'bottom';
+
+  /**
+   * Additional classes for the root error display
+   */
+  rootErrorClassName?: string;
 }
 
 /**
@@ -114,6 +133,9 @@ export function Form<TFieldValues extends FieldValues = FieldValues>({
   form,
   onSubmit,
   children,
+  showRootError = true,
+  rootErrorPosition = 'bottom',
+  rootErrorClassName,
   ...props
 }: FormProps<TFieldValues>) {
   const handleSubmit = form.handleSubmit(onSubmit);
@@ -124,7 +146,23 @@ export function Form<TFieldValues extends FieldValues = FieldValues>({
   return (
     <FormProvider {...form}>
       <form onSubmit={handleSubmit} {...props}>
+        {/* Top position error */}
+        {showRootError && rootErrorPosition === 'top' && form.formState.errors.root && (
+          <FieldError
+            errors={[form.formState.errors.root]}
+            className={cn("text-center", rootErrorClassName)}
+          />
+        )}
+
         {processedChildren}
+
+        {/* Bottom position error */}
+        {showRootError && rootErrorPosition === 'bottom' && form.formState.errors.root && (
+          <FieldError
+            errors={[form.formState.errors.root]}
+            className={cn("text-center", rootErrorClassName)}
+          />
+        )}
       </form>
     </FormProvider>
   );
