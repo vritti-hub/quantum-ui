@@ -10,3 +10,16 @@ export * from './context';
 // Utilities
 export { cn } from '../shadcn/utils';
 
+// Axios with token management and CSRF support
+export {
+  axios,
+  setToken,
+  getToken,
+  clearToken,
+  clearAllTokens,
+  setCsrfToken,
+  getCsrfToken,
+  clearCsrfToken,
+  type TokenType
+} from './utils/axios';
+

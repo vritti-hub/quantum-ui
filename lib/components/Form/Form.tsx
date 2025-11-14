@@ -13,6 +13,7 @@ import {
 import { Checkbox } from '../Checkbox';
 import { FieldError } from '../../../shadcn/shadcnField';
 import { cn } from '../../../shadcn/utils';
+import { axios, setCsrfToken, clearCsrfToken } from '../../utils/axios';
 
 // Re-export Controller for explicit usage
 export { Controller } from 'react-hook-form';
@@ -124,6 +125,14 @@ export interface FormProps<
    * Additional classes for the root error display
    */
   rootErrorClassName?: string;
+
+  /**
+   * Optional endpoint URL to fetch CSRF token from
+   * When provided, the form will automatically fetch and set the CSRF token
+   * The endpoint should return JSON with a `csrfToken` field
+   * @example '/api/csrf-token'
+   */
+  csrfEndpoint?: string;
 }
 
 /**
@@ -149,9 +158,36 @@ export function Form<
   showRootError = true,
   rootErrorPosition = 'bottom',
   rootErrorClassName,
+  csrfEndpoint,
   ...props
 }: FormProps<TFieldValues, TContext, TTransformedValues>) {
   const handleSubmit = form.handleSubmit(onSubmit);
+
+  // Handle CSRF token fetching
+  React.useEffect(() => {
+    if (csrfEndpoint) {
+      // Fetch CSRF token from the endpoint
+      axios.get(csrfEndpoint)
+        .then(response => {
+          const token = response.data?.csrfToken;
+          if (token) {
+            setCsrfToken(token);
+          } else {
+            console.warn('[Form] CSRF endpoint did not return a csrfToken field');
+          }
+        })
+        .catch(error => {
+          console.error('[Form] Failed to fetch CSRF token:', error);
+        });
+    }
+
+    // Cleanup: Clear CSRF token on unmount if endpoint was provided
+    return () => {
+      if (csrfEndpoint) {
+        clearCsrfToken();
+      }
+    };
+  }, [csrfEndpoint]);
 
   // Process children recursively to automatically wrap with Controller
   const processedChildren = processChildren(children, form.control);
