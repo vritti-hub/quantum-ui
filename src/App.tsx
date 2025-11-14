@@ -40,6 +40,7 @@ function App() {
   const handleReset = useCallback(() => {
     setCount(0);
   }, []);
+  //commit
 
   return (
     <main className='min-h-screen bg-background p-6'>
