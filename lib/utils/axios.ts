@@ -1,4 +1,5 @@
 import Axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
+import { getConfig } from '../config';
 
 /**
  * Token types supported by the application
@@ -25,6 +26,12 @@ const tokenStore: TokenStore = {};
  * Stored in memory for security
  */
 let csrfToken: string | null = null;
+
+/**
+ * CSRF token fetch promise
+ * Used to prevent duplicate fetches
+ */
+let csrfFetchPromise: Promise<string | null> | null = null;
 
 /**
  * Sets the CSRF token in the in-memory store
@@ -174,17 +181,69 @@ const getActiveToken = (): string | null => {
 };
 
 /**
- * Pre-configured axios instance for API requests
+ * Fetches CSRF token from the configured endpoint
+ * Uses promise locking to prevent duplicate fetches
+ *
+ * @returns Promise resolving to CSRF token or null
  */
-export const axios: AxiosInstance = Axios.create({
-  baseURL: '/api',
-  withCredentials: true,
-  headers: {
-    'Content-Type': 'application/json',
-    Accept: 'application/json',
-  },
-  timeout: 30000, // 30 seconds
-});
+async function fetchCsrfToken(): Promise<string | null> {
+  // Return existing fetch promise if one is in progress
+  if (csrfFetchPromise) {
+    return csrfFetchPromise;
+  }
+
+  // Create new fetch promise
+  csrfFetchPromise = (async () => {
+    try {
+      const config = getConfig();
+
+      if (!config.csrf.enabled) {
+        return null;
+      }
+
+      const response = await Axios.get(config.csrf.endpoint, {
+        baseURL: config.axios.baseURL,
+        withCredentials: config.axios.withCredentials,
+        timeout: config.axios.timeout,
+      });
+
+      const token = response.data?.csrfToken;
+
+      if (token && typeof token === 'string') {
+        setCsrfToken(token);
+        return token;
+      }
+
+      console.warn('[axios] CSRF endpoint did not return a csrfToken field');
+      return null;
+    } catch (error) {
+      console.error('[axios] Failed to fetch CSRF token:', error);
+      return null;
+    } finally {
+      // Clear the promise after completion
+      csrfFetchPromise = null;
+    }
+  })();
+
+  return csrfFetchPromise;
+}
+
+/**
+ * Pre-configured axios instance for API requests
+ * Configuration is initialized with defaults and can be overridden via configureQuantumUI()
+ */
+function createAxiosInstance(): AxiosInstance {
+  const config = getConfig();
+
+  return Axios.create({
+    baseURL: config.axios.baseURL,
+    withCredentials: config.axios.withCredentials,
+    headers: config.axios.headers,
+    timeout: config.axios.timeout,
+  });
+}
+
+export const axios: AxiosInstance = createAxiosInstance();
 
 /**
  * Extracts the subdomain from the current hostname
@@ -229,17 +288,22 @@ const getSubdomain = (): string | null => {
  * Request interceptor to automatically add Authorization header and tenant identifier
  * - Adds Bearer token if any token is available in the store
  * - Adds X-Tenant-Id header with subdomain for multi-tenant architecture
+ * - Auto-fetches CSRF token if needed for state-changing requests
  *
  * Token Priority: access > refresh > onboarding
  */
 axios.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
+  async (config: InternalAxiosRequestConfig) => {
+    const quantumConfig = getConfig();
+
     // Get the highest priority token available
     const token = getActiveToken();
 
     // Add Authorization header if token exists
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      const authHeaderName = quantumConfig.auth.tokenHeaderName;
+      const tokenPrefix = quantumConfig.auth.tokenPrefix;
+      config.headers[authHeaderName] = `${tokenPrefix} ${token}`;
     }
 
     // Add tenant identifier from subdomain
@@ -248,10 +312,25 @@ axios.interceptors.request.use(
       config.headers['x-subdomain'] = subdomain;
     }
 
-    // Add CSRF token for state-changing requests
-    const csrfTokenValue = getCsrfToken();
-    if (csrfTokenValue && ['post', 'put', 'patch', 'delete'].includes(config.method?.toLowerCase() || '')) {
-      config.headers['x-csrf-token'] = csrfTokenValue;
+    // Handle CSRF token for state-changing requests
+    const isStateChangingRequest = ['post', 'put', 'patch', 'delete'].includes(
+      config.method?.toLowerCase() || ''
+    );
+
+    if (isStateChangingRequest && quantumConfig.csrf.enabled) {
+      let csrfTokenValue = getCsrfToken();
+
+      // Auto-fetch CSRF token if not available
+      if (!csrfTokenValue) {
+        csrfTokenValue = await fetchCsrfToken();
+      }
+
+      // Add CSRF token to headers
+      if (csrfTokenValue) {
+        config.headers[quantumConfig.csrf.headerName] = csrfTokenValue;
+      } else {
+        console.warn('[axios] CSRF token not available for state-changing request');
+      }
     }
 
     return config;
