@@ -12,6 +12,7 @@ import {
 import { FieldError } from '../../../shadcn/shadcnField';
 import { cn } from '../../../shadcn/utils';
 import { Checkbox } from '../Checkbox';
+import { mapApiErrorsToForm, type FieldMapping } from '../../utils/formHelpers';
 
 // Re-export Controller for explicit usage
 export { Controller } from 'react-hook-form';
@@ -123,6 +124,12 @@ export interface FormProps<
    * Additional classes for the root error display
    */
   rootErrorClassName?: string;
+
+  /**
+   * Field mapping for automatic API error mapping
+   * Maps API field names to form field names
+   */
+  fieldMapping?: FieldMapping;
 }
 
 /**
@@ -148,9 +155,29 @@ export function Form<
   showRootError = true,
   rootErrorPosition = 'bottom',
   rootErrorClassName,
+  fieldMapping,
   ...props
 }: FormProps<TFieldValues, TContext, TTransformedValues>) {
-  const handleSubmit = form.handleSubmit(onSubmit);
+  // Wrap the submit handler with automatic error mapping (always enabled)
+  const wrappedOnSubmit = React.useCallback(
+    async (data: TTransformedValues extends undefined ? TFieldValues : TTransformedValues) => {
+      try {
+        await onSubmit(data as any);
+      } catch (error) {
+        // mapApiErrorsToForm now handles axios error structure extraction internally
+        mapApiErrorsToForm(error, form as any, {
+          fieldMapping,
+          setRootError: showRootError
+        });
+        // Log error for debugging
+        console.error('[Form Submission Error]', error);
+        // Error is swallowed, not re-thrown
+      }
+    },
+    [onSubmit, fieldMapping, form, showRootError]
+  );
+
+  const handleSubmit = form.handleSubmit(wrappedOnSubmit as any);
 
   // Process children recursively to automatically wrap with Controller
   const processedChildren = processChildren(children, form.control);
