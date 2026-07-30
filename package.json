@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.3.13",
+  "version": "0.3.15",
   "type": "module",
   "sideEffects": false,
   "repository": {
@@ -569,6 +569,10 @@
       "import": "./dist/theme/index.js"
     },
     "./index.css": "./dist/assets/quantum-ui.css",
+    "./CopyField": {
+      "types": "./dist/lib/components/CopyField/index.d.ts",
+      "import": "./dist/components/CopyField.js"
+    },
     "./DetailField": {
       "types": "./dist/lib/components/DetailField/index.d.ts",
       "import": "./dist/components/DetailField.js"
