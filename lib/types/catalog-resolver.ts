@@ -50,6 +50,8 @@ export interface SnapshotMicrofrontends {
 
 export type ScopeType = 'ORG' | 'LE' | 'SITE_GROUP' | 'SITE';
 export type SiteType = 'OUTLET' | 'WAREHOUSE' | 'PRODUCTION';
+export const SERVICE_CODES = ['GITEA'] as const;
+export type ServiceCode = (typeof SERVICE_CODES)[number];
 export interface SnapshotFeature {
   code: string;
   name: string;
@@ -60,6 +62,7 @@ export interface SnapshotFeature {
   applicableSiteTypes: SiteType[];
   permissions: SnapshotPermission[];
   microfrontends: SnapshotMicrofrontends;
+  requiredServices?: ServiceCode[];
 }
 
 export interface SnapshotAppFeatureRef {
@@ -124,13 +127,14 @@ export function snapshotFeatureKey(code: string, scope: ScopeType): string {
 
 export const SNAPSHOT_SCHEMA_VERSION = 2;
 
-export type LockReason = 'PLAN' | 'SITE';
+export type LockReason = 'PLAN' | 'SITE' | 'SERVICE';
 
 export interface CatalogPermission {
   code: string;
   locked: boolean;
   lockReason: LockReason | null;
   unlockPlans: string[];
+  missingServices: ServiceCode[];
 }
 
 export interface FeatureCatalogEntry {
@@ -157,6 +161,7 @@ export interface FeatureCatalogEntry {
   locked: boolean;
   lockReason: LockReason | null;
   unlockPlans: string[];
+  missingServices: ServiceCode[];
   permissions: CatalogPermission[];
 }
 
@@ -211,6 +216,7 @@ export interface LockedPermission {
   code: string;
   reason: LockReason | null;
   unlockPlans: string[];
+  missingServices: ServiceCode[];
 }
 
 export interface PlanUpsell {
@@ -228,6 +234,8 @@ export interface PermissionFeature {
   locked: boolean;
   lockReason: LockReason | null;
   unlockPlans: string[];
+  // Which declared services the org has not provisioned — empty unless lockReason is 'SERVICE'
+  missingServices: ServiceCode[];
   lockedPermissions: LockedPermission[];
   upsell: PlanUpsell[];
   route: {

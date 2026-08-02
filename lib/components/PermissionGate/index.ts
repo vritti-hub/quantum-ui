@@ -1,3 +1,4 @@
+export { SERVICE_LABELS, serviceLabels } from '../../utils/services';
 export {
   lockedTip,
   PermissionGate,

@@ -2,14 +2,18 @@ import { Lock, LockKeyhole } from 'lucide-react';
 import type React from 'react';
 import { createContext, useContext } from 'react';
 import { cn } from '../../../shadcn/utils';
+import type { ServiceCode } from '../../types/catalog-resolver';
+import { serviceLabels } from '../../utils/services';
 
-export type PermissionLockReason = 'PLAN' | 'SITE';
+export type PermissionLockReason = 'PLAN' | 'SITE' | 'SERVICE';
 
 export interface PermissionGateResult {
   granted: boolean;
   locked: boolean;
   reason: PermissionLockReason | null;
   unlockPlans: string[];
+  // Which external services the org still has to provision — only populated when reason is 'SERVICE'
+  missingServices: ServiceCode[];
   available: boolean;
   featureName: string | null;
 }
@@ -21,6 +25,7 @@ const ALLOW: PermissionGateResult = Object.freeze({
   locked: false,
   reason: null,
   unlockPlans: [],
+  missingServices: [],
   available: true,
   featureName: null,
 });
@@ -46,25 +51,45 @@ export function usePermission(code?: string): PermissionGateResult {
   return code && gate ? gate(code) : ALLOW;
 }
 
-// The lock symbol for a locked control — plan locks show a warning lock, BU locks a red keyhole lock
+// The lock symbol for a locked control — plan locks show a warning lock, BU locks a red keyhole lock,
+// service locks a red lock (blocked until the org provisions it, not an entitlement the user can buy)
 export const PermissionLockIcon: React.FC<{ reason: PermissionLockReason | null; className?: string }> = ({
   reason,
   className,
-}) =>
-  reason === 'SITE' ? (
-    <LockKeyhole className={cn('text-destructive', className)} />
-  ) : (
-    <Lock className={cn('text-warning', className)} />
-  );
+}) => {
+  switch (reason) {
+    case 'SITE':
+      return <LockKeyhole className={cn('text-destructive', className)} />;
+    case 'SERVICE':
+      return <Lock className={cn('text-destructive', className)} />;
+    default:
+      return <Lock className={cn('text-warning', className)} />;
+  }
+};
 
-// Shared tooltip copy for locked controls — upsell for plan locks, restriction notice for BU locks
-export function lockedTip({ reason, unlockPlans }: Pick<PermissionGateResult, 'reason' | 'unlockPlans'>): string {
-  if (reason === 'SITE') return 'Not enabled for this site';
-  return unlockPlans.length > 0 ? `Available in ${unlockPlans.join(', ')}` : 'Not included in your plan';
+// Shared tooltip copy for locked controls — upsell for plan locks, restriction notice for BU locks,
+// setup notice for service locks
+export function lockedTip({
+  reason,
+  unlockPlans,
+  missingServices = [],
+}: Pick<PermissionGateResult, 'reason' | 'unlockPlans'> &
+  Partial<Pick<PermissionGateResult, 'missingServices'>>): string {
+  switch (reason) {
+    case 'SITE':
+      return 'Not enabled for this site';
+    case 'SERVICE':
+      return `Requires ${serviceLabels(missingServices)}`;
+    default:
+      return unlockPlans.length > 0 ? `Available in ${unlockPlans.join(', ')}` : 'Not included in your plan';
+  }
 }
 
 // Resolves a blocked control's heading + description, keyed off the resolved feature name when known
-function lockMessages(result: Pick<PermissionGateResult, 'granted' | 'reason' | 'unlockPlans' | 'featureName'>): {
+function lockMessages(
+  result: Pick<PermissionGateResult, 'granted' | 'reason' | 'unlockPlans' | 'featureName'> &
+    Partial<Pick<PermissionGateResult, 'missingServices'>>,
+): {
   title: string;
   tip: string;
 } {
@@ -75,23 +100,33 @@ function lockMessages(result: Pick<PermissionGateResult, 'granted' | 'reason' | 
       tip: name ? `You don't have permission to view ${name}.` : "You don't have permission to access this.",
     };
   }
-  if (result.reason === 'SITE') {
-    return {
-      title: name ? `${name} not enabled here` : 'Not available here',
-      tip: name ? `${name} isn't enabled for this site.` : 'Not enabled for this site.',
-    };
+  switch (result.reason) {
+    case 'SITE':
+      return {
+        title: name ? `${name} not enabled here` : 'Not available here',
+        tip: name ? `${name} isn't enabled for this site.` : 'Not enabled for this site.',
+      };
+    case 'SERVICE': {
+      const needs = serviceLabels(result.missingServices ?? []);
+      return {
+        title: 'Setup required',
+        tip: name ? `${name} needs ${needs}. Set it up to continue.` : `This needs ${needs}. Set it up to continue.`,
+      };
+    }
+    default: {
+      if (result.unlockPlans.length > 0) {
+        const plans = result.unlockPlans.join(', ');
+        return {
+          title: name ? `Unlock ${name}` : 'Upgrade required',
+          tip: name ? `${name} is available on ${plans}.` : `Available in ${plans}.`,
+        };
+      }
+      return {
+        title: name ? `Unlock ${name}` : 'Upgrade required',
+        tip: name ? `${name} isn't included in your plan.` : 'Not included in your plan.',
+      };
+    }
   }
-  if (result.unlockPlans.length > 0) {
-    const plans = result.unlockPlans.join(', ');
-    return {
-      title: name ? `Unlock ${name}` : 'Upgrade required',
-      tip: name ? `${name} is available on ${plans}.` : `Available in ${plans}.`,
-    };
-  }
-  return {
-    title: name ? `Unlock ${name}` : 'Upgrade required',
-    tip: name ? `${name} isn't included in your plan.` : 'Not included in your plan.',
-  };
 }
 
 export interface PermissionGateProps {
