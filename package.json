@@ -184,6 +184,10 @@
       "types": "./dist/lib/selects/region/index.d.ts",
       "import": "./dist/selects/region.js"
     },
+    "./selects/repository": {
+      "types": "./dist/lib/selects/repository/index.d.ts",
+      "import": "./dist/selects/repository.js"
+    },
     "./selects/plan": {
       "types": "./dist/lib/selects/plan/index.d.ts",
       "import": "./dist/selects/plan.js"

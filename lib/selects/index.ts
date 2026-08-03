@@ -22,6 +22,7 @@ export * from './plan';
 export * from './purchase-order';
 export * from './quant';
 export * from './region';
+export * from './repository';
 export * from './role';
 export * from './serial';
 export * from './site';

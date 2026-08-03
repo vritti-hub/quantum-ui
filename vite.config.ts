@@ -64,6 +64,7 @@ export default defineConfig({
         'selects/cloud-provider': resolve(__dirname, 'lib/selects/cloud-provider/index.ts'),
         'selects/business': resolve(__dirname, 'lib/selects/business/index.ts'),
         'selects/region': resolve(__dirname, 'lib/selects/region/index.ts'),
+        'selects/repository': resolve(__dirname, 'lib/selects/repository/index.ts'),
         'selects/plan': resolve(__dirname, 'lib/selects/plan/index.ts'),
         'selects/billing-cycle': resolve(__dirname, 'lib/selects/billing-cycle/index.ts'),
         'selects/country': resolve(__dirname, 'lib/selects/country/index.ts'),
