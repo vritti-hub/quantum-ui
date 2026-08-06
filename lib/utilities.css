@@ -17,3 +17,12 @@
 @import "tailwindcss/utilities" layer(utilities);
 @source "./**/*.{ts,tsx}";
 @source "../shadcn/**/*.{ts,tsx}";
+
+/**
+ * Safelist the categorical group palette utilities. These are applied dynamically
+ * (from a color key in data), so they never appear literally in scanned source — the
+ * JIT would drop them. `@source inline(...)` forces them into the shipped CSS so
+ * consumers who don't @source-scan quantum-ui still get the bg-group, text-group,
+ * and border-group utilities.
+ */
+@source inline("{bg,text,border}-group-{blue,green,amber,rose,violet,teal,orange,lime,cyan,indigo,fuchsia,slate}");

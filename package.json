@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.3.17",
+  "version": "0.3.18",
   "type": "module",
   "sideEffects": false,
   "repository": {
@@ -555,6 +555,10 @@
     "./decimal": {
       "types": "./dist/lib/utils/decimal.d.ts",
       "import": "./dist/utils/decimal.js"
+    },
+    "./colors": {
+      "types": "./dist/lib/utils/colors.d.ts",
+      "import": "./dist/utils/colors.js"
     },
     "./hotkeys": {
       "types": "./dist/lib/utils/hotkeys.d.ts",

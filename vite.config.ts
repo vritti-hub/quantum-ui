@@ -168,6 +168,7 @@ export default defineConfig({
         'utils/permission-deps': resolve(__dirname, 'lib/utils/permission-deps.ts'),
         'utils/format': resolve(__dirname, 'lib/utils/format.ts'),
         'utils/decimal': resolve(__dirname, 'lib/utils/decimal.ts'),
+        'utils/colors': resolve(__dirname, 'lib/utils/colors.ts'),
         'date-fns': resolve(__dirname, 'lib/date-fns.ts'),
       },
       name: 'QuantumUI',
