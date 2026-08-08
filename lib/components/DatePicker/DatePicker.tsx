@@ -283,7 +283,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>((rawProp
   };
 
   return (
-    <Field data-disabled={disabled}>
+    <Field data-disabled={disabled} className={className}>
       {label && <FieldLabel htmlFor={inputId}>{label}</FieldLabel>}
       <div className="relative">
         <Input
@@ -294,7 +294,7 @@ export const DatePicker = forwardRef<HTMLInputElement, DatePickerProps>((rawProp
           readOnly
           aria-invalid={!!error}
           placeholder={placeholder}
-          className={`pr-10 ${className ?? ''}`.trim()}
+          className="w-full pr-10"
           onClick={() => !disabled && setOpen(true)}
           onBlur={() => onBlur?.()}
           onKeyDown={(e) => {
