@@ -1,6 +1,6 @@
 import { Camera, Upload, User, X } from 'lucide-react';
 import type React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { cn } from '../../../shadcn/utils';
 import { Button } from '../Button';
 import { Field, FieldError, FieldLabel } from '../Field';
@@ -12,12 +12,15 @@ interface UploadFileBaseProps {
   anchor?: AnchorPreset | React.ReactNode;
   multiple?: boolean;
   accept?: string;
+  className?: string;
   disabled?: boolean;
   label?: string;
   error?: string;
   placeholder?: string;
   hint?: string;
   value?: File | File[] | null;
+  /** URL of an already-persisted file (e.g. a saved avatar). Shown as the preview until a new file is picked. */
+  previewUrl?: string;
   isLoading?: boolean;
 }
 
@@ -33,39 +36,32 @@ interface UploadFileFormProps extends UploadFileBaseProps {
 
 export type UploadFileProps = UploadFileStandaloneProps | UploadFileFormProps;
 
-// Circular avatar preview used by the avatar anchor preset
-const AvatarPreview: React.FC<{ file: File; size: number }> = ({ file, size }) => {
-  const [objectUrl, setObjectUrl] = useState<string | null>(null);
+// Creates a revocable object URL for an image File; null for non-images or no file.
+// Built during render, not in an effect, so the preview never flashes a placeholder first.
+function useImageObjectUrl(file: File | undefined): string | null {
+  const objectUrl = useMemo(() => (file?.type.startsWith('image/') ? URL.createObjectURL(file) : null), [file]);
 
   useEffect(() => {
-    const url = URL.createObjectURL(file);
-    setObjectUrl(url);
-    return () => URL.revokeObjectURL(url);
-  }, [file]);
+    if (!objectUrl) return;
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [objectUrl]);
 
-  if (!objectUrl) return null;
-
-  return (
-    <img
-      src={objectUrl}
-      alt={file.name}
-      className="rounded-full object-cover w-full h-full"
-      style={{ width: size, height: size }}
-    />
-  );
-};
+  return objectUrl;
+}
 
 // File upload trigger with optional preset anchors and built-in file preview
 export const UploadFile: React.FC<UploadFileProps> = ({
   anchor = 'dropzone',
   multiple = false,
   accept,
+  className,
   disabled,
   label,
   error,
   placeholder,
   hint,
   value,
+  previewUrl,
   onChange,
   isLoading,
 }) => {
@@ -74,6 +70,12 @@ export const UploadFile: React.FC<UploadFileProps> = ({
   // Normalize value to an array for consistent handling
   const files: File[] = !value ? [] : Array.isArray(value) ? value : [value];
   const hasFiles = files.length > 0;
+
+  const firstFile: File | undefined = files[0];
+  const selectedImageUrl = useImageObjectUrl(firstFile);
+  // A picked file always wins; previewUrl only fills in when nothing is selected, so
+  // picking a non-image never falls back to the stale remote image
+  const imageSrc = hasFiles ? selectedImageUrl : (previewUrl ?? null);
 
   // True when using a preset string anchor (not a custom ReactNode)
   const isPreset = anchor === 'dropzone' || anchor === 'button' || anchor === 'avatar';
@@ -143,7 +145,11 @@ export const UploadFile: React.FC<UploadFileProps> = ({
             disabled ? 'cursor-default opacity-50' : 'cursor-pointer hover:bg-muted/50',
           )}
         >
-          <Upload className="h-6 w-6 text-muted-foreground" />
+          {imageSrc ? (
+            <img src={imageSrc} alt="" className="h-16 w-16 rounded object-cover" />
+          ) : (
+            <Upload className="h-6 w-6 text-muted-foreground" />
+          )}
           <p className="text-sm text-muted-foreground">{placeholder ?? 'Click or drag to upload'}</p>
           {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
         </button>
@@ -164,8 +170,6 @@ export const UploadFile: React.FC<UploadFileProps> = ({
 
     if (anchor === 'avatar') {
       const avatarSize = 80;
-      const firstFile = files[0];
-      const hasImage = hasFiles && firstFile.type.startsWith('image/');
 
       return (
         // Wrapper provides positioning context for the badge outside overflow-hidden
@@ -176,16 +180,25 @@ export const UploadFile: React.FC<UploadFileProps> = ({
             disabled={disabled}
             className={cn(
               'group relative h-full w-full overflow-hidden rounded-full bg-muted',
-              disabled ? 'cursor-default opacity-50' : 'cursor-pointer',
+              disabled ? 'cursor-default' : 'cursor-pointer',
+              // A shown image is content, not an affordance — only dim the empty placeholder
+              disabled && !imageSrc && 'opacity-50',
             )}
           >
-            {hasImage ? (
+            {imageSrc ? (
               <>
-                <AvatarPreview file={firstFile} size={avatarSize} />
-                {/* Camera overlay on hover */}
-                <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
-                  <Camera className="h-5 w-5 text-white" />
-                </div>
+                <img
+                  src={imageSrc}
+                  alt={firstFile?.name ?? ''}
+                  className="rounded-full object-cover w-full h-full"
+                  style={{ width: avatarSize, height: avatarSize }}
+                />
+                {/* Camera overlay on hover — omitted when read-only, since nothing can be picked */}
+                {!disabled && (
+                  <div className="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover:opacity-100">
+                    <Camera className="h-5 w-5 text-white" />
+                  </div>
+                )}
               </>
             ) : (
               <div className="flex h-full w-full items-center justify-center">
@@ -195,7 +208,7 @@ export const UploadFile: React.FC<UploadFileProps> = ({
           </button>
 
           {/* Badge sits outside overflow-hidden so it's never clipped */}
-          {!hasImage && (
+          {!imageSrc && (
             <div className="pointer-events-none absolute -bottom-0.5 -right-0.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary ring-2 ring-background">
               <Upload className="h-3 w-3 text-primary-foreground" />
             </div>
@@ -248,7 +261,9 @@ export const UploadFile: React.FC<UploadFileProps> = ({
   }
 
   return (
-    <Field data-disabled={disabled}>
+    // Field is w-full by default; the avatar is a fixed 80px circle, so it hugs its content
+    // instead of claiming the whole row and pushing sibling content to the far edge
+    <Field data-disabled={disabled} className={cn(anchor === 'avatar' && 'w-fit', className)}>
       {label && <FieldLabel>{label}</FieldLabel>}
 
       {renderAnchor()}
