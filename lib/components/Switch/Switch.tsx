@@ -10,7 +10,7 @@ export interface SwitchProps extends React.ComponentPropsWithoutRef<typeof Shadc
   error?: string;
 }
 
-// Switch for toggling on/off; label + description stack left with the toggle pinned right (description required)
+// Switch for toggling on/off; label + description on the left with the toggle pinned right (description required)
 export const Switch = React.forwardRef<React.ElementRef<typeof ShadcnSwitch>, SwitchProps>(
   ({ label, description, error, id, size = 'lg', ...props }, ref) => {
     const generatedId = React.useId();
@@ -19,21 +19,21 @@ export const Switch = React.forwardRef<React.ElementRef<typeof ShadcnSwitch>, Sw
 
     return (
       <Field data-disabled={props.disabled} data-invalid={hasError}>
-        <div className="flex min-h-9 items-center justify-between gap-4">
-          <div className="flex flex-col gap-0.5">
-            {label && (
-              <FieldLabel htmlFor={fieldId} className="font-normal cursor-pointer">
-                {label}
-              </FieldLabel>
-            )}
+        {label && (
+          <FieldLabel htmlFor={fieldId} className="cursor-pointer">
+            {label}
+          </FieldLabel>
+        )}
+        <div className="flex min-h-9 items-center gap-3">
+          {description && (
             <label
               htmlFor={fieldId}
               id={`${fieldId}-description`}
-              className="text-sm text-muted-foreground leading-normal cursor-pointer"
+              className="flex-1 cursor-pointer text-sm leading-snug text-muted-foreground"
             >
               {description}
             </label>
-          </div>
+          )}
           <ShadcnSwitch
             {...props}
             ref={ref}
@@ -43,7 +43,6 @@ export const Switch = React.forwardRef<React.ElementRef<typeof ShadcnSwitch>, Sw
             aria-invalid={hasError}
           />
         </div>
-
         {error && <FieldError id={`${fieldId}-error`}>{error}</FieldError>}
       </Field>
     );
