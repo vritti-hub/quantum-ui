@@ -298,7 +298,7 @@ export function Form<
       >
         {hasActions ? (
           <>
-            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-6 py-4 [scrollbar-gutter:stable]">
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto overscroll-contain px-6 py-4">
               {topError}
               {bodyChildren}
               {bottomError}

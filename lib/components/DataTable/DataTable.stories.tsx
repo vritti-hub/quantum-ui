@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import type { ColumnDef } from '@tanstack/react-table';
-import { FileX2, Trash2 } from 'lucide-react';
+import { Eye, FileX2, Pencil, Trash2 } from 'lucide-react';
 import { Button } from '../Button';
+import { RowActions } from './components/RowActions';
 import { DataTable } from './DataTable';
 import { useDataTable } from './hooks/useDataTable';
 import type { DataTableProps } from './types';
@@ -149,4 +150,65 @@ export const Loading: Story = {
 
 export const CustomPagination: Story = {
   render: () => <CustomPaginationStory />,
+};
+
+// ─── Scroll behaviour (tall + wide + actions) ───
+// Verifies: (1) vertical scrollbar starts BELOW the header, (2) header columns stay aligned with the
+// body while horizontal-scrolling, (3) the actions column stays pinned on the right in header + body.
+
+const tallData: Payment[] = Array.from({ length: 60 }, (_, i) => ({
+  id: `pay_${String(i + 1).padStart(3, '0')}`,
+  amount: Math.round(100 + Math.random() * 900),
+  status: (['pending', 'processing', 'success', 'failed'] as const)[i % 4],
+  email: `user${i + 1}@really-long-example-domain-to-force-width.com`,
+}));
+
+const wideColumns: ColumnDef<Payment, unknown>[] = [
+  { accessorKey: 'id', header: 'Payment ID', size: 220, enableSorting: false },
+  { accessorKey: 'email', header: 'Customer Email Address', size: 360 },
+  { accessorKey: 'status', header: 'Payment Status', size: 220 },
+  {
+    accessorKey: 'amount',
+    header: 'Amount Charged (USD)',
+    size: 240,
+    cell: ({ row }) => {
+      const amount = Number.parseFloat(row.getValue('amount'));
+      return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+    },
+  },
+  {
+    id: 'actions',
+    header: '',
+    enableSorting: false,
+    enableHiding: false,
+    cell: ({ row }) => (
+      <RowActions
+        actions={[
+          { id: 'view', icon: Eye, label: 'View', onClick: () => console.log('view', row.original.id) },
+          { id: 'edit', icon: Pencil, label: 'Edit', onClick: () => console.log('edit', row.original.id) },
+          {
+            id: 'delete',
+            icon: Trash2,
+            label: 'Delete',
+            variant: 'destructive',
+            onClick: () => console.log('delete', row.original.id),
+          },
+        ]}
+      />
+    ),
+  },
+];
+
+function ScrollBehaviorStory() {
+  const table = useDataTable({
+    columns: wideColumns,
+    slug: 'story-scroll',
+    label: 'Payments',
+    serverState: { result: tallData, count: tallData.length },
+  });
+  return <DataTable table={table} mode="page" enableViews={false} />;
+}
+
+export const ScrollBehavior: Story = {
+  render: () => <ScrollBehaviorStory />,
 };

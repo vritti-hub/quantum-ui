@@ -18,6 +18,7 @@ export * from './DatePicker';
 export * from './DateRangePicker';
 export * from './DateTimePicker';
 export * from './DateTimeRangePicker';
+export * from './CopyButton';
 export * from './CopyField';
 export * from './DetailField';
 export * from './Dialog';

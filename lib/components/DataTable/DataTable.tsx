@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { flexRender } from '@tanstack/react-table';
 import { ArrowDownToLine, ArrowUpFromLine, Funnel, TableProperties } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../../shadcn/shadcnTable';
 import { cn } from '../../../shadcn/utils';
 import { useDialog } from '../../hooks/useDialog';
@@ -72,6 +72,17 @@ export function DataTable<TData>({
 }: DataTableProps<TData>) {
   const [filtersOpen, setFiltersOpen] = useState(false);
   const importDialog = useDialog();
+
+  // Header and body are separate scroll regions so the vertical scrollbar starts BELOW the header
+  // (only the body scrolls vertically). Horizontal scroll lives on the body; we mirror its scrollLeft
+  // onto the header so both table-fixed layouts stay pixel-aligned without a shared scroll context.
+  const headerScrollRef = useRef<HTMLDivElement>(null);
+  const bodyScrollRef = useRef<HTMLDivElement>(null);
+  const syncHeaderScroll = () => {
+    if (headerScrollRef.current && bodyScrollRef.current) {
+      headerScrollRef.current.scrollLeft = bodyScrollRef.current.scrollLeft;
+    }
+  };
 
   // Table-level + import/export gates — ALLOW when no code or no provider is mounted
   const tableGate = usePermission(permission);
@@ -282,197 +293,227 @@ export function DataTable<TData>({
           ) : null}
         </AnimatePresence>
 
-        {/* Scrollable container — header and body share one scroll context */}
-        <div className="relative flex w-full flex-col overflow-auto overscroll-auto flex-1">
-          <table className="w-full caption-bottom text-sm table-fixed" style={{ minWidth: table.getCenterTotalSize() }}>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => {
-                    const isActions = header.column.id === 'actions';
-                    const headerAlignClass = isActions ? 'justify-end' : 'justify-center';
-                    return (
-                      <TableHead
-                        key={header.id}
-                        colSpan={header.colSpan}
-                        style={
-                          isActions
-                            ? { width: '70px' }
-                            : { width: header.getSize(), minWidth: header.getSize(), maxWidth: header.getSize() }
-                        }
-                        className={cn(
-                          'relative group/resize',
-                          isActions ? 'text-right sticky right-0 z-20' : 'text-center',
-                        )}
-                        aria-sort={
-                          header.column.getCanSort()
-                            ? header.column.getIsSorted() === 'asc'
-                              ? 'ascending'
-                              : header.column.getIsSorted() === 'desc'
-                                ? 'descending'
-                                : 'none'
-                            : undefined
-                        }
-                      >
-                        {/*
-                          Sticky actions header: the blurred/frosted bg lives in an absolute overlay that
-                          leaves the bottom 1px transparent, so the parent <tr>'s natural border-b shows
-                          through unmodified — no alignment math needed.
-                        */}
-                        {isActions && (
-                          <div
-                            aria-hidden
-                            className="pointer-events-none absolute inset-x-0 top-0 bottom-px bg-muted/40 backdrop-blur-sm"
-                          />
-                        )}
-                        <div className={cn(isActions ? 'relative' : undefined)}>
-                          {header.isPlaceholder ? null : typeof header.column.columnDef.header === 'string' ? (
-                            <div className={cn('flex', headerAlignClass)}>
-                              <DataTableColumnHeader column={header.column} title={header.column.columnDef.header} />
-                            </div>
-                          ) : (
-                            flexRender(header.column.columnDef.header, header.getContext())
-                          )}
-                        </div>
-                        {!meta?.lockedColumnSizing && header.column.getCanResize() && (
-                          <div
-                            onPointerDown={header.getResizeHandler()}
-                            onTouchStart={header.getResizeHandler()}
-                            className={cn(
-                              'absolute top-0 right-0 w-1 h-full cursor-col-resize select-none touch-none z-10',
-                              'opacity-0 group-hover/resize:opacity-100 hover:bg-primary/50',
-                              header.column.getIsResizing() && 'opacity-100 bg-primary',
-                            )}
-                          />
-                        )}
-                      </TableHead>
-                    );
-                  })}
-                </TableRow>
-              ))}
-            </TableHeader>
-            {!locked && (isLoading || table.getRowModel().rows.length > 0) && (
-              <TableBody>
-                {isLoading
-                  ? Array.from(
-                      { length: table.getState().pagination?.pageSize ?? 20 },
-                      (_, i) => `skeleton-row-${i}`,
-                    ).map((rowKey) => (
-                      <TableRow key={rowKey}>
-                        {Array.from({ length: columnCount }, (_, i) => `${rowKey}-cell-${i}`).map((cellKey) => (
-                          <TableCell key={cellKey} className={densityClasses[density]}>
-                            <Skeleton className="h-5 w-full" />
-                          </TableCell>
-                        ))}
-                      </TableRow>
-                    ))
-                  : table.getRowModel().rows.map((row, index) => {
-                      const externallySelected = selectedRowId != null && row.id === selectedRowId;
-                      const isSelected = row.getIsSelected() || externallySelected;
+        {/*
+          Fixed header + scrolling body — same pattern as the app layout's fixed page header over
+          scrolling content: the header lives OUTSIDE the vertical scroller, so the vertical scrollbar
+          starts BELOW the header. Horizontal scroll lives on the body (so the sticky actions column
+          keeps pinning) and a one-line scrollLeft mirror (syncHeaderScroll) keeps the header columns
+          aligned with the body. Both tables are table-fixed with the same minWidth + per-column sizes so
+          columns align. No scrollbar-gutter — it reserves a visible empty strip under Safari's overlay
+          scrollbars; overlay scrollbars have no width, so the columns line up without it.
+        */}
+        <div className="flex w-full flex-col flex-1 min-h-0">
+          {/* Header region — never scrolls vertically; mirrors the body's horizontal scroll */}
+          <div ref={headerScrollRef} className="shrink-0 overflow-hidden">
+            <table
+              className="w-full caption-bottom text-sm table-fixed"
+              style={{ minWidth: table.getCenterTotalSize() }}
+            >
+              <TableHeader>
+                {table.getHeaderGroups().map((headerGroup) => (
+                  <TableRow key={headerGroup.id}>
+                    {headerGroup.headers.map((header) => {
+                      const isActions = header.column.id === 'actions';
+                      const headerAlignClass = isActions ? 'justify-end' : 'justify-center';
                       return (
-                        <TableRow
-                          key={row.id}
-                          data-state={isSelected ? 'selected' : undefined}
-                          className="group animate-in fade-in duration-300"
-                          style={{ animationDelay: `${Math.min(index, 12) * 25}ms`, animationFillMode: 'both' }}
+                        <TableHead
+                          key={header.id}
+                          colSpan={header.colSpan}
+                          style={
+                            isActions
+                              ? { width: '70px' }
+                              : { width: header.getSize(), minWidth: header.getSize(), maxWidth: header.getSize() }
+                          }
+                          className={cn(
+                            'relative group/resize',
+                            // actions header stays pinned on horizontal scroll; z-20 keeps it above the
+                            // regular header cells that scroll underneath it.
+                            isActions ? 'text-right sticky right-0 z-20' : 'text-center',
+                          )}
+                          aria-sort={
+                            header.column.getCanSort()
+                              ? header.column.getIsSorted() === 'asc'
+                                ? 'ascending'
+                                : header.column.getIsSorted() === 'desc'
+                                  ? 'descending'
+                                  : 'none'
+                              : undefined
+                          }
                         >
-                          {row.getVisibleCells().map((cell) => {
-                            const isActionsCell = cell.column.id === 'actions';
-                            return (
-                              <TableCell
-                                key={cell.id}
-                                className={cn(
-                                  densityClasses[density],
-                                  isActionsCell ? 'px-2 sticky right-0 z-10' : undefined,
-                                  onRowClick && !isActionsCell ? 'cursor-pointer' : undefined,
-                                )}
-                                onClick={onRowClick && !isActionsCell ? () => onRowClick(row.original) : undefined}
-                                style={
-                                  isActionsCell
-                                    ? { width: '70px' }
-                                    : {
-                                        width: cell.column.getSize(),
-                                        minWidth: cell.column.getSize(),
-                                        maxWidth: cell.column.getSize(),
-                                      }
-                                }
-                              >
-                                {/*
-                                  Sticky actions cell: the frosted bg + scroll shadow live in an absolute
-                                  overlay that leaves the bottom 1px transparent. The parent <tr>'s natural
-                                  border-b shows through unmodified — guarantees pixel-perfect alignment with
-                                  the other cells' row dividers.
-                                */}
-                                {isActionsCell && (
-                                  <div
-                                    aria-hidden
-                                    className="pointer-events-none absolute inset-x-0 top-0 bottom-px bg-background/40 backdrop-blur-sm group-hover:bg-muted/30 group-data-[state=selected]:bg-muted/40"
-                                  />
-                                )}
-                                <div
-                                  className={cn(
-                                    isActionsCell
-                                      ? 'relative flex items-center justify-end'
-                                      : 'overflow-hidden text-center',
-                                  )}
-                                >
-                                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                                </div>
-                              </TableCell>
-                            );
-                          })}
-                        </TableRow>
+                          {/*
+                            Sticky actions header: an opaque bg-muted overlay so columns scrolling under it
+                            don't bleed through. It leaves the bottom 1px transparent, so the parent <tr>'s
+                            natural border-b shows through unmodified — no alignment math needed.
+                          */}
+                          {isActions && (
+                            <div
+                              aria-hidden
+                              className="pointer-events-none absolute inset-x-0 top-0 bottom-px bg-muted backdrop-blur-sm"
+                            />
+                          )}
+                          <div className={cn(isActions ? 'relative' : undefined)}>
+                            {header.isPlaceholder ? null : typeof header.column.columnDef.header === 'string' ? (
+                              <div className={cn('flex', headerAlignClass)}>
+                                <DataTableColumnHeader column={header.column} title={header.column.columnDef.header} />
+                              </div>
+                            ) : (
+                              flexRender(header.column.columnDef.header, header.getContext())
+                            )}
+                          </div>
+                          {!meta?.lockedColumnSizing && header.column.getCanResize() && (
+                            <div
+                              onPointerDown={header.getResizeHandler()}
+                              onTouchStart={header.getResizeHandler()}
+                              className={cn(
+                                'absolute top-0 right-0 w-1 h-full cursor-col-resize select-none touch-none z-10',
+                                'opacity-0 group-hover/resize:opacity-100 hover:bg-primary/50',
+                                header.column.getIsResizing() && 'opacity-100 bg-primary',
+                              )}
+                            />
+                          )}
+                        </TableHead>
                       );
                     })}
-              </TableBody>
+                  </TableRow>
+                ))}
+              </TableHeader>
+            </table>
+          </div>
+
+          {/* Body region — the only vertical scroller (scrollbar begins here, below the header) and the
+              horizontal-scroll driver that the header mirrors. */}
+          <div
+            ref={bodyScrollRef}
+            onScroll={syncHeaderScroll}
+            className="relative flex flex-col flex-1 min-h-0 overflow-auto overscroll-auto"
+          >
+            {!locked && (isLoading || table.getRowModel().rows.length > 0) && (
+              <table
+                className="w-full caption-bottom text-sm table-fixed"
+                style={{ minWidth: table.getCenterTotalSize() }}
+              >
+                <TableBody>
+                  {isLoading
+                    ? Array.from(
+                        { length: table.getState().pagination?.pageSize ?? 20 },
+                        (_, i) => `skeleton-row-${i}`,
+                      ).map((rowKey) => (
+                        <TableRow key={rowKey}>
+                          {Array.from({ length: columnCount }, (_, i) => `${rowKey}-cell-${i}`).map((cellKey) => (
+                            <TableCell key={cellKey} className={densityClasses[density]}>
+                              <Skeleton className="h-5 w-full" />
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      ))
+                    : table.getRowModel().rows.map((row, index) => {
+                        const externallySelected = selectedRowId != null && row.id === selectedRowId;
+                        const isSelected = row.getIsSelected() || externallySelected;
+                        return (
+                          <TableRow
+                            key={row.id}
+                            data-state={isSelected ? 'selected' : undefined}
+                            className="group animate-in fade-in duration-300"
+                            style={{ animationDelay: `${Math.min(index, 12) * 25}ms`, animationFillMode: 'both' }}
+                          >
+                            {row.getVisibleCells().map((cell) => {
+                              const isActionsCell = cell.column.id === 'actions';
+                              return (
+                                <TableCell
+                                  key={cell.id}
+                                  className={cn(
+                                    densityClasses[density],
+                                    isActionsCell ? 'px-2 sticky right-0 z-10' : undefined,
+                                    onRowClick && !isActionsCell ? 'cursor-pointer' : undefined,
+                                  )}
+                                  onClick={onRowClick && !isActionsCell ? () => onRowClick(row.original) : undefined}
+                                  style={
+                                    isActionsCell
+                                      ? { width: '70px' }
+                                      : {
+                                          width: cell.column.getSize(),
+                                          minWidth: cell.column.getSize(),
+                                          maxWidth: cell.column.getSize(),
+                                        }
+                                  }
+                                >
+                                  {/*
+                                    Sticky actions cell: the frosted bg + scroll shadow live in an absolute
+                                    overlay that leaves the bottom 1px transparent. The parent <tr>'s natural
+                                    border-b shows through unmodified — guarantees pixel-perfect alignment with
+                                    the other cells' row dividers.
+                                  */}
+                                  {isActionsCell && (
+                                    <div
+                                      aria-hidden
+                                      className="pointer-events-none absolute inset-x-0 top-0 bottom-px bg-background/40 backdrop-blur-sm group-hover:bg-muted/30 group-data-[state=selected]:bg-muted/40"
+                                    />
+                                  )}
+                                  <div
+                                    className={cn(
+                                      isActionsCell
+                                        ? 'relative flex items-center justify-end'
+                                        : 'overflow-hidden text-center',
+                                    )}
+                                  >
+                                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                                  </div>
+                                </TableCell>
+                              );
+                            })}
+                          </TableRow>
+                        );
+                      })}
+                </TableBody>
+              </table>
             )}
-          </table>
-          {(locked || (!isLoading && table.getRowModel().rows.length === 0)) && (
-            <div className="flex flex-1 items-center justify-center">
-              {locked ? (
-                <div className="flex flex-col items-center justify-center gap-2 text-center">
-                  <PermissionLockIcon reason={tableGate.reason} className="size-6" />
-                  <p className="text-sm text-muted-foreground">{lockedTip(tableGate)}</p>
-                </div>
-              ) : isFiltered ? (
-                <DataTableEmpty
-                  icon={emptyStateConfig?.icon}
-                  title="No results found"
-                  description={buildNoResultsDescription({ hasActiveSearch, hasActiveFilters, hasActiveView })}
-                  action={
-                    <div className="flex gap-2">
-                      {hasActiveSearch && (
-                        <Button variant="outline" size="sm" onClick={() => meta?.setSearch?.(searchBaseline)}>
-                          Clear Search
-                        </Button>
-                      )}
-                      {hasActiveFilters && (
-                        <Button variant="outline" size="sm" onClick={() => meta?.setFilters?.(filtersBaseline)}>
-                          Clear Filters
-                        </Button>
-                      )}
-                      {hasActiveView && slug && (
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          onClick={() => loadViewState(slug, EMPTY_TABLE_STATE, null, false)}
-                        >
-                          Clear View
-                        </Button>
-                      )}
-                    </div>
-                  }
-                />
-              ) : (
-                <DataTableEmpty
-                  icon={emptyStateConfig?.icon}
-                  title={emptyStateConfig?.title}
-                  description={emptyStateConfig?.description}
-                  action={emptyStateConfig?.action}
-                />
-              )}
-            </div>
-          )}
+            {(locked || (!isLoading && table.getRowModel().rows.length === 0)) && (
+              <div className="flex flex-1 items-center justify-center">
+                {locked ? (
+                  <div className="flex flex-col items-center justify-center gap-2 text-center">
+                    <PermissionLockIcon reason={tableGate.reason} className="size-6" />
+                    <p className="text-sm text-muted-foreground">{lockedTip(tableGate)}</p>
+                  </div>
+                ) : isFiltered ? (
+                  <DataTableEmpty
+                    icon={emptyStateConfig?.icon}
+                    title="No results found"
+                    description={buildNoResultsDescription({ hasActiveSearch, hasActiveFilters, hasActiveView })}
+                    action={
+                      <div className="flex gap-2">
+                        {hasActiveSearch && (
+                          <Button variant="outline" size="sm" onClick={() => meta?.setSearch?.(searchBaseline)}>
+                            Clear Search
+                          </Button>
+                        )}
+                        {hasActiveFilters && (
+                          <Button variant="outline" size="sm" onClick={() => meta?.setFilters?.(filtersBaseline)}>
+                            Clear Filters
+                          </Button>
+                        )}
+                        {hasActiveView && slug && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => loadViewState(slug, EMPTY_TABLE_STATE, null, false)}
+                          >
+                            Clear View
+                          </Button>
+                        )}
+                      </div>
+                    }
+                  />
+                ) : (
+                  <DataTableEmpty
+                    icon={emptyStateConfig?.icon}
+                    title={emptyStateConfig?.title}
+                    description={emptyStateConfig?.description}
+                    action={emptyStateConfig?.action}
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 

@@ -51,6 +51,7 @@ export default defineConfig({
         'components/PhoneField': resolve(__dirname, 'lib/components/PhoneField/index.ts'),
         'components/Progress': resolve(__dirname, 'lib/components/Progress/index.ts'),
         'components/DangerZone': resolve(__dirname, 'lib/components/DangerZone/index.ts'),
+        'components/CopyButton': resolve(__dirname, 'lib/components/CopyButton/index.ts'),
         'components/CopyField': resolve(__dirname, 'lib/components/CopyField/index.ts'),
         'components/DetailField': resolve(__dirname, 'lib/components/DetailField/index.ts'),
         'components/FormattedDate': resolve(__dirname, 'lib/components/FormattedDate/index.ts'),

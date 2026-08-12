@@ -577,6 +577,10 @@
       "import": "./dist/theme/index.js"
     },
     "./index.css": "./dist/assets/quantum-ui.css",
+    "./CopyButton": {
+      "types": "./dist/lib/components/CopyButton/index.d.ts",
+      "import": "./dist/components/CopyButton.js"
+    },
     "./CopyField": {
       "types": "./dist/lib/components/CopyField/index.d.ts",
       "import": "./dist/components/CopyField.js"

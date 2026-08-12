@@ -85,7 +85,7 @@
   --font-sans: "IBM Plex Sans", sans-serif;
   --font-serif: "Playfair Display", serif;
   --font-mono: "JetBrains Mono", monospace;
-  --radius: 0.75rem;
+  --radius: 0.625rem;
   --shadow-x: 0rem;
   --shadow-y: 0.5rem;
   --shadow-blur: 1rem;
@@ -162,7 +162,7 @@
   --font-sans: "IBM Plex Sans", sans-serif;
   --font-serif: "Playfair Display", serif;
   --font-mono: "JetBrains Mono", monospace;
-  --radius: 0.75rem;
+  --radius: 0.625rem;
   --shadow-x: 0rem;
   --shadow-y: 0.5rem;
   --shadow-blur: 1.25rem;
