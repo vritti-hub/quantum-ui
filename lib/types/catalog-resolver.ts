@@ -177,6 +177,9 @@ export interface SiteMatrixPermission {
   code: string;
   label: string;
   dependsOn: string[];
+  // Group the permission belongs to — 'other'/'Other' for pre-v3 snapshots that carry none
+  group: string;
+  groupLabel: string;
   web: SiteMatrixCell | null;
   mobile: SiteMatrixCell | null;
 }
