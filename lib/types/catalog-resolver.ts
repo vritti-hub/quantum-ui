@@ -3,29 +3,49 @@
 /**
  * The surfaces a permission can be granted on.
  *
- * `web` and `mobile` are UI buckets, reached by loading a microfrontend. `app` is an API client
- * signing its own requests — no microfrontend and no route, so a headless feature is grantable
- * there and nowhere else.
+ * `web` and `mobile` are UI buckets, reached by loading a microfrontend. `graphql` and `http` are
+ * API surfaces a credential signs its own requests against — no microfrontend and no route, so a
+ * headless feature is grantable there and nowhere else, and each surface is entitled independently.
  */
-export type PlatformBucket = 'web' | 'mobile' | 'app';
+export type PlatformBucket = 'web' | 'mobile' | 'graphql' | 'http';
 
-export const PLATFORMS: PlatformBucket[] = ['web', 'mobile', 'app'];
+export const PLATFORMS: PlatformBucket[] = ['web', 'mobile', 'graphql', 'http'];
 
 /** Buckets that reach their feature through a microfrontend, and so require one to resolve. */
-export type UiPlatformBucket = Exclude<PlatformBucket, 'app'>;
+export type UiPlatformBucket = 'web' | 'mobile';
 
 export const UI_PLATFORMS: UiPlatformBucket[] = ['web', 'mobile'];
 
+// The API surfaces an app credential can present — the values of core's `app_type` enum
+export const API_SURFACES = ['GRAPHQL', 'HTTP'] as const;
+export type ApiSurface = (typeof API_SURFACES)[number];
+
+/** Buckets that admit an API credential rather than a person — exactly one per surface. */
+export type ApiBucket = Exclude<PlatformBucket, UiPlatformBucket>;
+
+export const API_BUCKETS: ApiBucket[] = ['graphql', 'http'];
+
+export const SURFACE_BY_BUCKET: Record<ApiBucket, ApiSurface> = { graphql: 'GRAPHQL', http: 'HTTP' };
+export const BUCKET_BY_SURFACE: Record<ApiSurface, ApiBucket> = { GRAPHQL: 'graphql', HTTP: 'http' };
+
+export function isApiBucket(bucket: PlatformBucket): bucket is ApiBucket {
+  return bucket === 'graphql' || bucket === 'http';
+}
+
+// A legacy single `app` bucket may still occur in stored documents from before the split; it is
+// deliberately not part of these shapes — the server's resolvers honour it at read time only.
 export interface PlatformCodes {
   web?: string[];
   mobile?: string[];
-  app?: string[];
+  graphql?: string[];
+  http?: string[];
 }
 
 export interface PlatformDenyCodes {
   web?: string[] | null;
   mobile?: string[] | null;
-  app?: string[] | null;
+  graphql?: string[] | null;
+  http?: string[] | null;
 }
 
 export type FeatureUnlocks = Record<string, PlatformCodes>;
@@ -78,6 +98,8 @@ export interface SnapshotFeature {
   permissions: SnapshotPermission[];
   microfrontends: SnapshotMicrofrontends;
   requiredServices?: ServiceCode[];
+  // Absent on pre-flag snapshots, which reads as "reachable by any app credential"
+  apiSurfaces?: ApiSurface[];
 }
 
 export interface SnapshotAppFeatureRef {
@@ -140,7 +162,7 @@ export function snapshotFeatureKey(code: string, scope: ScopeType): string {
   return `${scope}.${code}`;
 }
 
-export const SNAPSHOT_SCHEMA_VERSION = 2;
+export const SNAPSHOT_SCHEMA_VERSION = 4;
 
 export type LockReason = 'PLAN' | 'SITE' | 'SERVICE';
 
@@ -194,7 +216,8 @@ export interface SiteMatrixPermission {
   dependsOn: string[];
   web: SiteMatrixCell | null;
   mobile: SiteMatrixCell | null;
-  app: SiteMatrixCell | null;
+  graphql: SiteMatrixCell | null;
+  http: SiteMatrixCell | null;
 }
 
 export interface SiteMatrixFeature {
@@ -206,6 +229,8 @@ export interface SiteMatrixFeature {
   platforms: PlatformBucket[];
   inPlan: boolean;
   availableIn: string[];
+  // API surfaces the feature declares — lets the app-credential editor filter by credential type
+  apiSurfaces?: ApiSurface[];
   permissions: SiteMatrixPermission[];
 }
 
@@ -226,7 +251,7 @@ export interface SiteMatrix {
 
 export type RevokedGrants = Record<string, PlatformDenyCodes>;
 
-export type ClientPlatform = 'web' | 'ios' | 'android' | 'app';
+export type ClientPlatform = 'web' | 'ios' | 'android' | 'graphql' | 'http';
 
 export interface LockedPermission {
   code: string;
