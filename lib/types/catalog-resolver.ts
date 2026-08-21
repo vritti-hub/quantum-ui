@@ -1,16 +1,31 @@
 // Frontend mirror of @vritti/api-sdk/catalog-resolver types — keep field-for-field in sync
-export type PlatformBucket = 'web' | 'mobile';
 
-export const PLATFORMS: PlatformBucket[] = ['web', 'mobile'];
+/**
+ * The surfaces a permission can be granted on.
+ *
+ * `web` and `mobile` are UI buckets, reached by loading a microfrontend. `app` is an API client
+ * signing its own requests — no microfrontend and no route, so a headless feature is grantable
+ * there and nowhere else.
+ */
+export type PlatformBucket = 'web' | 'mobile' | 'app';
+
+export const PLATFORMS: PlatformBucket[] = ['web', 'mobile', 'app'];
+
+/** Buckets that reach their feature through a microfrontend, and so require one to resolve. */
+export type UiPlatformBucket = Exclude<PlatformBucket, 'app'>;
+
+export const UI_PLATFORMS: UiPlatformBucket[] = ['web', 'mobile'];
 
 export interface PlatformCodes {
   web?: string[];
   mobile?: string[];
+  app?: string[];
 }
 
 export interface PlatformDenyCodes {
   web?: string[] | null;
   mobile?: string[] | null;
+  app?: string[] | null;
 }
 
 export type FeatureUnlocks = Record<string, PlatformCodes>;
@@ -179,6 +194,7 @@ export interface SiteMatrixPermission {
   dependsOn: string[];
   web: SiteMatrixCell | null;
   mobile: SiteMatrixCell | null;
+  app: SiteMatrixCell | null;
 }
 
 export interface SiteMatrixFeature {
@@ -210,7 +226,7 @@ export interface SiteMatrix {
 
 export type RevokedGrants = Record<string, PlatformDenyCodes>;
 
-export type ClientPlatform = 'web' | 'ios' | 'android';
+export type ClientPlatform = 'web' | 'ios' | 'android' | 'app';
 
 export interface LockedPermission {
   code: string;
