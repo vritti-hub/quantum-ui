@@ -3,7 +3,7 @@ import type React from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { cn } from '../../../shadcn/utils';
 import { Button } from '../Button';
-import { FieldDescription, FieldLabel } from '../Field';
+import { Field, FieldDescription, FieldLabel } from '../Field';
 import { Tooltip } from '../Tooltip';
 
 /**
@@ -61,19 +61,15 @@ export const CopyField: React.FC<CopyFieldProps> = ({ value, label, description,
   const ariaLabel = label ? `Copy ${typeof label === 'string' ? label : 'value'}` : 'Copy value';
 
   return (
-    <div className={className}>
-      {label && <FieldLabel className="mb-1">{label}</FieldLabel>}
+    <Field className={className}>
+      {label && <FieldLabel>{label}</FieldLabel>}
       <div
         className={cn(
           'group flex items-center gap-2 rounded-md border border-border bg-secondary pl-3 pr-1 py-1',
           'transition-colors focus-within:border-ring focus-within:ring-1 focus-within:ring-ring hover:border-ring/60',
         )}
       >
-        <span
-          className={cn('min-w-0 flex-1 select-all break-all text-sm', mono && 'font-mono')}
-        >
-          {value}
-        </span>
+        <span className={cn('min-w-0 flex-1 select-all break-all text-sm', mono && 'font-mono')}>{value}</span>
         <Tooltip content={copied ? 'Copied' : 'Copy'}>
           <Button
             type="button"
@@ -87,8 +83,8 @@ export const CopyField: React.FC<CopyFieldProps> = ({ value, label, description,
           </Button>
         </Tooltip>
       </div>
-      {description && <FieldDescription className="mt-1.5">{description}</FieldDescription>}
-    </div>
+      {description && <FieldDescription>{description}</FieldDescription>}
+    </Field>
   );
 };
 
