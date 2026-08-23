@@ -158,3 +158,32 @@ export function zodCodeField(options: CodeFieldOptions = {}) {
     .regex(pattern, message ?? defaultMessage);
   return max != null ? schema.max(max, `Code must be ${max} characters or less`) : schema;
 }
+
+export interface FileFieldOptions {
+  maxSizeMb?: number;
+  accept?: string[];
+  optional?: boolean;
+  required?: string;
+  message?: string;
+}
+
+// A File upload field for <UploadFile>; accept takes MIME types and is checked against the file's own type
+export function zodFileField(options?: FileFieldOptions & { optional?: false }): z.ZodType<File, File>;
+export function zodFileField(
+  options: FileFieldOptions & { optional: true },
+): z.ZodType<File | undefined, File | undefined>;
+export function zodFileField(
+  options: FileFieldOptions = {},
+): z.ZodType<File, File> | z.ZodType<File | undefined, File | undefined> {
+  const { maxSizeMb, accept, optional = false, required = 'A file is required', message } = options;
+  const limit = maxSizeMb == null ? null : maxSizeMb * 1024 * 1024;
+  const allowed = accept?.length ? new Set(accept) : null;
+  const label = accept?.map((type) => type.split('/').pop()?.toUpperCase() ?? type).join(', ');
+
+  const schema = z
+    .instanceof(File, { message: required })
+    .refine((file) => limit == null || file.size <= limit, message ?? `File must be under ${maxSizeMb}MB`)
+    .refine((file) => allowed == null || allowed.has(file.type), message ?? `File must be ${label}`);
+
+  return optional ? schema.optional() : schema;
+}
