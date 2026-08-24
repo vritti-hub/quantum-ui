@@ -195,7 +195,7 @@ export const MultiSelect = forwardRef<HTMLButtonElement, MultiSelectProps>(
     }
 
     return (
-      <Field>
+      <Field data-disabled={disabled}>
         {label && <FieldLabel>{label}</FieldLabel>}
 
         <MultiSelectRoot open={state.open} onOpenChange={handleOpenChange} disabled={disabled}>

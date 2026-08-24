@@ -23,7 +23,9 @@
  */
 @layer theme, base, components, utilities;
 
-:root {
+/* .light mirrors .dark so a subtree can be pinned to either theme regardless of the document's */
+:root,
+.light {
   --background: oklch(1 0 0);
   --foreground: oklch(0.2302 0.0547 256.1829);
   --card: oklch(1 0 0);

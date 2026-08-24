@@ -222,7 +222,7 @@ export const SingleSelect = forwardRef<HTMLButtonElement, SingleSelectProps>(
     // Custom anchor path -- skip Field wrapper and use PopoverTrigger asChild
     if (anchor) {
       return (
-        <Field>
+        <Field data-disabled={disabled}>
           {label && <FieldLabel>{label}</FieldLabel>}
           <SingleSelectRoot open={state.open} onOpenChange={handleOpenChange} disabled={disabled}>
             <PopoverTrigger asChild>
@@ -239,7 +239,7 @@ export const SingleSelect = forwardRef<HTMLButtonElement, SingleSelectProps>(
 
     // Default path -- Field wrapper with SingleSelectTrigger
     return (
-      <Field>
+      <Field data-disabled={disabled}>
         {label && <FieldLabel>{label}</FieldLabel>}
 
         <SingleSelectRoot open={state.open} onOpenChange={handleOpenChange} disabled={disabled}>
