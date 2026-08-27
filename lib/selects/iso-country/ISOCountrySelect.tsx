@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import { Select, type SelectProps } from '../../components/Select/Select';
 import { SelectFilter, type SelectFilterProps } from '../../components/Select/SelectFilter';
 import type { SelectOption } from '../../components/Select/types';
-import { ISO_COUNTRIES, countryFlag } from './iso-countries';
+import { countryFlag, ISO_COUNTRIES } from './iso-countries';
 
 // Base Select has no custom option render slot, so the flag is baked into the label string.
 const ISO_COUNTRY_OPTIONS: SelectOption[] = ISO_COUNTRIES.map(({ code, name }) => ({
