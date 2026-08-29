@@ -44,6 +44,13 @@ export interface CurrencyConfig {
   resolveCurrency?: () => string | null | undefined;
 }
 
+export interface SseConfig {
+  // Rewrites an SSE URL before the EventSource opens — the counterpart to axios.onRequest. EventSource
+  // cannot set request headers, so whatever an HTTP call carries in a header (workspace/tenant context)
+  // has to ride the query string here instead. Returns the URL to connect to.
+  onRequest?: (url: string) => string;
+}
+
 export interface QuantumUIConfig {
   csrf?: Partial<CsrfConfig>;
 
@@ -55,6 +62,8 @@ export interface QuantumUIConfig {
 
   currency?: CurrencyConfig;
 
+  sse?: SseConfig;
+
   views: ViewsConfig;
 }
 
@@ -65,6 +74,7 @@ const defaultConfig: {
   views: Required<ViewsConfig>;
   timeZone: TimeZoneConfig;
   currency: CurrencyConfig;
+  sse: SseConfig;
 } = {
   csrf: {
     endpoint: 'csrf/token',
@@ -92,6 +102,9 @@ const defaultConfig: {
   },
   currency: {
     resolveCurrency: undefined,
+  },
+  sse: {
+    onRequest: undefined,
   },
   views: {
     viewsEndpoint: 'table-views',
@@ -153,6 +166,10 @@ export function configureQuantumUI(userConfig: QuantumUIConfig): void {
     currency: {
       ...defaultConfig.currency,
       ...(userConfig.currency || {}),
+    },
+    sse: {
+      ...defaultConfig.sse,
+      ...(userConfig.sse || {}),
     },
     views: {
       ...defaultConfig.views,

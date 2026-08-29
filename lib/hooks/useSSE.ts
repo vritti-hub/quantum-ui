@@ -55,9 +55,11 @@ export function useSSE<EventMap extends Record<string, unknown> = Record<string,
       return;
     }
 
-    // Build full URL from quantum-ui config
+    // Build full URL from quantum-ui config, letting the app attach whatever an axios request would carry
+    // in a header — EventSource cannot set headers, so that context has to ride the query string.
     const config = getConfig();
-    const sseUrl = `${config.axios.baseURL}${path}`;
+    const baseUrl = `${config.axios.baseURL}${path}`;
+    const sseUrl = config.sse.onRequest?.(baseUrl) ?? baseUrl;
 
     const eventSource = new EventSource(sseUrl, { withCredentials });
     eventSourceRef.current = eventSource;
