@@ -75,6 +75,7 @@ export default defineConfig({
         'selects/deployment': resolve(__dirname, 'lib/selects/deployment/index.ts'),
         'selects/feature': resolve(__dirname, 'lib/selects/feature/index.ts'),
         'selects/feature-permission': resolve(__dirname, 'lib/selects/feature-permission/index.ts'),
+        'selects/permission-group': resolve(__dirname, 'lib/selects/permission-group/index.ts'),
         'selects/icon': resolve(__dirname, 'lib/selects/icon/index.ts'),
         icons: resolve(__dirname, 'lib/icons/index.ts'),
         'types/catalog-resolver': resolve(__dirname, 'lib/types/catalog-resolver.ts'),

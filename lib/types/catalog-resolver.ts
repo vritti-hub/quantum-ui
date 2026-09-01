@@ -32,8 +32,6 @@ export function isApiBucket(bucket: PlatformBucket): bucket is ApiBucket {
   return bucket === 'graphql' || bucket === 'http';
 }
 
-// A legacy single `app` bucket may still occur in stored documents from before the split; it is
-// deliberately not part of these shapes — the server's resolvers honour it at read time only.
 export interface PlatformCodes {
   web?: string[];
   mobile?: string[];
@@ -53,12 +51,20 @@ export type FeatureUnlocks = Record<string, PlatformCodes>;
 export type FeatureLocks = Record<string, PlatformDenyCodes>;
 export type SiteFeatureLocks = FeatureLocks;
 
+export interface PermissionGroupRef {
+  code: string;
+  label: string;
+  sortOrder: number;
+}
+
 export interface SnapshotPermission {
   code: string;
   label: string;
   isGlobal: boolean;
   businesses: string[];
   dependsOn: string[];
+  platforms: PlatformBucket[];
+  group?: string;
 }
 
 export interface SnapshotMicrofrontendWeb {
@@ -97,9 +103,10 @@ export interface SnapshotFeature {
   applicableSiteTypes: SiteType[];
   permissions: SnapshotPermission[];
   microfrontends: SnapshotMicrofrontends;
-  requiredServices?: ServiceCode[];
-  // Absent on pre-flag snapshots, which reads as "reachable by any app credential"
-  apiSurfaces?: ApiSurface[];
+  requiredServices: ServiceCode[];
+  permissionGroups: PermissionGroupRef[];
+  // Strict — it decides which of the `graphql`/`http` buckets the feature offers at all
+  apiSurfaces: ApiSurface[];
 }
 
 export interface SnapshotAppFeatureRef {
@@ -162,7 +169,7 @@ export function snapshotFeatureKey(code: string, scope: ScopeType): string {
   return `${scope}.${code}`;
 }
 
-export const SNAPSHOT_SCHEMA_VERSION = 4;
+export const SNAPSHOT_SCHEMA_VERSION = 5;
 
 export type LockReason = 'PLAN' | 'SITE' | 'SERVICE';
 
@@ -214,6 +221,7 @@ export interface SiteMatrixPermission {
   code: string;
   label: string;
   dependsOn: string[];
+  group?: PermissionGroupRef;
   web: SiteMatrixCell | null;
   mobile: SiteMatrixCell | null;
   graphql: SiteMatrixCell | null;
@@ -230,16 +238,20 @@ export interface SiteMatrixFeature {
   inPlan: boolean;
   availableIn: string[];
   // API surfaces the feature declares — lets the app-credential editor filter by credential type
-  apiSurfaces?: ApiSurface[];
+  apiSurfaces: ApiSurface[];
   permissions: SiteMatrixPermission[];
+}
+
+export interface MatrixCounts {
+  unlocked: number;
+  total: number;
 }
 
 export interface SiteMatrixApp {
   code: string;
   name: string;
   icon: string | null;
-  unlockedCount: number;
-  totalCount: number;
+  counts: Record<PlatformBucket, MatrixCounts>;
   features: SiteMatrixFeature[];
 }
 

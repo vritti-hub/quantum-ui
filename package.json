@@ -5,7 +5,7 @@
   "publishConfig": {
     "access": "public"
   },
-  "version": "0.4.0",
+  "version": "0.4.1",
   "type": "module",
   "sideEffects": false,
   "repository": {
@@ -223,6 +223,10 @@
     "./selects/feature-permission": {
       "types": "./dist/lib/selects/feature-permission/index.d.ts",
       "import": "./dist/selects/feature-permission.js"
+    },
+    "./selects/permission-group": {
+      "types": "./dist/lib/selects/permission-group/index.d.ts",
+      "import": "./dist/selects/permission-group.js"
     },
     "./selects/icon": {
       "types": "./dist/lib/selects/icon/index.d.ts",
