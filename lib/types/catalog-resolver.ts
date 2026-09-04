@@ -152,7 +152,6 @@ export interface BusinessVocabulary {
 export interface SnapshotBusiness {
   name: string;
   vocabulary?: BusinessVocabulary;
-  apps: SnapshotApp[];
   roleTemplates: Record<string, SnapshotRoleTemplate>;
   plans: Record<string, SnapshotPlan>;
 }
@@ -161,6 +160,7 @@ export interface VersionSnapshot {
   schemaVersion?: number;
   // Flat feature dictionary keyed by `${scope}.${code}` (see snapshotFeatureKey) — same-code features at different scopes stay distinct
   features: Record<string, SnapshotFeature>;
+  apps: SnapshotApp[];
   businesses: Record<string, SnapshotBusiness>;
 }
 
@@ -169,7 +169,7 @@ export function snapshotFeatureKey(code: string, scope: ScopeType): string {
   return `${scope}.${code}`;
 }
 
-export const SNAPSHOT_SCHEMA_VERSION = 5;
+export const SNAPSHOT_SCHEMA_VERSION = 6;
 
 export type LockReason = 'PLAN' | 'SITE' | 'SERVICE';
 
